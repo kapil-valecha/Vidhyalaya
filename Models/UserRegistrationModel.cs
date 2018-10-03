@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Vidhyalaya.Models
 {
@@ -29,12 +30,17 @@ namespace Vidhyalaya.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
                 
-        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         [Required(ErrorMessage = "Confirmation Password is required.")]
         public string ConfirmPassword { get; set; }
-            
+
+        [Display(Name = "Role")]
+        public int RoleId { get; set; }
+        public IEnumerable<SelectListItem> Role { get; set; }
+
+
         [Required]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]

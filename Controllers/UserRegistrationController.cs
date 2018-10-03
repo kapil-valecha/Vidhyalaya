@@ -11,8 +11,8 @@ namespace Vidhyalaya.Controllers
 {
     public class UserRegistrationController : Controller
     {
-
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+
         /// <summary>
         /// for list of details on Index
         /// </summary>
@@ -20,6 +20,10 @@ namespace Vidhyalaya.Controllers
         // GET: UserRegistration
         public ActionResult Index()
         {
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+
+
             List<UserRegistrationModel> objUserRegisterModel = new List<UserRegistrationModel>();
             var data = (from p in db.UserRegistrations select p).ToList();
             foreach (var item in data)
@@ -44,16 +48,20 @@ namespace Vidhyalaya.Controllers
             };
             return View(objUserRegisterModel);
         }
+       
 
-        /// <summary>
-        /// Get method for Create
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Create()
+            /// <summary>
+            /// Get method for Create
+            /// </summary>
+            /// <returns></returns>
+            public ActionResult Create()
         {
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+           
             return View();
-        }
 
+        }
         /// <summary>
         /// Post method for Create
         /// </summary>
@@ -63,6 +71,9 @@ namespace Vidhyalaya.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserRegistrationModel objUserRegistrationModel)
         {
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+
             try
             {
 
@@ -104,6 +115,8 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
+            List<Role> objRoleList = GetRoles();
+            //ViewBag.Role = new SelectList(db.UserRegistrations.ToList(), "RoleId", "RoleName");
             {
                 if (id == null)
                 {
@@ -148,6 +161,8 @@ namespace Vidhyalaya.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserRegistrationModel objUserRegistrationModel)
         {
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationModel.UserId);
@@ -299,5 +314,23 @@ namespace Vidhyalaya.Controllers
             }
         }
 
+        public static List<Role> GetRoles()
+        {
+            using (var db = new SchoolDatabaseEntities())
+            {
+                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
+                return k.ToList();
+            }
+        }
+
+        //public static Address GetAddress()
+        //{
+        //    using (var db = new SchoolDatabaseEntities())
+        //    {
+               
+        //    }
+
+        //    return View();
+        //}
     }
 }

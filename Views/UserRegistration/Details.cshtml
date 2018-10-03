@@ -26,6 +26,15 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleId)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
@@ -101,8 +110,8 @@
     </dl>
 </div>
 <p>
-    @Html.Partial("_EditButtonPartial", new { id = Model.UserId })
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |*@
+    @*@Html.Partial("_EditButtonPartial", new { id = Model.UserId })*@
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
 
     @Html.Partial("_BackToListButtonPartial")
 </p>
