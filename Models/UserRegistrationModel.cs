@@ -40,7 +40,19 @@ namespace Vidhyalaya.Models
         public int RoleId { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
 
-
+        [Display(Name = "Address")]
+        public int AddressId { get; set; }
+        [Display(Name = "Address Line 01")]
+        public string AddAddressTextBox1 { get; set; }
+        [Display(Name = "Address Line 02")]
+        public string AddAddressTextBox2 { get; set; }
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
+        [Display(Name = "State")]
+        public int StateId { get; set; }
+        [Display(Name = "City")]
+        public int CityId { get; set; }
+               
         [Required]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]

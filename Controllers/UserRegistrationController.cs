@@ -19,7 +19,7 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         // GET: UserRegistration
         public ActionResult Index()
-        {
+        {              
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
 
@@ -46,15 +46,16 @@ namespace Vidhyalaya.Controllers
                 objUserRegisterModel.Add(userRegistration);
 
             };
+
             return View(objUserRegisterModel);
         }
        
 
-            /// <summary>
+        /// <summary>
             /// Get method for Create
             /// </summary>
             /// <returns></returns>
-            public ActionResult Create()
+        public ActionResult Create()
         {
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
@@ -116,9 +117,9 @@ namespace Vidhyalaya.Controllers
         public ActionResult Edit(int id)
         {
             List<Role> objRoleList = GetRoles();
-            //ViewBag.Role = new SelectList(db.UserRegistrations.ToList(), "RoleId", "RoleName");
+            ViewBag.Role = objRoleList;
             {
-                if (id == null)
+                if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -162,7 +163,8 @@ namespace Vidhyalaya.Controllers
         public ActionResult Edit(UserRegistrationModel objUserRegistrationModel)
         {
             List<Role> objRoleList = GetRoles();
-            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+            ViewBag.Role = new SelectList(db.UserRegistrations.ToList(), "RoleId", "RoleName");
+
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationModel.UserId);
@@ -183,15 +185,13 @@ namespace Vidhyalaya.Controllers
                         userData.Password = objUserRegistrationModel.Password;
                         userData.DOB = objUserRegistrationModel.DOB;
                         userData.IsActive = objUserRegistrationModel.IsActive;
-                        userData.DateCreated = DateTime.Now;
                         userData.DateModified = DateTime.Now;
                    
                     db.SaveChanges();
                     return RedirectToAction("Index");
 
                 }
-
-                return View(objUserRegistrationModel);
+                 return View(objUserRegistrationModel);
             }
             catch (Exception ex)
             {
@@ -323,14 +323,5 @@ namespace Vidhyalaya.Controllers
             }
         }
 
-        //public static Address GetAddress()
-        //{
-        //    using (var db = new SchoolDatabaseEntities())
-        //    {
-               
-        //    }
-
-        //    return View();
-        //}
     }
 }
