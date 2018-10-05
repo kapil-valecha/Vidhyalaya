@@ -5,7 +5,6 @@
       <PropertyRef Name="AddressId" />
     </Key>
     <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="AddressTextBox1" Type="varchar(max)" Nullable="false" />
     <Property Name="AddressTextBox2" Type="varchar(max)" Nullable="false" />
     <Property Name="CountryId" Type="int" Nullable="false" />
@@ -19,9 +18,8 @@
       <PropertyRef Name="CityId" />
     </Key>
     <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CityName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
-    <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Country">
     <Key>
@@ -49,8 +47,8 @@
       <PropertyRef Name="StateId" />
     </Key>
     <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StateName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Subject">
     <Key>
@@ -112,6 +110,9 @@
     <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="DOB" Type="datetime" Nullable="false" />
+    <Property Name="AddressId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="DateModified" Type="datetime" Nullable="false" />
@@ -128,7 +129,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Address_Country">
+  <Association Name="FK_Address_Country1">
     <End Role="Country" Type="Self.Country" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
@@ -140,7 +141,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Address_State">
+  <Association Name="FK_Address_State1">
     <End Role="State" Type="Self.State" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
@@ -152,19 +153,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Address_UserRegistration">
-    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="1" />
-    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+  <Association Name="FK_City_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="UserRegistration">
-        <PropertyRef Name="UserId" />
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
       </Principal>
-      <Dependent Role="Address">
-        <PropertyRef Name="UserId" />
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_State_Country1">
+  <Association Name="FK_State_Country">
     <End Role="Country" Type="Self.Country" Multiplicity="1" />
     <End Role="State" Type="Self.State" Multiplicity="*" />
     <ReferentialConstraint>
@@ -176,7 +177,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SubjectInCourse_Course1">
+  <Association Name="FK_Subject_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="Subject">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubjectInCourse_Course">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -188,7 +201,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SubjectInCourse_Subject1">
+  <Association Name="FK_SubjectInCourse_Subject">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -200,7 +213,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeacherInSubject_Subject1">
+  <Association Name="FK_TeacherInSubject_Subject">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
@@ -212,7 +225,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeacherInSubject_UserRegistration">
+  <Association Name="FK_TeacherInSubject_UserRegistration1">
     <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="1" />
     <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
@@ -224,7 +237,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserInRole_Role">
+  <Association Name="FK_UserInRole_Role1">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -236,7 +249,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserInRole_UserRegistration">
+  <Association Name="FK_UserInRole_UserRegistration1">
     <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="1" />
     <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -245,6 +258,30 @@
       </Principal>
       <Dependent Role="UserInRole">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRegistration_Address">
+    <End Role="Address" Type="Self.Address" Multiplicity="1" />
+    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="UserRegistration">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRegistration_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="UserRegistration">
+        <PropertyRef Name="CourseId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -296,45 +333,57 @@
       <End Role="City" EntitySet="City" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK_Address_Country" Association="Self.FK_Address_Country">
+    <AssociationSet Name="FK_Address_Country1" Association="Self.FK_Address_Country1">
       <End Role="Country" EntitySet="Country" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK_Address_State" Association="Self.FK_Address_State">
+    <AssociationSet Name="FK_Address_State1" Association="Self.FK_Address_State1">
       <End Role="State" EntitySet="State" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK_Address_UserRegistration" Association="Self.FK_Address_UserRegistration">
-      <End Role="UserRegistration" EntitySet="UserRegistration" />
-      <End Role="Address" EntitySet="Address" />
+    <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="City" EntitySet="City" />
     </AssociationSet>
-    <AssociationSet Name="FK_State_Country1" Association="Self.FK_State_Country1">
+    <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
       <End Role="Country" EntitySet="Country" />
       <End Role="State" EntitySet="State" />
     </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Course1" Association="Self.FK_SubjectInCourse_Course1">
+    <AssociationSet Name="FK_Subject_Course" Association="Self.FK_Subject_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="Subject" EntitySet="Subject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubjectInCourse_Course" Association="Self.FK_SubjectInCourse_Course">
       <End Role="Course" EntitySet="Course" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Subject1" Association="Self.FK_SubjectInCourse_Subject1">
+    <AssociationSet Name="FK_SubjectInCourse_Subject" Association="Self.FK_SubjectInCourse_Subject">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeacherInSubject_Subject1" Association="Self.FK_TeacherInSubject_Subject1">
+    <AssociationSet Name="FK_TeacherInSubject_Subject" Association="Self.FK_TeacherInSubject_Subject">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeacherInSubject_UserRegistration" Association="Self.FK_TeacherInSubject_UserRegistration">
+    <AssociationSet Name="FK_TeacherInSubject_UserRegistration1" Association="Self.FK_TeacherInSubject_UserRegistration1">
       <End Role="UserRegistration" EntitySet="UserRegistration" />
       <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserInRole_Role" Association="Self.FK_UserInRole_Role">
+    <AssociationSet Name="FK_UserInRole_Role1" Association="Self.FK_UserInRole_Role1">
       <End Role="Role" EntitySet="Role" />
       <End Role="UserInRole" EntitySet="UserInRole" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserInRole_UserRegistration" Association="Self.FK_UserInRole_UserRegistration">
+    <AssociationSet Name="FK_UserInRole_UserRegistration1" Association="Self.FK_UserInRole_UserRegistration1">
       <End Role="UserRegistration" EntitySet="UserRegistration" />
       <End Role="UserInRole" EntitySet="UserInRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegistration_Address" Association="Self.FK_UserRegistration_Address">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="UserRegistration" EntitySet="UserRegistration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegistration_Course" Association="Self.FK_UserRegistration_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="UserRegistration" EntitySet="UserRegistration" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

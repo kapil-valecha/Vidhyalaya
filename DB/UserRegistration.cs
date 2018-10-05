@@ -17,7 +17,6 @@ namespace Vidhyalaya.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserRegistration()
         {
-            this.Addresses = new HashSet<Address>();
             this.TeacherInSubjects = new HashSet<TeacherInSubject>();
             this.UserInRoles = new HashSet<UserInRole>();
         }
@@ -30,12 +29,15 @@ namespace Vidhyalaya.DB
         public string EmailId { get; set; }
         public string Password { get; set; }
         public System.DateTime DOB { get; set; }
+        public int AddressId { get; set; }
+        public int CourseId { get; set; }
+        public int RoleId { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

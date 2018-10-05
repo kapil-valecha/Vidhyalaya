@@ -18,14 +18,17 @@ namespace Vidhyalaya.DB
         public State()
         {
             this.Addresses = new HashSet<Address>();
+            this.Cities = new HashSet<City>();
         }
     
         public int StateId { get; set; }
-        public string StateName { get; set; }
         public int CountryId { get; set; }
+        public string StateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<City> Cities { get; set; }
         public virtual Country Country { get; set; }
     }
 }

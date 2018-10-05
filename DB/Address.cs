@@ -14,8 +14,13 @@ namespace Vidhyalaya.DB
     
     public partial class Address
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Address()
+        {
+            this.UserRegistrations = new HashSet<UserRegistration>();
+        }
+    
         public int AddressId { get; set; }
-        public int UserId { get; set; }
         public string AddressTextBox1 { get; set; }
         public string AddressTextBox2 { get; set; }
         public int CountryId { get; set; }
@@ -27,6 +32,7 @@ namespace Vidhyalaya.DB
         public virtual City City { get; set; }
         public virtual Country Country { get; set; }
         public virtual State State { get; set; }
-        public virtual UserRegistration UserRegistration { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRegistration> UserRegistrations { get; set; }
     }
 }

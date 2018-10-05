@@ -29,7 +29,7 @@ namespace Vidhyalaya.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-                
+
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
@@ -40,19 +40,28 @@ namespace Vidhyalaya.Models
         public int RoleId { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
 
+        [Display(Name = "Course")]
+        public int CourseId { get; set; }
+
         [Display(Name = "Address")]
         public int AddressId { get; set; }
         [Display(Name = "Address Line 01")]
         public string AddAddressTextBox1 { get; set; }
         [Display(Name = "Address Line 02")]
         public string AddAddressTextBox2 { get; set; }
+
         [Display(Name = "Country")]
         public int CountryId { get; set; }
+        public IEnumerable<SelectListItem> Country { get; set; }
+
         [Display(Name = "State")]
         public int StateId { get; set; }
+        public IEnumerable<SelectListItem> State { get; set; }
+
         [Display(Name = "City")]
         public int CityId { get; set; }
-               
+        public IEnumerable<SelectListItem> City { get; set; }
+
         [Required]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
@@ -63,5 +72,16 @@ namespace Vidhyalaya.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
 
+    }
+
+    public class StateModel
+    {
+        public int StateId { get; set; }
+        public string StateName { get; set; }
+    }
+    public class CityModel
+    {
+        public int CityId { get; set; }
+        public string CityName { get; set; }
     }
 }
