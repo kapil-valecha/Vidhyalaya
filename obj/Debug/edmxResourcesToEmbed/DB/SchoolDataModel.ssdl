@@ -10,8 +10,6 @@
     <Property Name="CountryId" Type="int" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" Nullable="false" />
-    <Property Name="DateCreated" Type="datetime" Nullable="false" />
-    <Property Name="DateModified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="City">
     <Key>

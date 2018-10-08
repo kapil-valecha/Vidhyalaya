@@ -37,6 +37,7 @@ namespace Vidhyalaya.Controllers
                     EmailId = item.EmailId,
                     Password = item.Password,
                     DOB = item.DOB,
+                    AddressId = item.AddressId,
                     IsActive = item.IsActive,
                     DateCreated = item.DateCreated,
 
@@ -60,432 +61,420 @@ namespace Vidhyalaya.Controllers
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
 
-            List<Country> objCountryList = db.Countries.ToList();
-            ViewBag.Country = new SelectList(objCountryList, "CountryId", "CountryName");
-
-
+            List<Country> countryList = db.Countries.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
             return View();
 
         }
+
+        /// <summary>
+        /// post for create
+        /// </summary>
+        /// <param name="objUserRegistrationModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserRegistrationModel objUserRegistrationModel)
         {
-            //List<Role> objRoleList = GetRoles();
-            //ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
 
-            //List<Course> objCourseList = db.Courses.ToList();
-            //ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
 
-            //List<Country> objCountryList = db.Countries.ToList();
-            //ViewBag.Country = new SelectList(objCountryList, "CountryId", "CountryName");
+            List<Country> countryList = db.Countries.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
 
+            objUserRegistrationModel.UserId = 1;
+            objUserRegistrationModel.AddressId = 1;
             try
             {
-                Address address = new Address();
-
-               // address.AddressId = objUserRegistrationModel.AddressId;
-                address.AddressTextBox1 = objUserRegistrationModel.AddAddressTextBox1;
-                address.AddressTextBox2 = objUserRegistrationModel.AddAddressTextBox2;
-
-                address.CountryId = objUserRegistrationModel.CountryId;
-                address.StateId = objUserRegistrationModel.StateId;
-                address.CityId = objUserRegistrationModel.CityId;
-                address.DateCreated = DateTime.Now;
-                address.DateModified = DateTime.Now;
-
-                db.Addresses.Add(address);
-                db.SaveChanges();
-
-                int latestAddressId = address.AddressId;
-                UserRegistration objUserRegistration = new UserRegistration
-                {
-                    UserId = objUserRegistrationModel.UserId,
-                    FirstName = objUserRegistrationModel.FirstName,
-                    LastName = objUserRegistrationModel.LastName,
-                    Gender = objUserRegistrationModel.Gender,
-                    Hobby = objUserRegistrationModel.Hobby,
-                    Password = objUserRegistrationModel.Password,
-                    EmailId = objUserRegistrationModel.EmailId,
-                    DOB = objUserRegistrationModel.DOB,
-                    IsActive = objUserRegistrationModel.IsActive,
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                    RoleId = objUserRegistrationModel.RoleId,
-                    CourseId = objUserRegistrationModel.CourseId,
-                    AddressId = objUserRegistrationModel.AddressId
-                };
-                db.UserRegistrations.Add(objUserRegistration);
-
-                db.SaveChanges();
-
-
-                int latestUserId = objUserRegistration.UserId;
-                UserInRole userInRole = new UserInRole();
-                userInRole.RoleId = objUserRegistrationModel.RoleId;
-                userInRole.UserId = latestUserId;
-                db.UserInRoles.Add(userInRole);
-                db.SaveChanges();
-
                 if (ModelState.IsValid)
                 {
+
+                    Address address = new Address();
+
+                    address.AddressId = objUserRegistrationModel.AddressId;
+                    address.AddressTextBox1 = objUserRegistrationModel.AddAddressTextBox1;
+                    address.AddressTextBox2 = objUserRegistrationModel.AddAddressTextBox2;
+                    address.CountryId = objUserRegistrationModel.CountryId;
+                    address.StateId = objUserRegistrationModel.StateId;
+                    address.CityId = objUserRegistrationModel.CityId;
+             
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+
+                    int latestAddressId = address.AddressId;
                     UserRegistration userRegistration = new UserRegistration
                     {
+
                         UserId = objUserRegistrationModel.UserId,
                         FirstName = objUserRegistrationModel.FirstName,
                         LastName = objUserRegistrationModel.LastName,
                         Gender = objUserRegistrationModel.Gender,
                         Hobby = objUserRegistrationModel.Hobby,
                         EmailId = objUserRegistrationModel.EmailId,
+                        RoleId = objUserRegistrationModel.RoleId,
+                        CourseId = objUserRegistrationModel.CourseId,
                         Password = objUserRegistrationModel.Password,
                         DOB = objUserRegistrationModel.DOB,
+                        AddressId = latestAddressId,
+                        IsActive = objUserRegistrationModel.IsActive,
                         DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now
-
+                        DateModified = DateTime.Now,
+                    
                     };
-                    db.UserRegistrations.Add(userRegistration);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                db.UserRegistrations.Add(userRegistration);
+                db.SaveChanges();
 
-                }
-
-                return View(objUserRegistrationModel);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// Get method for Edit
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Edit(int id)
-        {
-            List<Role> objRoleList = GetRoles();
-            ViewBag.Role = objRoleList;
-
-
-            {
-                if (id == 0)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-                var data = from p in db.UserRegistrations
-                           where p.UserId == id
-                           select p;
-                var TempList = db.UserRegistrations.ToList();
-
-
-                UserRegistrationModel objUserRegistrationsModel = new UserRegistrationModel
-                {
-                    UserId = objUserRegistration.UserId,
-                    FirstName = objUserRegistration.FirstName,
-                    LastName = objUserRegistration.LastName,
-                    Gender = objUserRegistration.Gender,
-                    Hobby = objUserRegistration.Hobby,
-                    EmailId = objUserRegistration.EmailId,
-                    Password = objUserRegistration.Password,
-                    DOB = objUserRegistration.DOB,
-                    IsActive = objUserRegistration.IsActive,
-                    DateCreated = objUserRegistration.DateCreated,
-                    DateModified = objUserRegistration.DateModified
-                };
-                if (objUserRegistration == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(objUserRegistrationsModel);
-            }
-        }
-
-        /// <summary>
-        /// Action for Edit Post method
-        /// </summary>
-        /// <param name="objUserRegistrationModel"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserRegistrationModel objUserRegistrationModel)
-        {
-            List<Role> objRoleList = GetRoles();
-            ViewBag.Role = new SelectList(db.UserRegistrations.ToList(), "RoleId", "RoleName");
-
-            try
-            {
-                UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationModel.UserId);
-                var data = from p in db.UserRegistrations
-                           where p.UserId == objUserRegistrationModel.UserId
-                           select p;
-                var TempList = db.UserRegistrations.FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    userData.UserId = objUserRegistrationModel.UserId;
-                    userData.FirstName = objUserRegistrationModel.FirstName;
-                    userData.LastName = objUserRegistrationModel.LastName;
-                    userData.Gender = objUserRegistrationModel.Gender;
-                    userData.Hobby = objUserRegistrationModel.Hobby;
-                    userData.EmailId = objUserRegistrationModel.EmailId;
-                    userData.Password = objUserRegistrationModel.Password;
-                    userData.DOB = objUserRegistrationModel.DOB;
-                    userData.IsActive = objUserRegistrationModel.IsActive;
-                    userData.DateModified = DateTime.Now;
-
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-
-                }
-                return View(objUserRegistrationModel);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// to get Details in list
-        /// </summary>
-        /// <param name="id"> brings record by userid</param>
-        /// <returns></returns>
-        public ActionResult Details(int? id)
-        {
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                UserRegistration userRegistration = db.UserRegistrations.Find(id);
-                var data = from p in db.UserRegistrations
-                           where p.UserId == id
-                           select p;
-                var TempList = db.UserRegistrations.ToList();
-
-                UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel
-                {
-                    UserId = userRegistration.UserId,
-                    FirstName = userRegistration.FirstName,
-                    LastName = userRegistration.LastName,
-                    Gender = userRegistration.Gender,
-                    EmailId = userRegistration.EmailId,
-                    Password = userRegistration.Password,
-                    Hobby = userRegistration.Hobby,
-                    DOB = userRegistration.DOB,
-                    IsActive = userRegistration.IsActive,
-                    DateCreated = userRegistration.DateCreated,
-                    DateModified = userRegistration.DateModified
-                };
-
-                if (userRegistration == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(objUserRegistrationModel);
-            }
-        }
-
-        /// <summary>
-        /// GET: Delete/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
-        public ActionResult Delete(int? id)
-        {
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                UserRegistration userRegistration = db.UserRegistrations.Find(id);
-                var data = from p in db.UserRegistrations
-                           where p.UserId == id
-                           select p;
-                var TempList = db.UserRegistrations.ToList();
-
-
-                UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel
-                {
-                    UserId = userRegistration.UserId,
-                    FirstName = userRegistration.FirstName,
-                    LastName = userRegistration.LastName,
-                    Gender = userRegistration.Gender,
-                    EmailId = userRegistration.EmailId,
-                    Password = userRegistration.Password,
-                    Hobby = userRegistration.Hobby,
-                    DOB = userRegistration.DOB,
-                    IsActive = userRegistration.IsActive,
-                    DateCreated = userRegistration.DateCreated,
-                    DateModified = userRegistration.DateModified
-                };
-
-                if (userRegistration == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(objUserRegistrationModel);
-            }
-        }
-
-        /// <summary>
-        /// POST: Delete/5
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-
-                if (ModelState.IsValid)
-                {
-                    UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-                    db.UserRegistrations.Remove(objUserRegistration);
-                    db.SaveChanges();
-                }
-
+                int latestUserId = objUserRegistrationModel.UserId;
+                UserInRole userInRole = new UserInRole();
+                userInRole.RoleId = objUserRegistrationModel.RoleId;
+                userInRole.UserId = latestUserId;
+                db.UserInRoles.Add(userInRole);
+                db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
+
+                return View(objUserRegistrationModel);
+        }
+
             catch (Exception ex)
             {
 
                 throw ex;
             }
-        }
+}
 
-        /// <summary>
-        /// Get all Roles
-        /// </summary>
-        /// <returns></returns>
-        public static List<Role> GetRoles()
+/// <summary>
+/// Get method for Edit
+/// </summary>
+/// <returns></returns>
+public ActionResult Edit(int id)
+{
+    List<Role> objRoleList = GetRoles();
+    ViewBag.Role = objRoleList;
+
+
+    {
+        if (id == 0)
         {
-            using (var db = new SchoolDatabaseEntities())
-            {
-                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
-                return k.ToList();
-            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        /// <summary>
-        /// Get all Countries
-        /// </summary>
-        /// <returns></returns>
-        //public static List<Country> GetCountry()
-        public DataSet GetCountry()
+        UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
+        var data = from p in db.UserRegistrations
+                   where p.UserId == id
+                   select p;
+        var TempList = db.UserRegistrations.ToList();
+
+
+        UserRegistrationModel objUserRegistrationsModel = new UserRegistrationModel
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
-
-            SqlCommand com = new SqlCommand("Select * from Country", con);
-
-
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-
-            return ds;
-
-            //using (var db = new SchoolDatabaseEntities())
-            //{
-            //    var k = db.Countries;
-            //    return k.ToList();
-            //}
-        }
-
-        public void CountryBind()
+            UserId = objUserRegistration.UserId,
+            FirstName = objUserRegistration.FirstName,
+            LastName = objUserRegistration.LastName,
+            Gender = objUserRegistration.Gender,
+            Hobby = objUserRegistration.Hobby,
+            EmailId = objUserRegistration.EmailId,
+            Password = objUserRegistration.Password,
+            DOB = objUserRegistration.DOB,
+            IsActive = objUserRegistration.IsActive,
+            DateCreated = objUserRegistration.DateCreated,
+            DateModified = objUserRegistration.DateModified
+        };
+        if (objUserRegistration == null)
         {
-
-            DataSet ds = GetCountry();
-            List<SelectListItem> countryList = new List<SelectListItem>();
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                countryList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CountryId"].ToString() });
-
-            }
-            ViewBag.Country = countryList;
-
+            return HttpNotFound();
         }
+        return View(objUserRegistrationsModel);
+    }
+}
 
-        /// <summary>
-        /// Get all states
-        /// </summary>
-        /// <param name="countryId"></param>
-        /// <returns></returns>
+/// <summary>
+/// Action for Edit Post method
+/// </summary>
+/// <param name="objUserRegistrationModel"></param>
+/// <returns></returns>
+[HttpPost]
+[ValidateAntiForgeryToken]
+public ActionResult Edit(UserRegistrationModel objUserRegistrationModel)
+{
+    List<Role> objRoleList = GetRoles();
+    ViewBag.Role = new SelectList(db.UserRegistrations.ToList(), "RoleId", "RoleName");
 
-        public DataSet GetStates(string countryId)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
+    try
+    {
+        UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationModel.UserId);
+        var data = from p in db.UserRegistrations
+                   where p.UserId == objUserRegistrationModel.UserId
+                   select p;
+        var TempList = db.UserRegistrations.FirstOrDefault();
 
-            SqlCommand com = new SqlCommand("Select * from State where CountryId=@catid", con);
-            com.Parameters.AddWithValue("@catid", countryId);
-
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-
-            return ds;
-
-        }
-        public JsonResult StateBind(int countryId)
-        {
-            List<StateModel> data = new List<StateModel>();
-            var stateData = db.States.Where(x => x.CountryId == countryId).ToList();
-            foreach (var item in stateData)
-            {
-                StateModel ds = new StateModel
-                {
-                    StateId = item.StateId,
-                    StateName = item.StateName
-                };
-                data.Add(ds);
-            }
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// Get all Cities
-        /// </summary>
-        /// <param name="stateId"></param>
-        /// <returns></returns>
-        public DataSet GetCity(string stateId)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
-
-            SqlCommand com = new SqlCommand("Select * from City where StateId=@staid", con);
-            com.Parameters.AddWithValue("@staid", stateId);
-
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-
-            return ds;
-
-        }
-        public JsonResult CityBind(int stateId)
+        if (ModelState.IsValid)
         {
 
-            List<CityModel> data = new List<CityModel>();
-            var cityData = db.Cities.Where(x => x.StateId == stateId).ToList();
-            foreach (var item in cityData)
-            {
-                CityModel ds = new CityModel
-                {
-                    CityId = item.CityId,
-                    CityName = item.CityName
-                };
-                data.Add(ds);
-            }
-            return Json(data, JsonRequestBehavior.AllowGet);
+            userData.UserId = objUserRegistrationModel.UserId;
+            userData.FirstName = objUserRegistrationModel.FirstName;
+            userData.LastName = objUserRegistrationModel.LastName;
+            userData.Gender = objUserRegistrationModel.Gender;
+            userData.Hobby = objUserRegistrationModel.Hobby;
+            userData.EmailId = objUserRegistrationModel.EmailId;
+            userData.Password = objUserRegistrationModel.Password;
+            userData.DOB = objUserRegistrationModel.DOB;
+            userData.IsActive = objUserRegistrationModel.IsActive;
+            userData.DateModified = DateTime.Now;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
         }
+        return View(objUserRegistrationModel);
+    }
+    catch (Exception ex)
+    {
+
+        throw ex;
+    }
+}
+
+/// <summary>
+/// to get Details in list
+/// </summary>
+/// <param name="id"> brings record by userid</param>
+/// <returns></returns>
+public ActionResult Details(int? id)
+{
+    {
+        if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        UserRegistration userRegistration = db.UserRegistrations.Find(id);
+        var data = from p in db.UserRegistrations
+                   where p.UserId == id
+                   select p;
+        var TempList = db.UserRegistrations.ToList();
+
+        UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel
+        {
+            UserId = userRegistration.UserId,
+            FirstName = userRegistration.FirstName,
+            LastName = userRegistration.LastName,
+            Gender = userRegistration.Gender,
+            EmailId = userRegistration.EmailId,
+            Password = userRegistration.Password,
+            Hobby = userRegistration.Hobby,
+            DOB = userRegistration.DOB,
+            IsActive = userRegistration.IsActive,
+            DateCreated = userRegistration.DateCreated,
+            DateModified = userRegistration.DateModified
+        };
+
+        if (userRegistration == null)
+        {
+            return HttpNotFound();
+        }
+        return View(objUserRegistrationModel);
+    }
+}
+
+/// <summary>
+/// GET: Delete/5
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+
+public ActionResult Delete(int? id)
+{
+    {
+        if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        UserRegistration userRegistration = db.UserRegistrations.Find(id);
+        var data = from p in db.UserRegistrations
+                   where p.UserId == id
+                   select p;
+        var TempList = db.UserRegistrations.ToList();
+
+
+        UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel
+        {
+            UserId = userRegistration.UserId,
+            FirstName = userRegistration.FirstName,
+            LastName = userRegistration.LastName,
+            Gender = userRegistration.Gender,
+            EmailId = userRegistration.EmailId,
+            Password = userRegistration.Password,
+            Hobby = userRegistration.Hobby,
+            DOB = userRegistration.DOB,
+            IsActive = userRegistration.IsActive,
+            DateCreated = userRegistration.DateCreated,
+            DateModified = userRegistration.DateModified
+        };
+
+        if (userRegistration == null)
+        {
+            return HttpNotFound();
+        }
+        return View(objUserRegistrationModel);
+    }
+}
+
+/// <summary>
+/// POST: Delete/5
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+[HttpPost]
+[ValidateAntiForgeryToken]
+public ActionResult Delete(int id)
+{
+    try
+    {
+
+        if (ModelState.IsValid)
+        {
+            UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
+            db.UserRegistrations.Remove(objUserRegistration);
+            db.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
+    }
+    catch (Exception ex)
+    {
+
+        throw ex;
+    }
+}
+
+/// <summary>
+/// Get all Roles
+/// </summary>
+/// <returns></returns>
+public static List<Role> GetRoles()
+{
+    using (var db = new SchoolDatabaseEntities())
+    {
+        var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
+        return k.ToList();
+    }
+}
+
+/// <summary>
+/// Get all Countries
+/// </summary>
+/// <returns></returns>
+//public static List<Country> GetCountry()
+//public DataSet GetCountry()
+//{
+//    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+//    SqlCommand com = new SqlCommand("Select * from Country", con);
+
+
+//    SqlDataAdapter da = new SqlDataAdapter(com);
+//    DataSet ds = new DataSet();
+//    da.Fill(ds);
+
+//    return ds;
+
+//    //using (var db = new SchoolDatabaseEntities())
+//    //{
+//    //    var k = db.Countries;
+//    //    return k.ToList();
+//    //}
+//}
+
+//public void CountryBind()
+//{
+
+//    DataSet ds = GetCountry();
+//    List<SelectListItem> countryList = new List<SelectListItem>();
+//    foreach (DataRow dr in ds.Tables[0].Rows)
+//    {
+//        countryList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CountryId"].ToString() });
+
+//    }
+//    ViewBag.Country = countryList;
+
+//}
+
+/// <summary>
+/// Get all states
+/// </summary>
+/// <param name="countryId"></param>
+/// <returns></returns>
+
+public DataSet GetStates(string countryId)
+{
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
+
+    SqlCommand com = new SqlCommand("Select * from State where CountryId=@catid", con);
+    com.Parameters.AddWithValue("@catid", countryId);
+
+    SqlDataAdapter da = new SqlDataAdapter(com);
+    DataSet ds = new DataSet();
+    da.Fill(ds);
+
+    return ds;
+
+}
+public JsonResult StateBind(int countryId)
+{
+    List<StateModel> data = new List<StateModel>();
+    var stateData = db.States.Where(x => x.CountryId == countryId).ToList();
+    foreach (var item in stateData)
+    {
+        StateModel ds = new StateModel
+        {
+            StateId = item.StateId,
+            StateName = item.StateName
+        };
+        data.Add(ds);
+    }
+    return Json(data, JsonRequestBehavior.AllowGet);
+}
+/// <summary>
+/// Get all Cities
+/// </summary>
+/// <param name="stateId"></param>
+/// <returns></returns>
+public DataSet GetCity(string stateId)
+{
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
+
+    SqlCommand com = new SqlCommand("Select * from City where StateId=@staid", con);
+    com.Parameters.AddWithValue("@staid", stateId);
+
+    SqlDataAdapter da = new SqlDataAdapter(com);
+    DataSet ds = new DataSet();
+    da.Fill(ds);
+
+    return ds;
+
+}
+public JsonResult CityBind(int stateId)
+{
+
+    List<CityModel> data = new List<CityModel>();
+    var cityData = db.Cities.Where(x => x.StateId == stateId).ToList();
+    foreach (var item in cityData)
+    {
+        CityModel ds = new CityModel
+        {
+            CityId = item.CityId,
+            CityName = item.CityName
+        };
+        data.Add(ds);
+    }
+    return Json(data, JsonRequestBehavior.AllowGet);
+}
         //public static List<State> GetState()
         //{
         //    using (var db = new SchoolDatabaseEntities())

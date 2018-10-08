@@ -26,8 +26,6 @@ namespace Vidhyalaya.DB
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public System.DateTime DateModified { get; set; }
     
         public virtual City City { get; set; }
         public virtual Country Country { get; set; }

@@ -15,8 +15,6 @@
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="CityId" Type="int" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateModified" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -494,7 +492,7 @@
             <End Role="UserRegistration" EntitySet="UserRegistrations" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -516,8 +514,6 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="CityId" Type="Int32" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
           <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country1" FromRole="Address" ToRole="Country" />
           <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State1" FromRole="Address" ToRole="State" />
@@ -819,7 +815,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -852,8 +848,6 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
               <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
@@ -978,7 +972,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

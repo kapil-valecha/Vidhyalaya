@@ -28,8 +28,6 @@
     <EntitySetMapping Name="Addresses">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
         <MappingFragment StoreEntitySet="Address">
-          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="StateId" ColumnName="StateId" />
           <ScalarProperty Name="CountryId" ColumnName="CountryId" />

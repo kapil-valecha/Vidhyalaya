@@ -52,15 +52,18 @@ namespace Vidhyalaya.Models
 
         [Display(Name = "Country")]
         public int CountryId { get; set; }
-        public IEnumerable<SelectListItem> Country { get; set; }
+        public string CountryName { get; set; }
+        //public IEnumerable<SelectListItem> Country { get; set; }
 
         [Display(Name = "State")]
         public int StateId { get; set; }
-        public IEnumerable<SelectListItem> State { get; set; }
+        public string StateName { get; set; }
+        //public IEnumerable<SelectListItem> State { get; set; }
 
         [Display(Name = "City")]
         public int CityId { get; set; }
-        public IEnumerable<SelectListItem> City { get; set; }
+        public string CityName { get; set; }
+        //public IEnumerable<SelectListItem> City { get; set; }
 
         [Required]
         [Display(Name = "Date Of Birth")]

@@ -121,8 +121,6 @@
     <Property Name="CountryId" Type="Int32" Nullable="false" />
     <Property Name="StateId" Type="Int32" Nullable="false" />
     <Property Name="CityId" Type="Int32" Nullable="false" />
-    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
     <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country1" FromRole="Address" ToRole="Country" />
     <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State1" FromRole="Address" ToRole="State" />
