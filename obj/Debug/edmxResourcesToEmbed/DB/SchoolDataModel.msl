@@ -124,8 +124,6 @@
     <EntitySetMapping Name="UserInRoles">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.UserInRole">
         <MappingFragment StoreEntitySet="UserInRole">
-          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />

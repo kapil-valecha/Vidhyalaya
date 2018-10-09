@@ -38,8 +38,7 @@ namespace Vidhyalaya.Models
 
         [Display(Name = "Role")]
         public int RoleId { get; set; }
-        public IEnumerable<SelectListItem> Role { get; set; }
-
+        
         [Display(Name = "Course")]
         public int CourseId { get; set; }
 
@@ -53,13 +52,11 @@ namespace Vidhyalaya.Models
         [Display(Name = "Country")]
         public int CountryId { get; set; }
         public string CountryName { get; set; }
-        //public IEnumerable<SelectListItem> Country { get; set; }
-
+        
         [Display(Name = "State")]
         public int StateId { get; set; }
         public string StateName { get; set; }
-        //public IEnumerable<SelectListItem> State { get; set; }
-
+        
         [Display(Name = "City")]
         public int CityId { get; set; }
         public string CityName { get; set; }

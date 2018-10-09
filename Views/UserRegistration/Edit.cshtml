@@ -33,13 +33,13 @@
         </div>
     </div>
 
-      <div class="form-group">
+    <div class="form-group">
         @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
 
-          <div class="col-md-10">
-              @Html.DropDownList("RoleId", new SelectList(ViewBag.Role, "RoleId", "RoleName"))
-              @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-          </div>
+        <div class="col-md-10">
+            @Html.DropDownList("RoleId  ", new SelectList(ViewBag.Role, "RoleId", "RoleName"))
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+        </div>
     </div>
 
 
@@ -53,6 +53,15 @@
             @Html.RadioButtonFor(model => model.Gender, "O")
             <span>Others</span>
             @Html.ValidationMessageFor(model => model.Gender)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.DropDownList("CourseId", new SelectList(ViewBag.Course, "CourseId", "CourseName"), "--select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -88,6 +97,7 @@
         </div>
     </div>
 
+
     <div class="form-group">
         @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -96,6 +106,45 @@
         </div>
     </div>
 
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AddAddressTextBox1, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.AddAddressTextBox1, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddAddressTextBox1, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AddAddressTextBox2, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.AddAddressTextBox2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddAddressTextBox2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CountryId", ViewBag.CountryList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="state" name="StateId">--Select--</select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="city" name="CityId">--Select--</select>
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-success" />

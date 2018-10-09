@@ -98,8 +98,6 @@
           <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateModified" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRegistration">
           <Key>
@@ -288,6 +286,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRegistration_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRegistration">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -388,6 +398,10 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="UserRegistration" EntitySet="UserRegistration" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRegistration_Role" Association="Self.FK_UserRegistration_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRegistration" EntitySet="UserRegistration" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -476,6 +490,10 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRegistration_Role" Association="SchoolDatabaseModel.FK_UserRegistration_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRegistration" EntitySet="UserRegistrations" />
+          </AssociationSet>
           <AssociationSet Name="FK_SubjectInCourse_Subject" Association="SchoolDatabaseModel.FK_SubjectInCourse_Subject">
             <End Role="Subject" EntitySet="Subjects" />
             <End Role="SubjectInCourse" EntitySet="SubjectInCourses" />
@@ -555,6 +573,7 @@
           <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserInRoles" Relationship="SchoolDatabaseModel.FK_UserInRole_Role1" FromRole="Role" ToRole="UserInRole" />
+          <NavigationProperty Name="UserRegistrations" Relationship="SchoolDatabaseModel.FK_UserRegistration_Role" FromRole="Role" ToRole="UserRegistration" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -619,8 +638,6 @@
           <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Role" Relationship="SchoolDatabaseModel.FK_UserInRole_Role1" FromRole="UserInRole" ToRole="Role" />
           <NavigationProperty Name="UserRegistration" Relationship="SchoolDatabaseModel.FK_UserInRole_UserRegistration1" FromRole="UserInRole" ToRole="UserRegistration" />
         </EntityType>
@@ -644,6 +661,7 @@
           <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Address" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="UserRegistration" ToRole="Address" />
           <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_UserRegistration_Course" FromRole="UserRegistration" ToRole="Course" />
+          <NavigationProperty Name="Role" Relationship="SchoolDatabaseModel.FK_UserRegistration_Role" FromRole="UserRegistration" ToRole="Role" />
           <NavigationProperty Name="TeacherInSubjects" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_UserRegistration1" FromRole="UserRegistration" ToRole="TeacherInSubject" />
           <NavigationProperty Name="UserInRoles" Relationship="SchoolDatabaseModel.FK_UserInRole_UserRegistration1" FromRole="UserRegistration" ToRole="UserInRole" />
         </EntityType>
@@ -763,6 +781,18 @@
               <PropertyRef Name="RoleId" />
             </Principal>
             <Dependent Role="UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRegistration_Role">
+          <End Type="SchoolDatabaseModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="SchoolDatabaseModel.UserRegistration" Role="UserRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRegistration">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
@@ -944,8 +974,6 @@
           <EntitySetMapping Name="UserInRoles">
             <EntityTypeMapping TypeName="SchoolDatabaseModel.UserInRole">
               <MappingFragment StoreEntitySet="UserInRole">
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />

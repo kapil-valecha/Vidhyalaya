@@ -93,8 +93,6 @@
     <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="RoleId" Type="int" Nullable="false" />
-    <Property Name="DateCreated" Type="datetime" Nullable="false" />
-    <Property Name="DateModified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="UserRegistration">
     <Key>
@@ -283,6 +281,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserRegistration_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRegistration">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -381,6 +391,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_UserRegistration_Course" Association="Self.FK_UserRegistration_Course">
       <End Role="Course" EntitySet="Course" />
+      <End Role="UserRegistration" EntitySet="UserRegistration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegistration_Role" Association="Self.FK_UserRegistration_Role">
+      <End Role="Role" EntitySet="Role" />
       <End Role="UserRegistration" EntitySet="UserRegistration" />
     </AssociationSet>
   </EntityContainer>
