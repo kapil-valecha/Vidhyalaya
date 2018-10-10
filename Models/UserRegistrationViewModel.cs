@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Vidhyalaya.Models
 {
-    public class UserRegistrationModel
+    public class UserRegistrationViewModel
     {
         [Key]
         public int UserId { get; set; }
@@ -60,8 +60,8 @@ namespace Vidhyalaya.Models
         [Display(Name = "City")]
         public int CityId { get; set; }
         public string CityName { get; set; }
-        //public IEnumerable<SelectListItem> City { get; set; }
-
+        public IEnumerable<CityModel> CityList { get; set; }
+        public IEnumerable<StateModel> StateList { get; set; }
         [Required]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
