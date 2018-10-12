@@ -11,13 +11,20 @@ namespace Vidhyalaya.Controllers
     public class UserLoginController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-
-        // GET: UserLogin
-
+        /// <summary>
+        /// Get method for User Login
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Login()
         {
             return View();
         }
+
+        /// <summary>
+        ///  Post method for User Login
+        /// </summary>
+        /// <param name="objUserRegistration"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserRegistration objUserRegistration)
@@ -26,14 +33,11 @@ namespace Vidhyalaya.Controllers
             //Code to Authenticate Identity Of user.
             if (userDetails != null)
             {
-
                 if (userDetails.RoleId == 1)
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("AllUserDetails", "Admin");
-                    //return RedirectToAction("Index", "SuperAdmin");
-
+                    return RedirectToAction("AllUserDetails", "SuperAdmin");
                 }
                 else if (userDetails.RoleId == 2)
                 {
@@ -46,7 +50,7 @@ namespace Vidhyalaya.Controllers
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("StudentDetails", "Teacher");
+                    return RedirectToAction("AllUserDetails", "Teacher");
                 }
                 else if (userDetails.RoleId == 4)
                 {
@@ -58,12 +62,14 @@ namespace Vidhyalaya.Controllers
             else
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
-
             }
-
-
             return View();
         }
+
+        /// <summary>
+        /// Thankyou page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ThankYou()
         {
             return View();

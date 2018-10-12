@@ -16,7 +16,7 @@ namespace Vidhyalaya
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "UserLogin", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Admin", action = "Welcome", id = UrlParameter.Optional }
             );
         }
     }

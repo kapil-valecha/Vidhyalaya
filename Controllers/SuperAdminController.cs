@@ -1,11 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using Vidhyalaya.DB;
@@ -13,14 +13,9 @@ using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
-    public class AdminController : Controller
+    public class SuperAdminController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-
-        public ActionResult Welcome()
-        {            
-            return View();
-        }
 
         /// <summary>
         /// Get Action Method for all users details
@@ -294,7 +289,7 @@ namespace Vidhyalaya.Controllers
         {
             using (var db = new SchoolDatabaseEntities())
             {
-                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
+                var k = db.Roles.Where(x => x.RoleId != 1);
                 return k.ToList();
             }
         }

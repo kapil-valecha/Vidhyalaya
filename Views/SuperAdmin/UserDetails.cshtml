@@ -102,7 +102,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId })
+    @*@Html.Partial("_EditButtonPartial", new { id = Model.UserId })*@
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
 
     @Html.Partial("_BackToListButtonPartial")
 </p>

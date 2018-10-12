@@ -1,18 +1,19 @@
 ﻿@model Vidhyalaya.Models.UserRegistrationViewModel
+
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <script>
-    
+
     $(document).ready(function () {
-     
+
         $("#country").change(function () {
-          
+
             var id = $(this).val();
-          
+            //alert(id);
             $("#state").empty();
             $.getJSON("StateBind",{countryId: id },function(data)
             {
@@ -20,7 +21,7 @@
                 var v = "<option>..Select State..</option>";
                 $.each(data, function (i, v1)
                 {
-                    
+
                     v += "<option Value=" + v1.StateId + ">" + v1.StateName + "</option>";
 
                 });
@@ -29,7 +30,6 @@
         });
 
         $("#state").change(function () {
-            
             var id = $(this).val();
             $("#city").empty();
             $.getJSON("CityBind", { stateId: id }, function (data) {
@@ -55,6 +55,8 @@
     <h4>User RegistrationModel</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.UserId)
+
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -72,6 +74,16 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.DropDownList("RoleId", ViewBag.Role as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.RadioButtonFor(model => model.Gender, "M")
@@ -81,15 +93,6 @@
             @Html.RadioButtonFor(model => model.Gender, "O")
             <span>Others</span>
             @Html.ValidationMessageFor(model => model.Gender)
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-
-        <div class="col-md-10">
-            @Html.DropDownList("RoleId", ViewBag.Role as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -147,7 +150,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.AddAddressTextBox1, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.AddAddressTextBox1, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.AddAddressTextBox1, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.AddAddressTextBox1, "", new { @class = "text-danger" })
 
         </div>
@@ -156,7 +159,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.AddAddressTextBox2, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.AddAddressTextBox2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.AddAddressTextBox2, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.AddAddressTextBox2, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -172,20 +175,22 @@
     <div class="form-group">
         @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select id="state" name="StateId" class="form-control">--Select--</select>
+            @Html.DropDownList("StateId", ViewBag.StateList as SelectList, "--select--", htmlAttributes: new { id = "state", @class = "form-control" })
+            @*<select id="state" name="StateId">--Select--</select>*@
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select id="city" name="CityId" class="form-control">--Select--</select>
+            @Html.DropDownList("CityId", ViewBag.CityList as SelectList, "--select--", htmlAttributes: new { id = "city", @class = "form-control" })
+            @*<select id="city" name="CityId">--Select--</select>*@
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-success" />
+            <input type="submit" value="Save" class="btn btn-success" />
         </div>
     </div>
 </div>

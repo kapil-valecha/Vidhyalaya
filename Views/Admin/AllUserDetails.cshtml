@@ -3,13 +3,11 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index</h2>
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
-
 <p>
     @Html.Partial("_CreateButtonPartial")
 </p>
