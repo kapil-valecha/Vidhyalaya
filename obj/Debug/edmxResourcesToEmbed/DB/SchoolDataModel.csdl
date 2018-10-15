@@ -125,6 +125,7 @@
     <Property Name="CountryId" Type="Int32" Nullable="false" />
     <Property Name="StateId" Type="Int32" Nullable="false" />
     <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="Pincode" Type="Int32" />
     <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
     <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country1" FromRole="Address" ToRole="Country" />
     <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State1" FromRole="Address" ToRole="State" />
@@ -244,6 +245,7 @@
     <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Hobby" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="EmailId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsEmailVerified" Type="Boolean" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="AddressId" Type="Int32" Nullable="false" />

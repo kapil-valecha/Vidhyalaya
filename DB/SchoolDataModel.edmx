@@ -15,6 +15,7 @@
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="CityId" Type="int" Nullable="false" />
+          <Property Name="Pincode" Type="int" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -109,6 +110,7 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Hobby" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsEmailVerified" Type="bit" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="DOB" Type="datetime" Nullable="false" />
           <Property Name="AddressId" Type="int" Nullable="false" />
@@ -532,6 +534,7 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" />
           <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
           <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country1" FromRole="Address" ToRole="Country" />
           <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State1" FromRole="Address" ToRole="State" />
@@ -651,6 +654,7 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Hobby" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmailId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsEmailVerified" Type="Boolean" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AddressId" Type="Int32" Nullable="false" />
@@ -878,6 +882,7 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
@@ -991,6 +996,7 @@
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />
                 <ScalarProperty Name="Hobby" ColumnName="Hobby" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />

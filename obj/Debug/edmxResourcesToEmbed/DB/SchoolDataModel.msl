@@ -28,6 +28,7 @@
     <EntitySetMapping Name="Addresses">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
         <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="StateId" ColumnName="StateId" />
           <ScalarProperty Name="CountryId" ColumnName="CountryId" />
@@ -141,6 +142,7 @@
           <ScalarProperty Name="AddressId" ColumnName="AddressId" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
           <ScalarProperty Name="EmailId" ColumnName="EmailId" />
           <ScalarProperty Name="Hobby" ColumnName="Hobby" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />

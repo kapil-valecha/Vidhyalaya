@@ -25,6 +25,8 @@ namespace Vidhyalaya.Models
         [Required]
         [DisplayName("Email Id")]
         public string EmailId { get; set; }
+       
+        public bool IsEmailVerified { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]

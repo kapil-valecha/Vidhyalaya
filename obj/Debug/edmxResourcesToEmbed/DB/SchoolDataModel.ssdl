@@ -10,6 +10,7 @@
     <Property Name="CountryId" Type="int" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Pincode" Type="int" />
   </EntityType>
   <EntityType Name="City">
     <Key>
@@ -104,6 +105,7 @@
     <Property Name="Gender" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="Hobby" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsEmailVerified" Type="bit" />
     <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="DOB" Type="datetime" Nullable="false" />
     <Property Name="AddressId" Type="int" Nullable="false" />

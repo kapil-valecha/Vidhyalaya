@@ -14,8 +14,7 @@ namespace Vidhyalaya.DB
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data;
-
+    
     public partial class SchoolDatabaseEntities : DbContext
     {
         public SchoolDatabaseEntities()
@@ -40,8 +39,7 @@ namespace Vidhyalaya.DB
         public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual DbSet<UserInRole> UserInRoles { get; set; }
         public virtual DbSet<UserRegistration> UserRegistrations { get; set; }
-        public IDbTransaction Begin { get; internal set; }
-
+    
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?

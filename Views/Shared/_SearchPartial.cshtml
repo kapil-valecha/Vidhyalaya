@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Vidhyalaya.Models.UserRegistrationViewModel>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.FirstName
+            </td>
+            <td>
+                @item.LastName
+            </td>
+            <td>
+                @item.Gender
+            </td>
+            <td>
+                @item.Hobby
+            </td>
+            <td>
+                @item.EmailId
+            </td>
+            <td>
+                @item.IsEmailVerified
+            </td>
+            <td>
+                @item.Password
+            </td>
+            <td>
+                @item.ConfirmPassword
+            </td>
+            <td>
+                @item.RoleId
+            </td>
+            <td>
+                @item.CourseId
+            </td>
+            <td>
+                @item.AddressId
+            </td>
+            <td>
+                @item.AddAddressTextBox1
+            </td>
+            <td>
+                @item.AddAddressTextBox2
+            </td>
+            <td>
+                @item.CountryId
+            </td>
+            <td>
+                @item.CountryName
+            </td>
+            <td>
+                @item.StateId
+            </td>
+            <td>
+                @item.StateName
+            </td>
+            <td>
+                @item.CityId
+            </td>
+            <td>
+                @item.CityName
+            </td>
+            <td>
+                @item => item.DOB
+            </td>
+            <td>
+                @item.IsActive
+            </td>
+            <td>
+                @item.DateCreated
+            </td>
+            <td>
+                @item.DateModified
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
+            </td>
+        </tr>
+    }
+}
