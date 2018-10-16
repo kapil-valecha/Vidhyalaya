@@ -183,6 +183,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CourseViewController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubjectViewController.cs" />
+    <Compile Include="Areas\Admin\Models\CourseViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubjectViewModel.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -284,6 +289,12 @@
     <Content Include="DB\SchoolDataModel.edmx.diagram">
       <DependentUpon>SchoolDataModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\CourseView\CreateNewCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\CourseView\GetCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectView\GetSubject.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -335,6 +346,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Course\" />
+    <Folder Include="Areas\Admin\Views\Subject\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -24,6 +24,7 @@ namespace Vidhyalaya.DB
     
         public int CourseId { get; set; }
         public string CourseName { get; set; }
+        public Nullable<int> SubjectId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subject> Subjects { get; set; }

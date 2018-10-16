@@ -1,0 +1,40 @@
+﻿@model Vidhyalaya.Areas.Admin.Models.SubjectViewModel
+
+@{
+    ViewBag.Title = "GetSubject";
+}
+
+<h2>Total Subjects</h2>
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("CreateNewSubject")">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span>Create New</span>
+    </a>
+</p>
+<table class="table table-striped table ">
+    <tr class="success">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SubjectId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectId })
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+

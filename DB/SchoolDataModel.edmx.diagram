@@ -12,10 +12,10 @@
         <EntityTypeShape EntityType="SchoolDatabaseModel.Role" Width="1.5" PointX="0.75" PointY="3.125" />
         <EntityTypeShape EntityType="SchoolDatabaseModel.State" Width="1.5" PointX="1.5" PointY="18.125" />
         <EntityTypeShape EntityType="SchoolDatabaseModel.Subject" Width="1.5" PointX="3" PointY="11.5" />
-        <EntityTypeShape EntityType="SchoolDatabaseModel.SubjectInCourse" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="SchoolDatabaseModel.SubjectInCourse" Width="1.5" PointX="5.25" PointY="8.5" />
         <EntityTypeShape EntityType="SchoolDatabaseModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SchoolDatabaseModel.TeacherInSubject" Width="1.5" PointX="5.25" PointY="7.875" />
-        <EntityTypeShape EntityType="SchoolDatabaseModel.UserInRole" Width="1.5" PointX="5.25" PointY="4.875" />
+        <EntityTypeShape EntityType="SchoolDatabaseModel.TeacherInSubject" Width="1.5" PointX="5.25" PointY="4.875" />
+        <EntityTypeShape EntityType="SchoolDatabaseModel.UserInRole" Width="1.5" PointX="8.25" PointY="5.875" />
         <EntityTypeShape EntityType="SchoolDatabaseModel.UserRegistration" Width="1.5" PointX="3" PointY="4.5" />
         <AssociationConnector Association="SchoolDatabaseModel.FK_Address_City" />
         <AssociationConnector Association="SchoolDatabaseModel.FK_Address_Country1" />

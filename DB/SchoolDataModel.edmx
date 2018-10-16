@@ -38,6 +38,7 @@
           </Key>
           <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CourseName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SubjectId" Type="int" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -565,6 +566,7 @@
           </Key>
           <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectId" Type="Int32" />
           <NavigationProperty Name="Subjects" Relationship="SchoolDatabaseModel.FK_Subject_Course" FromRole="Course" ToRole="Subject" />
           <NavigationProperty Name="SubjectInCourses" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Course" FromRole="Course" ToRole="SubjectInCourse" />
           <NavigationProperty Name="UserRegistrations" Relationship="SchoolDatabaseModel.FK_UserRegistration_Course" FromRole="Course" ToRole="UserRegistration" />
@@ -912,6 +914,7 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="SchoolDatabaseModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
               </MappingFragment>
