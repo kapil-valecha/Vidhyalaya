@@ -14,7 +14,7 @@ namespace Vidhyalaya.Controllers
         // GET: Search
         public ActionResult SearchIndex()
         {
-            List<UserRegistrationViewModel> userList = db.UserRegistrations.Select(x => new UserRegistrationViewModel
+            List<UserSearchViewModel> userList = db.UserRegistrations.Select(x => new UserSearchViewModel
             {
                 UserId = x.UserId,
                 FirstName = x.FirstName,
@@ -22,12 +22,8 @@ namespace Vidhyalaya.Controllers
                 Gender = x.Gender,
                 Hobby = x.Hobby,
                 EmailId = x.EmailId,
-                IsEmailVerified = true,
-                Password = x.Password,
                 DOB = x.DOB,
                 AddressId = x.AddressId,
-                AddAddressTextBox1 = x.Address.AddressTextBox1,
-                AddAddressTextBox2 = x.Address.AddressTextBox2,
                 CountryName = x.Address.Country.CountryName,
                 CityId = x.Address.CityId,
                 CityName = x.Address.City.CityName,
@@ -47,7 +43,7 @@ namespace Vidhyalaya.Controllers
         public ActionResult GetSearchRecord(string SearchText)
         {
             SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-            List<UserRegistrationViewModel> userList = db.UserRegistrations.Where(x => x.FirstName.Contains(SearchText) || x.LastName.Contains(SearchText)).Select(x => new UserRegistrationViewModel
+            List<UserSearchViewModel> userList = db.UserRegistrations.Where(x => x.FirstName.Contains(SearchText) || x.LastName.Contains(SearchText)).Select(x => new UserSearchViewModel
             {
                 UserId = x.UserId,
                 FirstName = x.FirstName,
@@ -59,13 +55,11 @@ namespace Vidhyalaya.Controllers
                 Password = x.Password,
                 DOB = x.DOB,
                 AddressId = x.AddressId,
-                //AddAddressTextBox1 = x.Address.AddressTextBox1,
-                //AddAddressTextBox2 = x.Address.AddressTextBox2,
                 CountryName = x.Address.Country.CountryName,
                 CityId = x.Address.CityId,
-                //CityName = x.Address.City.CityName,
+                CityName = x.Address.City.CityName,
                 StateId = x.Address.StateId,
-                //StateName = x.Address.State.StateName,
+                StateName = x.Address.State.StateName,
                 RoleId = x.RoleId,
                 CourseId = x.CourseId,
                 IsActive = x.IsActive,
