@@ -19,8 +19,10 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav navbar-right"></ul>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                @Html.ActionLink("LogOut", "LogOut", "MainAdmin", routeValues: null, htmlAttributes: new { id = "loginLink" })
             </div>
         </div>
     </div>

@@ -37,14 +37,14 @@ namespace Vidhyalaya.Controllers
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("AllUserDetails", "SuperAdmin");
+                    return RedirectToAction("AllUserDetails", "MainAdmin");
                 }
                 else if (userDetails.RoleId == 2)
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.EmailId.ToString();
 
-                    return RedirectToAction("AllUserDetails", "Admin");
+                    return RedirectToAction("AllUserDetails", "MainAdmin");
                 }
                 else if (userDetails.RoleId == 3)
                 {
@@ -56,7 +56,7 @@ namespace Vidhyalaya.Controllers
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("StudentDetails", "Student");
+                    return RedirectToAction("AllUserDetails", "Teacher");
                 }
             }
             else
@@ -64,6 +64,15 @@ namespace Vidhyalaya.Controllers
                 ModelState.AddModelError("", "UserName or Password is wrong");
             }
             return View();
+        }
+
+        /// <summary>
+        /// for logging out current user
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOut()
+        {
+            return RedirectToAction("Login", "UserLogin");
         }
 
         /// <summary>

@@ -58,7 +58,6 @@
     <EntitySetMapping Name="Courses">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.Course">
         <MappingFragment StoreEntitySet="Course">
-          <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
           <ScalarProperty Name="CourseName" ColumnName="CourseName" />
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
         </MappingFragment>
@@ -84,7 +83,6 @@
     <EntitySetMapping Name="Subjects">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.Subject">
         <MappingFragment StoreEntitySet="Subject">
-          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
           <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
           <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
         </MappingFragment>

@@ -33,7 +33,6 @@
     </Key>
     <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CourseName" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="SubjectId" Type="int" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -56,7 +55,6 @@
     </Key>
     <Property Name="SubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SubjectName" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="CourseId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SubjectInCourse">
     <Key>
@@ -176,19 +174,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Subject_Course">
-    <End Role="Course" Type="Self.Course" Multiplicity="1" />
-    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="CourseId" />
-      </Principal>
-      <Dependent Role="Subject">
-        <PropertyRef Name="CourseId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SubjectInCourse_Course">
+  <Association Name="FK_SubjectInCourse_Course1">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -200,7 +186,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SubjectInCourse_Subject">
+  <Association Name="FK_SubjectInCourse_Subject1">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -212,7 +198,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeacherInSubject_Subject">
+  <Association Name="FK_TeacherInSubject_Subject1">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
@@ -269,18 +255,6 @@
       </Principal>
       <Dependent Role="UserRegistration">
         <PropertyRef Name="AddressId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRegistration_Course">
-    <End Role="Course" Type="Self.Course" Multiplicity="1" />
-    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="CourseId" />
-      </Principal>
-      <Dependent Role="UserRegistration">
-        <PropertyRef Name="CourseId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -360,19 +334,15 @@
       <End Role="Country" EntitySet="Country" />
       <End Role="State" EntitySet="State" />
     </AssociationSet>
-    <AssociationSet Name="FK_Subject_Course" Association="Self.FK_Subject_Course">
-      <End Role="Course" EntitySet="Course" />
-      <End Role="Subject" EntitySet="Subject" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Course" Association="Self.FK_SubjectInCourse_Course">
+    <AssociationSet Name="FK_SubjectInCourse_Course1" Association="Self.FK_SubjectInCourse_Course1">
       <End Role="Course" EntitySet="Course" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Subject" Association="Self.FK_SubjectInCourse_Subject">
+    <AssociationSet Name="FK_SubjectInCourse_Subject1" Association="Self.FK_SubjectInCourse_Subject1">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeacherInSubject_Subject" Association="Self.FK_TeacherInSubject_Subject">
+    <AssociationSet Name="FK_TeacherInSubject_Subject1" Association="Self.FK_TeacherInSubject_Subject1">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
     </AssociationSet>
@@ -390,10 +360,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_UserRegistration_Address" Association="Self.FK_UserRegistration_Address">
       <End Role="Address" EntitySet="Address" />
-      <End Role="UserRegistration" EntitySet="UserRegistration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRegistration_Course" Association="Self.FK_UserRegistration_Course">
-      <End Role="Course" EntitySet="Course" />
       <End Role="UserRegistration" EntitySet="UserRegistration" />
     </AssociationSet>
     <AssociationSet Name="FK_UserRegistration_Role" Association="Self.FK_UserRegistration_Role">

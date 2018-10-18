@@ -67,17 +67,9 @@
       <End Role="Country" EntitySet="Countries" />
       <End Role="State" EntitySet="States" />
     </AssociationSet>
-    <AssociationSet Name="FK_Subject_Course" Association="SchoolDatabaseModel.FK_Subject_Course">
-      <End Role="Course" EntitySet="Courses" />
-      <End Role="Subject" EntitySet="Subjects" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Course" Association="SchoolDatabaseModel.FK_SubjectInCourse_Course">
+    <AssociationSet Name="FK_SubjectInCourse_Course1" Association="SchoolDatabaseModel.FK_SubjectInCourse_Course1">
       <End Role="Course" EntitySet="Courses" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRegistration_Course" Association="SchoolDatabaseModel.FK_UserRegistration_Course">
-      <End Role="Course" EntitySet="Courses" />
-      <End Role="UserRegistration" EntitySet="UserRegistrations" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInRole_Role1" Association="SchoolDatabaseModel.FK_UserInRole_Role1">
       <End Role="Role" EntitySet="Roles" />
@@ -87,11 +79,11 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="UserRegistration" EntitySet="UserRegistrations" />
     </AssociationSet>
-    <AssociationSet Name="FK_SubjectInCourse_Subject" Association="SchoolDatabaseModel.FK_SubjectInCourse_Subject">
+    <AssociationSet Name="FK_SubjectInCourse_Subject1" Association="SchoolDatabaseModel.FK_SubjectInCourse_Subject1">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourses" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeacherInSubject_Subject" Association="SchoolDatabaseModel.FK_TeacherInSubject_Subject">
+    <AssociationSet Name="FK_TeacherInSubject_Subject1" Association="SchoolDatabaseModel.FK_TeacherInSubject_Subject1">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="TeacherInSubject" EntitySet="TeacherInSubjects" />
     </AssociationSet>
@@ -156,10 +148,7 @@
     </Key>
     <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="SubjectId" Type="Int32" />
-    <NavigationProperty Name="Subjects" Relationship="SchoolDatabaseModel.FK_Subject_Course" FromRole="Course" ToRole="Subject" />
-    <NavigationProperty Name="SubjectInCourses" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Course" FromRole="Course" ToRole="SubjectInCourse" />
-    <NavigationProperty Name="UserRegistrations" Relationship="SchoolDatabaseModel.FK_UserRegistration_Course" FromRole="Course" ToRole="UserRegistration" />
+    <NavigationProperty Name="SubjectInCourses" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Course1" FromRole="Course" ToRole="SubjectInCourse" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -187,10 +176,8 @@
     </Key>
     <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="CourseId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_Subject_Course" FromRole="Subject" ToRole="Course" />
-    <NavigationProperty Name="SubjectInCourses" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Subject" FromRole="Subject" ToRole="SubjectInCourse" />
-    <NavigationProperty Name="TeacherInSubjects" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_Subject" FromRole="Subject" ToRole="TeacherInSubject" />
+    <NavigationProperty Name="SubjectInCourses" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Subject1" FromRole="Subject" ToRole="SubjectInCourse" />
+    <NavigationProperty Name="TeacherInSubjects" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_Subject1" FromRole="Subject" ToRole="TeacherInSubject" />
   </EntityType>
   <EntityType Name="SubjectInCourse">
     <Key>
@@ -201,8 +188,8 @@
     <Property Name="CourseId" Type="Int32" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Course" FromRole="SubjectInCourse" ToRole="Course" />
-    <NavigationProperty Name="Subject" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Subject" FromRole="SubjectInCourse" ToRole="Subject" />
+    <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Course1" FromRole="SubjectInCourse" ToRole="Course" />
+    <NavigationProperty Name="Subject" Relationship="SchoolDatabaseModel.FK_SubjectInCourse_Subject1" FromRole="SubjectInCourse" ToRole="Subject" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -223,7 +210,7 @@
     <Property Name="SubjectId" Type="Int32" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Subject" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_Subject" FromRole="TeacherInSubject" ToRole="Subject" />
+    <NavigationProperty Name="Subject" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_Subject1" FromRole="TeacherInSubject" ToRole="Subject" />
     <NavigationProperty Name="UserRegistration" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_UserRegistration1" FromRole="TeacherInSubject" ToRole="UserRegistration" />
   </EntityType>
   <EntityType Name="UserInRole">
@@ -256,7 +243,6 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Address" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="UserRegistration" ToRole="Address" />
-    <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_UserRegistration_Course" FromRole="UserRegistration" ToRole="Course" />
     <NavigationProperty Name="Role" Relationship="SchoolDatabaseModel.FK_UserRegistration_Role" FromRole="UserRegistration" ToRole="Role" />
     <NavigationProperty Name="TeacherInSubjects" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_UserRegistration1" FromRole="UserRegistration" ToRole="TeacherInSubject" />
     <NavigationProperty Name="UserInRoles" Relationship="SchoolDatabaseModel.FK_UserInRole_UserRegistration1" FromRole="UserRegistration" ToRole="UserInRole" />
@@ -333,19 +319,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Subject_Course">
-    <End Type="SchoolDatabaseModel.Course" Role="Course" Multiplicity="1" />
-    <End Type="SchoolDatabaseModel.Subject" Role="Subject" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="CourseId" />
-      </Principal>
-      <Dependent Role="Subject">
-        <PropertyRef Name="CourseId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SubjectInCourse_Course">
+  <Association Name="FK_SubjectInCourse_Course1">
     <End Type="SchoolDatabaseModel.Course" Role="Course" Multiplicity="1" />
     <End Type="SchoolDatabaseModel.SubjectInCourse" Role="SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -353,18 +327,6 @@
         <PropertyRef Name="CourseId" />
       </Principal>
       <Dependent Role="SubjectInCourse">
-        <PropertyRef Name="CourseId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRegistration_Course">
-    <End Type="SchoolDatabaseModel.Course" Role="Course" Multiplicity="1" />
-    <End Type="SchoolDatabaseModel.UserRegistration" Role="UserRegistration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="CourseId" />
-      </Principal>
-      <Dependent Role="UserRegistration">
         <PropertyRef Name="CourseId" />
       </Dependent>
     </ReferentialConstraint>
@@ -393,7 +355,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SubjectInCourse_Subject">
+  <Association Name="FK_SubjectInCourse_Subject1">
     <End Type="SchoolDatabaseModel.Subject" Role="Subject" Multiplicity="1" />
     <End Type="SchoolDatabaseModel.SubjectInCourse" Role="SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
@@ -405,7 +367,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeacherInSubject_Subject">
+  <Association Name="FK_TeacherInSubject_Subject1">
     <End Type="SchoolDatabaseModel.Subject" Role="Subject" Multiplicity="1" />
     <End Type="SchoolDatabaseModel.TeacherInSubject" Role="TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
