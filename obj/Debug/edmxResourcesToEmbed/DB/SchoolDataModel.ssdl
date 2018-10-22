@@ -258,6 +258,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserRegistration_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="UserRegistration">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserRegistration_Role">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="*" />
@@ -360,6 +372,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_UserRegistration_Address" Association="Self.FK_UserRegistration_Address">
       <End Role="Address" EntitySet="Address" />
+      <End Role="UserRegistration" EntitySet="UserRegistration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegistration_Course" Association="Self.FK_UserRegistration_Course">
+      <End Role="Course" EntitySet="Course" />
       <End Role="UserRegistration" EntitySet="UserRegistration" />
     </AssociationSet>
     <AssociationSet Name="FK_UserRegistration_Role" Association="Self.FK_UserRegistration_Role">

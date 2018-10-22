@@ -18,6 +18,7 @@ namespace Vidhyalaya.DB
         public Course()
         {
             this.SubjectInCourses = new HashSet<SubjectInCourse>();
+            this.UserRegistrations = new HashSet<UserRegistration>();
         }
     
         public int CourseId { get; set; }
@@ -25,5 +26,7 @@ namespace Vidhyalaya.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubjectInCourse> SubjectInCourses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRegistration> UserRegistrations { get; set; }
     }
 }

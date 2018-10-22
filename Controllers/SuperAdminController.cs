@@ -1,26 +1,21 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using Vidhyalaya.DB;
 using Vidhyalaya.Models;
 
-namespace Vidhyalaya.Areas.Admin.Controllers
+namespace Vidhyalaya.Controllers
 {
-    public class MainAdminController : Controller
+    public class SuperAdminController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-
-        public ActionResult Welcome()
-        {            
-            return View();
-        }
 
         /// <summary>
         /// Get Action Method for all users details
@@ -193,12 +188,7 @@ namespace Vidhyalaya.Areas.Admin.Controllers
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
-                //var data = from p in db.UserRegistrations
-                //           where p.UserId == objUserRegistrationViewModel.UserId
-                //           select p;
-                //var TempList = db.UserRegistrations.FirstOrDefault();
-
-                if (ModelState.IsValid)
+                 if (ModelState.IsValid)
                 {
                     userData.UserId = objUserRegistrationViewModel.UserId;
                     userData.FirstName = objUserRegistrationViewModel.FirstName;
@@ -294,7 +284,7 @@ namespace Vidhyalaya.Areas.Admin.Controllers
         {
             using (var db = new SchoolDatabaseEntities())
             {
-                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
+                var k = db.Roles.Where(x => x.RoleId != 1);
                 return k.ToList();
             }
         }
@@ -373,16 +363,6 @@ namespace Vidhyalaya.Areas.Admin.Controllers
                 data.Add(ds);
             }
             return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// for logging out current user
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult LogOut()
-        {
-
-            return RedirectToAction("Login", "UserLogin");
         }
     }
 }

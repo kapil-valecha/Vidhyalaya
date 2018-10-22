@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Vidhyalaya
+
+namespace Vidhyalaya.Areas.Admin
 {
     public class RouteConfig
     {
@@ -16,7 +17,7 @@ namespace Vidhyalaya
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "MainAdmin", action = "Welcome", id = UrlParameter.Optional }
+                defaults: new { controller = "UserLogin", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

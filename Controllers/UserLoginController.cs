@@ -10,16 +10,30 @@ namespace Vidhyalaya.Controllers
 {
     public class UserLoginController : Controller
     {
-        private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+        public SchoolDatabaseEntities db = new SchoolDatabaseEntities();
         /// <summary>
         /// Get method for User Login
         /// </summary>
         /// <returns></returns>
         public ActionResult Login()
         {
-            return View();
-        }
+                var model = new LoginViewModel();
+                ViewBag.Title = "Login";
+                model.EmailId = CheckLoginCookie();
+                model.RememberMe = !string.IsNullOrEmpty(model.EmailId);
+                return View("Login", model);
 
+            }
+        [HttpGet]
+        private string CheckLoginCookie()
+        {
+            if (Request.Cookies.Get("EmailId") != null)
+            {
+                return Request.Cookies["EmailId"].Value;
+            }
+            return string.Empty;
+        }
+        
         /// <summary>
         ///  Post method for User Login
         /// </summary>
@@ -27,36 +41,38 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(UserRegistration objUserRegistration)
+        public ActionResult Login(LoginViewModel model, string returnUrl )
         {
-            var userDetails = db.UserRegistrations.Where(x => x.EmailId == objUserRegistration.EmailId && x.Password == objUserRegistration.Password).FirstOrDefault();
+            if (model.RememberMe)
+            {
+                HttpCookie ckEmail = new HttpCookie("Email");
+                ckEmail.Expires = DateTime.Now.AddSeconds(1000);
+                ckEmail.Value = model.EmailId;
+                Response.Cookies.Add(ckEmail);
+            }
+
+            var userDetails = db.UserRegistrations.Where(x => x.EmailId == model.EmailId && x.Password == model.Password).FirstOrDefault();
             //Code to Authenticate Identity Of user.
             if (userDetails != null)
             {
+                Session["UserId"] = userDetails.UserId.ToString();
+                Session["UserName"] = userDetails.EmailId.ToString();
+
                 if (userDetails.RoleId == 1)
                 {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("AllUserDetails", "MainAdmin");
+                    return RedirectToAction("AllUserDetails", "SuperAdmin");
                 }
                 else if (userDetails.RoleId == 2)
                 {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.EmailId.ToString();
-
-                    return RedirectToAction("AllUserDetails", "MainAdmin");
+                    return RedirectToAction("AllUserDetails", "Admin");
                 }
                 else if (userDetails.RoleId == 3)
                 {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.EmailId.ToString();
                     return RedirectToAction("AllUserDetails", "Teacher");
                 }
                 else if (userDetails.RoleId == 4)
                 {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.EmailId.ToString();
-                    return RedirectToAction("AllUserDetails", "Teacher");
+                    return RedirectToAction("Welcome", "Student");
                 }
             }
             else

@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vidhyalaya.DB;
 
-namespace Vidhyalaya.Areas.Admin.Controllers
+namespace Vidhyalaya.Controllers
 {
     public class SubjectController : Controller
     {

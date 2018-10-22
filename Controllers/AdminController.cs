@@ -1,21 +1,24 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Vidhyalaya.DB;
 using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
-    public class MainSuperAdminController : Controller
+    public class AdminController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+
+        public ActionResult Welcome()
+        {            
+            return View();
+        }
 
         /// <summary>
         /// Get Action Method for all users details
@@ -188,11 +191,7 @@ namespace Vidhyalaya.Controllers
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
-                //var data = from p in db.UserRegistrations
-                //           where p.UserId == objUserRegistrationViewModel.UserId
-                //           select p;
-                //var TempList = db.UserRegistrations.FirstOrDefault();
-
+              
                 if (ModelState.IsValid)
                 {
                     userData.UserId = objUserRegistrationViewModel.UserId;
@@ -289,7 +288,7 @@ namespace Vidhyalaya.Controllers
         {
             using (var db = new SchoolDatabaseEntities())
             {
-                var k = db.Roles.Where(x => x.RoleId != 1);
+                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
                 return k.ToList();
             }
         }
@@ -368,6 +367,16 @@ namespace Vidhyalaya.Controllers
                 data.Add(ds);
             }
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// for logging out current user
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOut()
+        {
+
+            return RedirectToAction("Login", "UserLogin");
         }
     }
 }

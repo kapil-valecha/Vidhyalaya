@@ -11,7 +11,8 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class UserRegistration
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,13 +23,18 @@ namespace Vidhyalaya.DB
         }
     
         public int UserId { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string Hobby { get; set; }
+        [DisplayName("Email Id")]
         public string EmailId { get; set; }
+        [DisplayName("Email Id Verified")]
         public Nullable<bool> IsEmailVerified { get; set; }
         public string Password { get; set; }
+        [DisplayName("Date of Birth")]
         public System.DateTime DOB { get; set; }
         public int AddressId { get; set; }
         public int CourseId { get; set; }
@@ -38,6 +44,7 @@ namespace Vidhyalaya.DB
         public System.DateTime DateModified { get; set; }
     
         public virtual Address Address { get; set; }
+        public virtual Course Course { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<h2>Welcome</h2>
+
+<br />
+<table class="table table-hover">
+    <tr>
+        <th>
+            <div>
+                @Html.ActionLink("Click here for New Registration ", "CreateNewUser", "Admin")
+            </div>
+        </th>
+        </tr>
+
+    <tr>
+        <th>
+            <div>
+                @Html.ActionLink("Already Registered ? Login from here", "Login","UserLogin")
+            </div>
+        </th>
+        </tr>
+    
+    <tr></tr>
+
+    </table>
