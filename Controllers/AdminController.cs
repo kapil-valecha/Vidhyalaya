@@ -16,7 +16,7 @@ namespace Vidhyalaya.Controllers
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
 
         public ActionResult Welcome()
-        {            
+        {
             return View();
         }
 
@@ -58,119 +58,120 @@ namespace Vidhyalaya.Controllers
         {
             objUserRegistrationViewModel.UserId = 1;
             objUserRegistrationViewModel.AddressId = 1;
-            using (var dbTransaction = db.Database.BeginTransaction())
+            //using (var dbTransaction = db.Database.BeginTransaction())
+            //{
+            try
             {
-                try
-                {
 
-                    if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    Address address = new Address();
+                    address.AddressId = objUserRegistrationViewModel.AddressId;
+                    address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
+                    address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
+                    address.CountryId = objUserRegistrationViewModel.CountryId;
+                    address.StateId = objUserRegistrationViewModel.StateId;
+                    address.CityId = objUserRegistrationViewModel.CityId;
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+                    int latestAddressId = address.AddressId;
+
+                    UserRegistration userRegistration = new UserRegistration
                     {
-                        Address address = new Address();
-                        address.AddressId = objUserRegistrationViewModel.AddressId;
-                        address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
-                        address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
-                        address.CountryId = objUserRegistrationViewModel.CountryId;
-                        address.StateId = objUserRegistrationViewModel.StateId;
-                        address.CityId = objUserRegistrationViewModel.CityId;
-                        db.Addresses.Add(address);
-                        db.SaveChanges();
-                        int latestAddressId = address.AddressId;
+                        UserId = objUserRegistrationViewModel.UserId,
+                        FirstName = objUserRegistrationViewModel.FirstName,
+                        LastName = objUserRegistrationViewModel.LastName,
+                        Gender = objUserRegistrationViewModel.Gender,
+                        Hobby = objUserRegistrationViewModel.Hobby,
+                        EmailId = objUserRegistrationViewModel.EmailId,
+                        RoleId = objUserRegistrationViewModel.RoleId,
+                        CourseId = objUserRegistrationViewModel.CourseId,
+                        Password = objUserRegistrationViewModel.Password.GetHashCode().ToString(),
+                        DOB = objUserRegistrationViewModel.DOB,
+                        AddressId = latestAddressId,
+                        IsActive = objUserRegistrationViewModel.IsActive,
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now,
+                    };
+                    db.UserRegistrations.Add(userRegistration);
+                    db.SaveChanges();
 
-                        UserRegistration userRegistration = new UserRegistration
-                        {
-                            UserId = objUserRegistrationViewModel.UserId,
-                            FirstName = objUserRegistrationViewModel.FirstName,
-                            LastName = objUserRegistrationViewModel.LastName,
-                            Gender = objUserRegistrationViewModel.Gender,
-                            Hobby = objUserRegistrationViewModel.Hobby,
-                            EmailId = objUserRegistrationViewModel.EmailId,
-                            RoleId = objUserRegistrationViewModel.RoleId,
-                            CourseId = objUserRegistrationViewModel.CourseId,
-                            Password = objUserRegistrationViewModel.Password.GetHashCode().ToString(),
-                            DOB = objUserRegistrationViewModel.DOB,
-                            AddressId = latestAddressId,
-                            IsActive = objUserRegistrationViewModel.IsActive,
-                            DateCreated = DateTime.Now,
-                            DateModified = DateTime.Now,
-                        };
-                        db.UserRegistrations.Add(userRegistration);
-                        db.SaveChanges();
-
-                        int latestUserId = userRegistration.UserId;
-                        UserInRole objUserInRole = new UserInRole();
-                        objUserInRole.RoleId = objUserRegistrationViewModel.RoleId;
-                        objUserInRole.UserId = latestUserId;
-                        db.UserInRoles.Add(objUserInRole);
-                        db.SaveChanges();
-                        return RedirectToAction("AllUserDetails");
-                    }
-                    dbTransaction.Commit();
-
-                    return View(objUserRegistrationViewModel);
+                    int latestUserId = userRegistration.UserId;
+                    UserInRole objUserInRole = new UserInRole();
+                    objUserInRole.RoleId = objUserRegistrationViewModel.RoleId;
+                    objUserInRole.UserId = latestUserId;
+                    db.UserInRoles.Add(objUserInRole);
+                    db.SaveChanges();
+                    //dbTransaction.Commit();
+                    return RedirectToAction("AllUserDetails");
                 }
-                catch
+
+
+                return View(objUserRegistrationViewModel);
+            }
+            catch (Exception ex)
+            {
+                //        //dbTransaction.Rollback();
+                throw;
+            }
+
+            //} } }
+            //}
+
+            /// <summary>
+            /// Action for Edit Existing User Get method
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public ActionResult EditUser(int id)
+            {
+                List<Role> objRoleList = GetRoles();
+                ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+                List<Course> objCourseList = db.Courses.ToList();
+                ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
+                List<Country> countryList = db.Countries.ToList();
+                ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
+
+                if (id == 0)
                 {
-                    dbTransaction.Rollback();
-                    throw;
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-            }
-        }
+                UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
+                List<State> statesList = db.States.Where(x => x.CountryId == objUserRegistration.Address.CountryId).ToList();
+                ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+                List<City> citiesList = db.Cities.Where(x => x.StateId == objUserRegistration.Address.StateId).ToList();
+                ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
-        /// <summary>
-        /// Action for Edit Existing User Get method
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult EditUser(int id)
-        {
-            List<Role> objRoleList = GetRoles();
-            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
-            List<Course> objCourseList = db.Courses.ToList();
-            ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
-            List<Country> countryList = db.Countries.ToList();
-            ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
-
-            if (id == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-            List<State> statesList = db.States.Where(x => x.CountryId == objUserRegistration.Address.CountryId).ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
-            List<City> citiesList = db.Cities.Where(x => x.StateId == objUserRegistration.Address.StateId).ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
-
-            var data = from p in db.UserRegistrations where p.UserId == id select p;
-            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
-            {
-                UserId = objUserRegistration.UserId,
-                FirstName = objUserRegistration.FirstName,
-                LastName = objUserRegistration.LastName,
-                Password = objUserRegistration.Password,
-                EmailId = objUserRegistration.EmailId,
-                Gender = objUserRegistration.Gender,
-                DOB = objUserRegistration.DOB,
-                Hobby = objUserRegistration.Hobby,
-                CourseId = objUserRegistration.CourseId,
-                RoleId = objUserRegistration.RoleId,
-                AddressId = objUserRegistration.Address.AddressId,
-                CountryId = objUserRegistration.Address.CountryId,
-                StateId = objUserRegistration.Address.StateId,
-                CityId = objUserRegistration.Address.CityId,
-                AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1,
-                AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2,
-                IsActive = objUserRegistration.IsActive,
-                DateCreated = objUserRegistration.DateCreated,
-                DateModified = objUserRegistration.DateModified
-            };
-            if (objUserRegistration == null)
-            {
-                return HttpNotFound();
-            }
-            return View(objUserRegistrationViewModel);
-        }
+                var data = from p in db.UserRegistrations where p.UserId == id select p;
+                UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
+                {
+                    UserId = objUserRegistration.UserId,
+                    FirstName = objUserRegistration.FirstName,
+                    LastName = objUserRegistration.LastName,
+                    Password = objUserRegistration.Password,
+                    EmailId = objUserRegistration.EmailId,
+                    Gender = objUserRegistration.Gender,
+                    DOB = objUserRegistration.DOB,
+                    Hobby = objUserRegistration.Hobby,
+                    CourseId = objUserRegistration.CourseId,
+                    RoleId = objUserRegistration.RoleId,
+                    AddressId = objUserRegistration.Address.AddressId,
+                    CountryId = objUserRegistration.Address.CountryId,
+                    StateId = objUserRegistration.Address.StateId,
+                    CityId = objUserRegistration.Address.CityId,
+                    AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1,
+                    AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2,
+                    IsActive = objUserRegistration.IsActive,
+                    DateCreated = objUserRegistration.DateCreated,
+                    DateModified = objUserRegistration.DateModified
+                };
+                if (objUserRegistration == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(objUserRegistrationViewModel);
+            } }
 
         /// <summary>
         /// Action for Edit Existing User Post method
