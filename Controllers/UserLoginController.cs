@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -46,7 +45,7 @@ namespace Vidhyalaya.Controllers
             if (model.RememberMe)
             {
                 HttpCookie ckEmail = new HttpCookie("Email");
-                ckEmail.Expires = DateTime.Now.AddSeconds(1000);
+                ckEmail.Expires = DateTime.Now.AddDays(30);
                 ckEmail.Value = model.EmailId;
                 Response.Cookies.Add(ckEmail);
             }
@@ -60,15 +59,15 @@ namespace Vidhyalaya.Controllers
 
                 if (userDetails.RoleId == 1)
                 {
-                    return RedirectToAction("AllUserDetails", "SuperAdmin");
+                    return RedirectToAction("Welcome", "SuperAdmin");
                 }
                 else if (userDetails.RoleId == 2)
                 {
-                    return RedirectToAction("AllUserDetails", "Admin");
+                    return RedirectToAction("Welcome", "Admin");
                 }
                 else if (userDetails.RoleId == 3)
                 {
-                    return RedirectToAction("AllUserDetails", "Teacher");
+                    return RedirectToAction("Welcome", "Teacher");
                 }
                 else if (userDetails.RoleId == 4)
                 {

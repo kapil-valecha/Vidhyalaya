@@ -326,7 +326,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_PartialLogOut.cshtml" />
     <Content Include="Views\Admin\CreateNewUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\UserDetails.cshtml" />
@@ -344,13 +343,19 @@
     <Content Include="Views\SuperAdmin\EditUser.cshtml" />
     <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
     <Content Include="Views\UserLogin\ThankYou.cshtml" />
-    <Content Include="Views\Teacher\AllUserDetails.cshtml" />
+    <Content Include="Views\Teacher\AllStudentDetails.cshtml" />
     <Content Include="Views\Admin\Welcome.cshtml" />
     <Content Include="Views\Search\SearchIndex.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
-    <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Student\Welcome.cshtml" />
+    <Content Include="Views\Shared\Logout.cshtml" />
+    <Content Include="Views\SuperAdmin\Welcome.cshtml" />
+    <Content Include="Views\Student\CourseList.cshtml" />
+    <Content Include="Views\Student\SubjectList.cshtml" />
+    <Content Include="Views\Student\RegisterStudent.cshtml" />
+    <Content Include="Views\Student\Thankyou.cshtml" />
+    <Content Include="Views\Teacher\Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

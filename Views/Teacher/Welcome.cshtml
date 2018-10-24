@@ -2,20 +2,27 @@
 @{
     ViewBag.Title = "Welcome";
     Layout = "~/Views/Shared/LogOut.cshtml";
-
 }
 
-<h2>Welcome</h2>
+<h2>Welcome Teacher</h2>
 
 <br />
 <table class="table table-hover">
     <tr>
         <th>
             <div>
+                @Html.ActionLink("Student List", "AllStudentDetails", "Teacher")
+            </div>
+        </th>
+    </tr>
+
+    <tr>
+        <th>
+            <div>
                 @Html.ActionLink("Courses List", "CourseList", "Student")
             </div>
         </th>
-        </tr>
+    </tr>
 
     <tr>
         <th>
@@ -23,8 +30,8 @@
                 @Html.ActionLink("Subjects List", "SubjectList", "Student")
             </div>
         </th>
-        </tr>
-    
+    </tr>
+
     <tr></tr>
 
-    </table>
+</table>

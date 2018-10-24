@@ -19,10 +19,15 @@ namespace Vidhyalaya.Controllers
         /// Get Action Method for all users details
         /// </summary>
         /// <returns></returns>
-        public ActionResult AllUserDetails()
+        public ActionResult AllStudentDetails()
         {
-            var returnUserDetailsList = db.UserRegistrations.Where(user => user.RoleId != 1 && user.RoleId != 2 && user.RoleId != 3).ToList();
-            return View(returnUserDetailsList);
+            var returnStudentDetailsList = db.UserRegistrations.Where(user => user.RoleId != 1 && user.RoleId != 2 && user.RoleId != 3).ToList();
+            return View(returnStudentDetailsList);
+        }
+
+        public ActionResult Welcome()
+        {
+            return View();
         }
     }
 }

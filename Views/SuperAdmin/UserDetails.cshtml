@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/LogOut.cshtml";
 }
 
 <h2>Details</h2>
@@ -102,8 +103,5 @@
     </dl>
 </div>
 <p>
-    @*@Html.Partial("_EditButtonPartial", new { id = Model.UserId })*@
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-
-    @Html.Partial("_BackToListButtonPartial")
+        @Html.Partial("_BackToListButtonPartial")
 </p>

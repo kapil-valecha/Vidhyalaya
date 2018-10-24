@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,17 +13,41 @@ namespace Vidhyalaya.Controllers
 {
     public class StudentController : Controller
     {
+        private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+
         public ActionResult Welcome()
         {
             return View();
         }
 
-        private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+        public ActionResult Thankyou()
+        {
+            return View();
+        }
+
         /// <summary>
-        /// Get Action Method for Create New Student
+        /// for getting list of courses
         /// </summary>
         /// <returns></returns>
-        public ActionResult CreateNewStudent()
+        public ActionResult CourseList()
+        {
+            return View(db.Courses.ToList());
+        }
+
+        /// <summary>
+        /// for getting list of subjects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SubjectList()
+        {
+            return View(db.Subjects.ToList());
+        }
+
+        /// <summary>
+        /// get method for new student registration
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RegisterStudent()
         {
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
@@ -34,17 +61,15 @@ namespace Vidhyalaya.Controllers
         }
 
         /// <summary>
-        /// Post Action Method for Create New Student
+        /// post method for new student registration
         /// </summary>
-        /// <param name="objUserRegistrationViewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateNewStudent(UserRegistrationViewModel objUserRegistrationViewModel)
+        public ActionResult RegisterStudent(UserRegistrationViewModel objUserRegistrationViewModel)
         {
             objUserRegistrationViewModel.UserId = 1;
             objUserRegistrationViewModel.AddressId = 1;
-            using (var dbTransaction = db.Database.BeginTransaction())
             {
                 try
                 {
@@ -72,7 +97,7 @@ namespace Vidhyalaya.Controllers
                             EmailId = objUserRegistrationViewModel.EmailId,
                             RoleId = objUserRegistrationViewModel.RoleId,
                             CourseId = objUserRegistrationViewModel.CourseId,
-                            Password = objUserRegistrationViewModel.Password.GetHashCode().ToString(),
+                            Password = objUserRegistrationViewModel.Password,
                             DOB = objUserRegistrationViewModel.DOB,
                             AddressId = latestAddressId,
                             IsActive = objUserRegistrationViewModel.IsActive,
@@ -88,15 +113,12 @@ namespace Vidhyalaya.Controllers
                         objUserInRole.UserId = latestUserId;
                         db.UserInRoles.Add(objUserInRole);
                         db.SaveChanges();
-                        return RedirectToAction("AllUserDetails");
+                        return RedirectToAction("Thankyou");
                     }
-                    dbTransaction.Commit();
-
                     return View(objUserRegistrationViewModel);
                 }
-                catch
+                catch (Exception)
                 {
-                    dbTransaction.Rollback();
                     throw;
                 }
 
@@ -111,10 +133,85 @@ namespace Vidhyalaya.Controllers
         {
             using (var db = new SchoolDatabaseEntities())
             {
-                var k = db.Roles.Where(x => x.RoleId != 1);
+                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
                 return k.ToList();
             }
         }
 
+        /// <summary>
+        /// For getting all states
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <returns></returns>
+        public DataSet GetStates(string countryId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
+            SqlCommand com = new SqlCommand("Select * from State where CountryId=@catid", con);
+            com.Parameters.AddWithValue("@catid", countryId);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+
+        }
+
+        /// <summary>
+        /// For binding states with countries
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <returns></returns>
+        public JsonResult StateBind(int countryId)
+        {
+            List<StateModel> data = new List<StateModel>();
+            var stateData = db.States.Where(x => x.CountryId == countryId).ToList();
+            foreach (var item in stateData)
+            {
+                StateModel ds = new StateModel
+                {
+                    StateId = item.StateId,
+                    StateName = item.StateName
+                };
+                data.Add(ds);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// For getting all Cities
+        /// </summary>
+        /// <param name="stateId"></param>
+        /// <returns></returns>
+        public DataSet GetCity(string stateId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["SchoolDatabaseEntities"].ConnectionString);
+            SqlCommand com = new SqlCommand("Select * from City where StateId=@staid", con);
+            com.Parameters.AddWithValue("@staid", stateId);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+
+        }
+
+        /// <summary>
+        /// For binding cities with states
+        /// </summary>
+        /// <param name="stateId"></param>
+        /// <returns></returns>
+        public JsonResult CityBind(int stateId)
+        {
+            List<CityModel> data = new List<CityModel>();
+            var cityData = db.Cities.Where(x => x.StateId == stateId).ToList();
+            foreach (var item in cityData)
+            {
+                CityModel ds = new CityModel
+                {
+                    CityId = item.CityId,
+                    CityName = item.CityName
+                };
+                data.Add(ds);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

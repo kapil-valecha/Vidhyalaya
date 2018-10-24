@@ -1,18 +1,59 @@
 ﻿@model Vidhyalaya.Models.UserRegistrationViewModel
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/LogOut.cshtml";
+    ViewBag.Title = "RegisterStudent";
 }
 
-<h2>Edit User :</h2>
+<h2>Register Student</h2>
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $("#country").change(function () {
+
+            var id = $(this).val();
+
+            $("#state").empty();
+            $.getJSON("StateBind", { countryId: id }, function (data) {
+
+                var v = "<option>..Select State..</option>";
+                $.each(data, function (i, v1) {
+
+                    v += "<option Value=" + v1.StateId + ">" + v1.StateName + "</option>";
+
+                });
+                $("#state").html(v);
+            });
+        });
+
+        $("#state").change(function () {
+
+            var id = $(this).val();
+            $("#city").empty();
+            $.getJSON("CityBind", { stateId: id }, function (data) {
+
+                var v = "<option>..Select City..</option>";
+                $.each(data, function (i, v1) {
+                    v += "<option Value=" + v1.CityId + ">" + v1.CityName + "</option>";
+
+                });
+                $("#city").html(v);
+            });
+        });
+
+    });
+
+</script>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>User RegistrationModel</h4>
+
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -94,7 +135,6 @@
         </div>
     </div>
 
-
     <div class="form-group">
         @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -102,7 +142,6 @@
             @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.AddAddressTextBox1, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -130,33 +169,26 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("StateId", ViewBag.StateList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+            <select id="state" name="StateId" class="form-control">--Select--</select>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("CityId", ViewBag.CityList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+            <select id="city" name="CityId" class="form-control">--Select--</select>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="submit" value="Create" class="btn btn-success" />
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.Partial("_BackToListButtonPartial")
-</div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

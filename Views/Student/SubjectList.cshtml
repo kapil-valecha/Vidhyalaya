@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Vidhyalaya.DB.Subject>
+
+@{
+    ViewBag.Title = "SubjectList";
+}
+
+<h2>Subject List</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectName)
+            </td>
+        </tr>
+    }
+
+</table>

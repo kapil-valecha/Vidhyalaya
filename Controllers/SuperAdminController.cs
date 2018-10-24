@@ -18,6 +18,15 @@ namespace Vidhyalaya.Controllers
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
 
         /// <summary>
+        /// Welcome for super admin
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Welcome()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// Get Action Method for all users details
         /// </summary>
         /// <returns></returns>
@@ -83,7 +92,7 @@ namespace Vidhyalaya.Controllers
                             EmailId = objUserRegistrationViewModel.EmailId,
                             RoleId = objUserRegistrationViewModel.RoleId,
                             CourseId = objUserRegistrationViewModel.CourseId,
-                            Password = objUserRegistrationViewModel.Password.GetHashCode().ToString(),
+                            Password = objUserRegistrationViewModel.Password,
                             DOB = objUserRegistrationViewModel.DOB,
                             AddressId = latestAddressId,
                             IsActive = objUserRegistrationViewModel.IsActive,
@@ -99,10 +108,10 @@ namespace Vidhyalaya.Controllers
                         objUserInRole.UserId = latestUserId;
                         db.UserInRoles.Add(objUserInRole);
                         db.SaveChanges();
+                        dbTransaction.Commit();
                         return RedirectToAction("AllUserDetails");
                     }
-                    dbTransaction.Commit();
-
+                    
                     return View(objUserRegistrationViewModel);
                 }
                 catch
@@ -127,6 +136,10 @@ namespace Vidhyalaya.Controllers
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
             List<Country> countryList = db.Countries.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+            List<City> citiesList = db.Cities.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
             if (id == 0)
             {
@@ -134,10 +147,6 @@ namespace Vidhyalaya.Controllers
             }
 
             UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-            List<State> statesList = db.States.Where(x => x.CountryId == objUserRegistration.Address.CountryId).ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
-            List<City> citiesList = db.Cities.Where(x => x.StateId == objUserRegistration.Address.StateId).ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
             var data = from p in db.UserRegistrations where p.UserId == id select p;
             UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
@@ -188,9 +197,9 @@ namespace Vidhyalaya.Controllers
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
-                 if (ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    userData.UserId = objUserRegistrationViewModel.UserId;
+                    // userData.UserId = objUserRegistrationViewModel.UserId;
                     userData.FirstName = objUserRegistrationViewModel.FirstName;
                     userData.LastName = objUserRegistrationViewModel.LastName;
                     userData.Gender = objUserRegistrationViewModel.Gender;
@@ -199,7 +208,7 @@ namespace Vidhyalaya.Controllers
                     userData.Password = objUserRegistrationViewModel.Password;
                     userData.DOB = objUserRegistrationViewModel.DOB;
                     userData.RoleId = objUserRegistrationViewModel.RoleId;
-                    userData.AddressId = objUserRegistrationViewModel.AddressId;
+                    // userData.AddressId = objUserRegistrationViewModel.AddressId;
                     userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
                     userData.Address.StateId = objUserRegistrationViewModel.StateId;
                     userData.Address.CityId = objUserRegistrationViewModel.CityId;
@@ -264,8 +273,16 @@ namespace Vidhyalaya.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-                    db.UserRegistrations.Remove(objUserRegistration);
+                    UserInRole objUserInRole = db.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
+                    UserRegistration objUser = db.UserRegistrations.Where(m => m.UserId == id).FirstOrDefault();
+                    Address objAddress = db.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault();
+
+                    //for removing address from address table
+                    db.Addresses.Remove(objAddress);
+                    //for removing User from User Table
+                    db.UserRegistrations.Remove(objUser);
+                    //for removing User from UserInRole table.
+                    db.UserInRoles.Remove(objUserInRole);
                     db.SaveChanges();
                 }
                 return RedirectToAction("AllUserDetails");

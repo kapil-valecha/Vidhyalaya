@@ -2,8 +2,9 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LogOut.cshtml";
 }
-<h2>Index</h2>
+<h2>All Users List :</h2>
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
