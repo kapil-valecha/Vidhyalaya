@@ -155,37 +155,37 @@ fieldset[disabled] .btn-primary.active {
   background-repeat: repeat-x;
   border-color: #3e8f3e;
 }
-.btn-success:hover,
-.btn-success:focus {
-  background-color: #419641;
-  background-position: 0 -15px;
-}
-.btn-success:active,
-.btn-success.active {
-  background-color: #419641;
-  border-color: #3e8f3e;
-}
-.btn-success.disabled,
-.btn-success[disabled],
-fieldset[disabled] .btn-success,
-.btn-success.disabled:hover,
-.btn-success[disabled]:hover,
-fieldset[disabled] .btn-success:hover,
-.btn-success.disabled:focus,
-.btn-success[disabled]:focus,
-fieldset[disabled] .btn-success:focus,
-.btn-success.disabled.focus,
-.btn-success[disabled].focus,
-fieldset[disabled] .btn-success.focus,
-.btn-success.disabled:active,
-.btn-success[disabled]:active,
-fieldset[disabled] .btn-success:active,
-.btn-success.disabled.active,
-.btn-success[disabled].active,
-fieldset[disabled] .btn-success.active {
-  background-color: #419641;
-  background-image: none;
-}
+    .btn-success:hover,
+    .btn-success:focus {
+        background-color: #a5ffa5;
+        background-position: 0 -15px;
+    }
+    .btn-success:active,
+    .btn-success.active {
+        background-color: #a5ffa5;
+        border-color: #3e8f3e;
+    }
+    .btn-success.disabled,
+    .btn-success[disabled],
+    fieldset[disabled] .btn-success,
+    .btn-success.disabled:hover,
+    .btn-success[disabled]:hover,
+    fieldset[disabled] .btn-success:hover,
+    .btn-success.disabled:focus,
+    .btn-success[disabled]:focus,
+    fieldset[disabled] .btn-success:focus,
+    .btn-success.disabled.focus,
+    .btn-success[disabled].focus,
+    fieldset[disabled] .btn-success.focus,
+    .btn-success.disabled:active,
+    .btn-success[disabled]:active,
+    fieldset[disabled] .btn-success:active,
+    .btn-success.disabled.active,
+    .btn-success[disabled].active,
+    fieldset[disabled] .btn-success.active {
+        background-color: #a5ffa5;
+        background-image: none;
+    }
 .btn-info {
   background-image: -webkit-linear-gradient(top, #5bc0de 0%, #2aabd2 100%);
   background-image:      -o-linear-gradient(top, #5bc0de 0%, #2aabd2 100%);

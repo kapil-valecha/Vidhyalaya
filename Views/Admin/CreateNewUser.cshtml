@@ -170,14 +170,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="state" name="StateId" class="form-control">--Select--</select>
+                <select id="state" name="StateId" required class="form-control">--Select--</select>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="city" name="CityId" class="form-control">--Select--</select>
+                <select id="city" name="CityId" required class="form-control">--Select--</select>
             </div>
         </div>
 
