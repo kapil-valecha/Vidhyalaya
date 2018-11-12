@@ -10,17 +10,17 @@ using Vidhyalaya.DB;
 
 namespace Vidhyalaya.Controllers
 {
-    public class SubjectController : Controller
+    public class SubjectsController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
 
-        // GET: Admin/Subject
+        // GET: Subjects
         public ActionResult Index()
         {
             return View(db.Subjects.ToList());
         }
 
-        // GET: Admin/Subject/Details/5
+        // GET: Subjects/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,13 +35,13 @@ namespace Vidhyalaya.Controllers
             return View(subject);
         }
 
-        // GET: Admin/Subject/Create
+        // GET: Subjects/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Subject/Create
+        // POST: Subjects/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -58,7 +58,7 @@ namespace Vidhyalaya.Controllers
             return View(subject);
         }
 
-        // GET: Admin/Subject/Edit/5
+        // GET: Subjects/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace Vidhyalaya.Controllers
             return View(subject);
         }
 
-        // POST: Admin/Subject/Edit/5
+        // POST: Subjects/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,7 +89,7 @@ namespace Vidhyalaya.Controllers
             return View(subject);
         }
 
-        // GET: Admin/Subject/Delete/5
+        // GET: Subjects/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace Vidhyalaya.Controllers
             return View(subject);
         }
 
-        // POST: Admin/Subject/Delete/5
+        // POST: Subjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

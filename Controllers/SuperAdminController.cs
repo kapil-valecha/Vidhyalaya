@@ -30,11 +30,75 @@ namespace Vidhyalaya.Controllers
         /// Get Action Method for all users details
         /// </summary>
         /// <returns></returns>
-        public ActionResult AllUserDetails()
+        public ActionResult AllUserDetails(string searching)
         {
-            var returnUserDetailsList = db.UserRegistrations.ToList();
-            return View(returnUserDetailsList);
+
+            var users = from usr in db.UserRegistrations where usr.RoleId != 1 select usr;
+            if (!String.IsNullOrEmpty(searching))
+            {
+                users = users.Where(usr => usr.Role.RoleName.Contains(searching) && usr.RoleId != 1);
+
+            }
+            return View(users.ToList());
         }
+
+        /// <summary>
+        /// Get Action for Existing User Details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UserDetails(int? id)
+        {
+            // for roles
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = objRoleList;
+            // for course
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            // for country
+            List<Country> countryList = db.Countries.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
+            //for state
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+            // for city
+            List<City> citiesList = db.Cities.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
+
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
+
+            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel();
+            objUserRegistrationViewModel.FirstName = objUserRegistration.FirstName;
+            objUserRegistrationViewModel.LastName = objUserRegistration.LastName;
+            objUserRegistrationViewModel.Gender = objUserRegistration.Gender;
+            objUserRegistrationViewModel.Hobby = objUserRegistration.Hobby;
+            objUserRegistrationViewModel.EmailId = objUserRegistration.EmailId;
+            objUserRegistrationViewModel.Password = objUserRegistration.Password;
+            objUserRegistrationViewModel.DOB = objUserRegistration.DOB;
+            objUserRegistrationViewModel.RoleId = objUserRegistration.RoleId;
+            objUserRegistrationViewModel.CourseId = objUserRegistration.CourseId;
+            objUserRegistrationViewModel.IsActive = objUserRegistration.IsActive;
+            objUserRegistrationViewModel.DateCreated = objUserRegistration.DateCreated;
+            objUserRegistrationViewModel.DateModified = objUserRegistration.DateModified;
+            objUserRegistrationViewModel.AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1;
+            objUserRegistrationViewModel.AddAddressTextBox2= objUserRegistration.Address.AddressTextBox2;
+            objUserRegistrationViewModel.CountryId = objUserRegistration.Address.CountryId;
+            objUserRegistrationViewModel.StateId = objUserRegistration.Address.StateId;
+            objUserRegistrationViewModel.CityId = objUserRegistration.Address.CityId;
+            objUserRegistrationViewModel.Pincode = objUserRegistration.Address.Pincode;
+
+            if (objUserRegistration == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objUserRegistrationViewModel);
+        }            
+
 
         /// <summary>
         /// Get Action Method for Create New User
@@ -42,12 +106,13 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult CreateNewUser()
         {
+            // for roles
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
-
+            // for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
-
+            // for country
             List<Country> countryList = db.Countries.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
             return View();
@@ -64,7 +129,7 @@ namespace Vidhyalaya.Controllers
         {
             objUserRegistrationViewModel.UserId = 1;
             objUserRegistrationViewModel.AddressId = 1;
-            using (var dbTransaction = db.Database.BeginTransaction())
+            using (var Transaction = db.Database.BeginTransaction())
             {
                 try
                 {
@@ -78,6 +143,7 @@ namespace Vidhyalaya.Controllers
                         address.CountryId = objUserRegistrationViewModel.CountryId;
                         address.StateId = objUserRegistrationViewModel.StateId;
                         address.CityId = objUserRegistrationViewModel.CityId;
+                        address.Pincode = objUserRegistrationViewModel.Pincode;
                         db.Addresses.Add(address);
                         db.SaveChanges();
                         int latestAddressId = address.AddressId;
@@ -90,6 +156,7 @@ namespace Vidhyalaya.Controllers
                             Gender = objUserRegistrationViewModel.Gender,
                             Hobby = objUserRegistrationViewModel.Hobby,
                             EmailId = objUserRegistrationViewModel.EmailId,
+                            IsEmailVerified = objUserRegistrationViewModel.IsEmailVerified,
                             RoleId = objUserRegistrationViewModel.RoleId,
                             CourseId = objUserRegistrationViewModel.CourseId,
                             Password = objUserRegistrationViewModel.Password,
@@ -108,19 +175,22 @@ namespace Vidhyalaya.Controllers
                         objUserInRole.UserId = latestUserId;
                         db.UserInRoles.Add(objUserInRole);
                         db.SaveChanges();
-                        dbTransaction.Commit();
+
+                        Transaction.Commit();
                         return RedirectToAction("AllUserDetails");
                     }
-                    
+
                     return View(objUserRegistrationViewModel);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    dbTransaction.Rollback();
-                    throw;
+                    Transaction.Rollback();
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    throw ex;
                 }
 
             }
+
         }
 
         /// <summary>
@@ -130,14 +200,19 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult EditUser(int id)
         {
+            //for roles
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+            //for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
+            //for country
             List<Country> countryList = db.Countries.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
+            //for state
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+            //for city
             List<City> citiesList = db.Cities.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
@@ -156,15 +231,16 @@ namespace Vidhyalaya.Controllers
                 LastName = objUserRegistration.LastName,
                 Password = objUserRegistration.Password,
                 EmailId = objUserRegistration.EmailId,
+                IsEmailVerified = objUserRegistration.IsEmailVerified,
                 Gender = objUserRegistration.Gender,
                 DOB = objUserRegistration.DOB,
                 Hobby = objUserRegistration.Hobby,
                 CourseId = objUserRegistration.CourseId,
                 RoleId = objUserRegistration.RoleId,
-                AddressId = objUserRegistration.Address.AddressId,
                 CountryId = objUserRegistration.Address.CountryId,
                 StateId = objUserRegistration.Address.StateId,
                 CityId = objUserRegistration.Address.CityId,
+                Pincode = objUserRegistration.Address.Pincode,
                 AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1,
                 AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2,
                 IsActive = objUserRegistration.IsActive,
@@ -188,18 +264,27 @@ namespace Vidhyalaya.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(int id, UserRegistrationViewModel objUserRegistrationViewModel)
         {
+            //for roles
             List<Role> objRoleList = GetRoles();
-            //ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
             ViewBag.Role = objRoleList;
+            //for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = objCourseList;
+            //for country
+            List<Country> countryList = db.Countries.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
+            //for country
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+            //for city    
+            List<City> citiesList = db.Cities.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
             try
             {
                 UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
                 if (ModelState.IsValid)
                 {
-                    // userData.UserId = objUserRegistrationViewModel.UserId;
                     userData.FirstName = objUserRegistrationViewModel.FirstName;
                     userData.LastName = objUserRegistrationViewModel.LastName;
                     userData.Gender = objUserRegistrationViewModel.Gender;
@@ -208,10 +293,10 @@ namespace Vidhyalaya.Controllers
                     userData.Password = objUserRegistrationViewModel.Password;
                     userData.DOB = objUserRegistrationViewModel.DOB;
                     userData.RoleId = objUserRegistrationViewModel.RoleId;
-                    // userData.AddressId = objUserRegistrationViewModel.AddressId;
                     userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
                     userData.Address.StateId = objUserRegistrationViewModel.StateId;
                     userData.Address.CityId = objUserRegistrationViewModel.CityId;
+                    userData.Address.Pincode = objUserRegistrationViewModel.Pincode;
                     userData.Address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
                     userData.Address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
                     userData.IsActive = objUserRegistrationViewModel.IsActive;
@@ -228,28 +313,7 @@ namespace Vidhyalaya.Controllers
             }
         }
 
-        /// <summary>
-        /// Get Action for Existing User Details
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult UserDetails(int? id)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserRegistration userRegistration = db.UserRegistrations.Find(id);
-
-            if (userRegistration == null)
-            {
-                return HttpNotFound();
-            }
-            return View();
-
-        }
-
+        
         /// <summary>
         /// GET: Delete/5
         /// </summary>

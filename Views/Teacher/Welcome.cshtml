@@ -11,7 +11,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Student List", "AllStudentDetails", "Teacher")
+                @Html.ActionLink("Student List", "AllStudentDetails", "Teacher", new { @class = "navbar-brand" })
             </div>
         </th>
     </tr>
@@ -19,7 +19,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Courses List", "CourseList", "Student")
+                @Html.ActionLink("Courses List", "CourseList", "Student", new { @class = "navbar-brand" })
             </div>
         </th>
     </tr>
@@ -27,7 +27,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Subjects List", "SubjectList", "Student")
+                @Html.ActionLink("Subjects List", "SubjectList", "Student", new { @class = "navbar-brand" })
             </div>
         </th>
     </tr>

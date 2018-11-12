@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Vidhyalaya.DB.TeacherInSubject>
+
+@{
+    ViewBag.Title = "TeachersList";
+    Layout = "~/Views/Shared/LogOut.cshtml";
+}
+
+<h2>Teachers List</h2>
+
+<table class="table table-striped">
+    <tr class="success">
+        <th>
+            @Html.DisplayName("Subject")
+        </th>
+
+        <th>
+            @Html.Label("Teachers")
+        </th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.SubjectName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRegistration.FirstName)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Back", "StudentProfile")
+</p>
+
+
+

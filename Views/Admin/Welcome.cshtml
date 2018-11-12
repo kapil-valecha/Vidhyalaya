@@ -8,10 +8,11 @@
 
 <br />
 <table class="table table-hover">
+
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Register New User (Teacher/Student)", "CreateNewUser", "Admin", new { area = "Admin" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(" View all users (Add/Remove)", "AllUserDetails", "Admin", new { @class = "navbar-brand" })
             </div>
         </th>
     </tr>
@@ -19,7 +20,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Create New Course", "Create", "Course", new { area = "Admin" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Register New User (Teacher/Student)", "CreateNewUser", "Admin", new { @class = "navbar-brand" })
             </div>
         </th>
     </tr>
@@ -27,7 +28,15 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Create New Subject", "Create", "Subject", new { area = "Admin" }, new { @class = "navbar-brand" })<br /><br />
+                @Html.ActionLink("Create New Course", "Create", "Course", new { @class = "navbar-brand" })
+            </div>
+        </th>
+    </tr>
+
+    <tr>
+        <th>
+            <div>
+                @Html.ActionLink("Create New Subject", "Create", "Subject",  new { @class = "navbar-brand" })<br /><br />
             </div>
         </th>
     </tr>

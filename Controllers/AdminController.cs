@@ -26,8 +26,8 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult AllUserDetails()
         {
-            var returnUserDetailsList = db.UserRegistrations.ToList();
-            return View(returnUserDetailsList);
+            var returnStudentDetailsList = db.UserRegistrations.Where(user => user.RoleId != 1 && user.RoleId != 2).ToList();
+            return View(returnStudentDetailsList);
         }
 
         /// <summary>

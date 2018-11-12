@@ -67,10 +67,13 @@ namespace Vidhyalaya.Controllers
                 }
                 else if (userDetails.RoleId == 3)
                 {
+                    Session["User"] = userDetails;
                     return RedirectToAction("Welcome", "Teacher");
                 }
                 else if (userDetails.RoleId == 4)
                 {
+                    Session["User"] = userDetails;
+
                     return RedirectToAction("Welcome", "Student");
                 }
             }

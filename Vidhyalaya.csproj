@@ -183,16 +183,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="Models\CourseViewModel.cs" />
-    <Compile Include="Models\SubjectViewModel.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\SuperAdminController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\TeacherController.cs" />
-    <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\SubjectInCoursesController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\TeacherInSubjectsController.cs" />
     <Compile Include="DB\Address.cs">
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
@@ -206,27 +200,6 @@
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Role.cs">
-      <DependentUpon>SchoolDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\SchoolDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchoolDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\SchoolDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchoolDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\SchoolDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchoolDataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DB\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SchoolDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\sp_helpdiagrams_Result.cs">
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\State.cs">
@@ -248,6 +221,34 @@
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserRegistration.cs">
+      <DependentUpon>SchoolDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\SubjectViewModel.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="DB\SchoolDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchoolDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SchoolDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchoolDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SchoolDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchoolDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SchoolDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sp_helpdiagrams_Result.cs">
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -289,19 +290,11 @@
     <Content Include="DB\SchoolDataModel.edmx.diagram">
       <DependentUpon>SchoolDataModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\SubjectView\GetSubject.cshtml" />
-    <Content Include="Views\SubjectView\EditCourse.cshtml" />
-    <Content Include="Views\SubjectView\CreateNewSubject.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Delete.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Subject\Create.cshtml" />
-    <Content Include="Views\Subject\Delete.cshtml" />
-    <Content Include="Views\Subject\Details.cshtml" />
-    <Content Include="Views\Subject\Edit.cshtml" />
-    <Content Include="Views\Subject\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -345,17 +338,42 @@
     <Content Include="Views\UserLogin\ThankYou.cshtml" />
     <Content Include="Views\Teacher\AllStudentDetails.cshtml" />
     <Content Include="Views\Admin\Welcome.cshtml" />
-    <Content Include="Views\Search\SearchIndex.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Student\Welcome.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
     <Content Include="Views\SuperAdmin\Welcome.cshtml" />
-    <Content Include="Views\Student\CourseList.cshtml" />
     <Content Include="Views\Student\SubjectList.cshtml" />
     <Content Include="Views\Student\RegisterStudent.cshtml" />
     <Content Include="Views\Student\Thankyou.cshtml" />
     <Content Include="Views\Teacher\Welcome.cshtml" />
+    <Content Include="Views\Student\StudentProfile.cshtml" />
+    <Content Include="Views\Student\TeachersList.cshtml" />
+    <Content Include="Views\Student\TeachersCourseList.cshtml" />
+    <Content Include="Views\Teacher\TeacherProfile.cshtml" />
+    <Content Include="Views\Teacher\StudentDetails.cshtml" />
+    <Content Include="Views\Teacher\EditUser.cshtml" />
+    <Content Include="Views\Student\EditStudent.cshtml" />
+    <Content Include="Views\SubjectInCourses\Create.cshtml" />
+    <Content Include="Views\SubjectInCourses\Delete.cshtml" />
+    <Content Include="Views\SubjectInCourses\Details.cshtml" />
+    <Content Include="Views\SubjectInCourses\Edit.cshtml" />
+    <Content Include="Views\SubjectInCourses\Index.cshtml" />
+    <Content Include="Views\TeacherInSubjects\Create.cshtml" />
+    <Content Include="Views\TeacherInSubjects\Delete.cshtml" />
+    <Content Include="Views\TeacherInSubjects\Details.cshtml" />
+    <Content Include="Views\TeacherInSubjects\Edit.cshtml" />
+    <Content Include="Views\TeacherInSubjects\Index.cshtml" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Vidhyalaya.DB.UserRegistration>
+
+@{
+    ViewBag.Title = "TeachersCourseList";
+    Layout = "~/Views/Shared/LogOut.cshtml";
+}
+
+<h2>Teachers In Course</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        @*<td>
+            @Html.ActionLink("View Subjects", "TeachersList", new { id = item.UserId }) |
+            @Html.ActionLink("Back ", "StudentProfile")
+        </td>*@
+    </tr>
+}
+
+</table>

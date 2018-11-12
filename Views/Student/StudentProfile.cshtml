@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Vidhyalaya.DB.UserRegistration>
+
+@{
+    ViewBag.Title = "StudentProfile";
+    Layout = "~/Views/Shared/LogOut.cshtml";
+}
+
+<h2>My Profile</h2>
+
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hobby)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.AddressTextBox1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.AddressTextBox2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role.RoleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hobby)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressTextBox1)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressTextBox2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role.RoleName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditStudent", new { id = item.UserId }) |
+            @Html.ActionLink("MySubjects", "SubjectList", new { id = item.CourseId })|
+            @Html.ActionLink("ViewTeachers", "TeachersCourseList", new { id = item.CourseId })
+        </td>
+    </tr>
+    }
+
+</table>

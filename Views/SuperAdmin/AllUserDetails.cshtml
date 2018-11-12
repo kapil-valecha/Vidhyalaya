@@ -30,9 +30,6 @@
             @Html.DisplayNameFor(model => model.EmailId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.DOB)
         </th>
         <th>
@@ -60,14 +57,7 @@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </th>
-
-
+      
         <th></th>
     </tr>
 
@@ -89,10 +79,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EmailId)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
+                      <td>
                 @Html.DisplayFor(modelItem => item.DOB)
             </td>
             <td>
@@ -119,13 +106,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
-
+      
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |

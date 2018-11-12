@@ -52,6 +52,7 @@
 {
     @Html.AntiForgeryToken()
 
+
 <div class="form-horizontal">
 
     <hr />
@@ -86,35 +87,17 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-
+        @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("RoleId", ViewBag.Role as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
-
-        <div class="col-md-10">
-            @Html.DropDownList("CourseId", ViewBag.Course as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Hobby, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Hobby, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Hobby, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", htmlAttributes: new { @class = "form-control", required = "Required", @type = "date" })
+            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.EmailId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
             @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -122,7 +105,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -130,16 +113,26 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.IsEmailVerified, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsEmailVerified)
+                @Html.ValidationMessageFor(model => model.IsEmailVerified, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Hobby, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Hobby, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Hobby, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -171,25 +164,54 @@
     <div class="form-group">
         @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select id="state" name="StateId" class="form-control">--Select--</select>
+            <select id="state" name="StateId" required class="form-control">--Select--</select>
+            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select id="city" name="CityId" class="form-control">--Select--</select>
+            <select id="city" name="CityId" required class="form-control">--Select--</select>
+            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-success" />
+        @Html.LabelFor(model => model.Pincode, htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
+            @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
         </div>
     </div>
-</div>
-}
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <div class="form-group">
+        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.DropDownList("RoleId", ViewBag.Role as SelectList, "--select--", htmlAttributes: new { @class = "form-control", required = "Required" })
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.DropDownList("CourseId", ViewBag.Course as SelectList, "--select--", htmlAttributes: new { @class = "form-control", required = "Required" })
+            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+        </div>
+    </div>  
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Register Now" class="btn btn-success" />
+                    <input type="reset" value="Reset Entries" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

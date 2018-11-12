@@ -91,8 +91,6 @@
     <EntitySetMapping Name="SubjectInCourses">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.SubjectInCourse">
         <MappingFragment StoreEntitySet="SubjectInCourse">
-          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="CourseId" ColumnName="CourseId" />
           <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
           <ScalarProperty Name="SubjectCourseId" ColumnName="SubjectCourseId" />
@@ -113,8 +111,6 @@
     <EntitySetMapping Name="TeacherInSubjects">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.TeacherInSubject">
         <MappingFragment StoreEntitySet="TeacherInSubject">
-          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TeacherSubjectId" ColumnName="TeacherSubjectId" />

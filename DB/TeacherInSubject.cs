@@ -17,8 +17,6 @@ namespace Vidhyalaya.DB
         public int TeacherSubjectId { get; set; }
         public int UserId { get; set; }
         public int SubjectId { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public System.DateTime DateModified { get; set; }
     
         public virtual Subject Subject { get; set; }
         public virtual UserRegistration UserRegistration { get; set; }

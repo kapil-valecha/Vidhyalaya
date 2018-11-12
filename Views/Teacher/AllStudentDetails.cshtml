@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AllStudentDetails";
     Layout = "~/Views/Shared/LogOut.cshtml";
-}
+  }
 
 <h2>Student Details</h2>
 @if (Session["UserId"] != null)
@@ -28,6 +28,9 @@
             @Html.DisplayNameFor(model => model.EmailId)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.IsEmailVerified)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
@@ -46,6 +49,9 @@
             @Html.DisplayNameFor(model => model.Address.AddressTextBox1)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Address.AddressTextBox2)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Course.CourseName)
         </th>
         <th>
@@ -56,47 +62,54 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hobby)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.AddressTextBox1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.CourseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleName)
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hobby)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsEmailVerified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressTextBox1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressTextBox2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role.RoleName)
+        </td>
+        <td>
+            @Html.ActionLink("View Details", "StudentDetails", new { id = item.UserId })
+                    </td>
+    </tr>
     }
 
 </table>
+<p>
+    @Html.ActionLink("View My Profile", "TeacherProfile")
+</p>

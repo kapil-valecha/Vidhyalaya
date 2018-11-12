@@ -11,8 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,17 +19,15 @@ namespace Vidhyalaya.DB
         {
             this.UserRegistrations = new HashSet<UserRegistration>();
         }
-
+    
         public int AddressId { get; set; }
-        [DisplayName("Address Line 01")]
         public string AddressTextBox1 { get; set; }
-        [DisplayName("Address Line 02")]
         public string AddressTextBox2 { get; set; }
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
         public Nullable<int> Pincode { get; set; }
-
+    
         public virtual City City { get; set; }
         public virtual Country Country { get; set; }
         public virtual State State { get; set; }
