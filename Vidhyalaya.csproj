@@ -16,7 +16,7 @@
     <AssemblyName>Vidhyalaya</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -224,6 +224,7 @@
       <DependentUpon>SchoolDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\SubjectInCoursesViewModel.cs" />
     <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -290,11 +291,6 @@
     <Content Include="DB\SchoolDataModel.edmx.diagram">
       <DependentUpon>SchoolDataModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Course\Create.cshtml" />
-    <Content Include="Views\Course\Delete.cshtml" />
-    <Content Include="Views\Course\Details.cshtml" />
-    <Content Include="Views\Course\Edit.cshtml" />
-    <Content Include="Views\Course\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -343,7 +339,6 @@
     <Content Include="Views\Student\Welcome.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
     <Content Include="Views\SuperAdmin\Welcome.cshtml" />
-    <Content Include="Views\Student\SubjectList.cshtml" />
     <Content Include="Views\Student\RegisterStudent.cshtml" />
     <Content Include="Views\Student\Thankyou.cshtml" />
     <Content Include="Views\Teacher\Welcome.cshtml" />
@@ -354,26 +349,24 @@
     <Content Include="Views\Teacher\StudentDetails.cshtml" />
     <Content Include="Views\Teacher\EditUser.cshtml" />
     <Content Include="Views\Student\EditStudent.cshtml" />
-    <Content Include="Views\SubjectInCourses\Create.cshtml" />
     <Content Include="Views\SubjectInCourses\Delete.cshtml" />
-    <Content Include="Views\SubjectInCourses\Details.cshtml" />
-    <Content Include="Views\SubjectInCourses\Edit.cshtml" />
-    <Content Include="Views\SubjectInCourses\Index.cshtml" />
     <Content Include="Views\TeacherInSubjects\Create.cshtml" />
     <Content Include="Views\TeacherInSubjects\Delete.cshtml" />
     <Content Include="Views\TeacherInSubjects\Details.cshtml" />
     <Content Include="Views\TeacherInSubjects\Edit.cshtml" />
     <Content Include="Views\TeacherInSubjects\Index.cshtml" />
-    <Content Include="Views\Subjects\Create.cshtml" />
-    <Content Include="Views\Subjects\Delete.cshtml" />
-    <Content Include="Views\Subjects\Details.cshtml" />
-    <Content Include="Views\Subjects\Edit.cshtml" />
-    <Content Include="Views\Subjects\Index.cshtml" />
-    <Content Include="Views\Courses\Create.cshtml" />
-    <Content Include="Views\Courses\Delete.cshtml" />
-    <Content Include="Views\Courses\Details.cshtml" />
-    <Content Include="Views\Courses\Edit.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Student\SubjectsList.cshtml" />
+    <Content Include="Views\Courses\GetCourse.cshtml" />
+    <Content Include="Views\Courses\EditCourse.cshtml" />
+    <Content Include="Views\Courses\DeleteCourse.cshtml" />
+    <Content Include="Views\Courses\CreateCourse.cshtml" />
+    <Content Include="Views\Subjects\GetSubject.cshtml" />
+    <Content Include="Views\Subjects\CreateSubject.cshtml" />
+    <Content Include="Views\Subjects\EditSubject.cshtml" />
+    <Content Include="Views\Subjects\DeleteSubject.cshtml" />
+    <Content Include="Views\SubjectInCourses\GetMapCourseSubject.cshtml" />
+    <Content Include="Views\SubjectInCourses\CreateSubjectInCourse.cshtml" />
+    <Content Include="Views\SubjectInCourses\EditSubjectInCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -412,7 +405,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50655</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50655/</IISUrl>
+          <IISUrl>http://localhost/Vidhyalaya</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -6,6 +6,14 @@
 }
 
 <h2>Teachers In Course</h2>
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "Student", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+
+</p>
 
 <table class="table">
     <tr>
@@ -32,11 +40,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Course.CourseName)
         </td>
-        @*<td>
-            @Html.ActionLink("View Subjects", "TeachersList", new { id = item.UserId }) |
-            @Html.ActionLink("Back ", "StudentProfile")
-        </td>*@
+       
     </tr>
 }
 
 </table>
+<p>
+    @Html.ActionLink("MyProfile", "StudentProfile")
+</p>

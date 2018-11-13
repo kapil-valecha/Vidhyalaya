@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/LogOut.cshtml";
 }
 
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+
+</p>
+
 <h2>Delete</h2>
 <h3>Are you sure you want to delete this?</h3>
 <div>

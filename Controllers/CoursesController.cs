@@ -6,122 +6,181 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Vidhyalaya.Areas.Admin.Models;
 using Vidhyalaya.DB;
 
 namespace Vidhyalaya.Controllers
 {
     public class CoursesController : Controller
     {
-        private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-
-        // GET: Courses
-        public ActionResult Index()
+        SchoolDatabaseEntities objEntities = new SchoolDatabaseEntities();
+        /// <summary>
+        ///  GET: for getting course
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetCourse()
         {
-            return View(db.Courses.ToList());
+            List<CourseViewModel> objCourseViewModel = new List<CourseViewModel>();
+            var data = (from p in objEntities.Courses select p).ToList();
+            foreach (var item in data)
+            {
+                CourseViewModel course = new CourseViewModel
+                {
+                    CourseId = item.CourseId,
+                    CourseName = item.CourseName
+
+                };
+                objCourseViewModel.Add(course);
+            };
+            return View(objCourseViewModel);
         }
 
-        // GET: Courses/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
+        /// <summary>
+        ///  GET: for creating new course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult CreateCourse(string id)
 
-        // GET: Courses/Create
-        public ActionResult Create()
         {
+
             return View();
+
         }
 
-        // POST: Courses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: for creating new course
+        /// </summary>
+        /// <param name="objCourseViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseId,CourseName")] Course course)
+        public ActionResult CreateCourse(CourseViewModel objCourseViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    Course objCourses = new Course
+                    {
+                        CourseName = objCourseViewModel.CourseName,
 
-            return View(course);
+                    };
+                    var test = objEntities.Courses.Add(objCourses);
+                    objEntities.SaveChanges();
+
+                };
+                return RedirectToAction("GetCourse", "Courses", objCourseViewModel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        // GET: Courses/Edit/5
-        public ActionResult Edit(int? id)
+        /// <summary>
+        /// GET: for edit course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditCourse(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            Course courses = objEntities.Courses.Find(id);
+            var data = from d in objEntities.Courses
+                       where d.CourseId == id
+                       select d;
+            //var TEMPlIST = objEntities.Subjects.ToList();
+            CourseViewModel courseView = new CourseViewModel
+            {
+                CourseId = Convert.ToInt32(courses.CourseId),
+                CourseName = courses.CourseName
+            };
+            if (courses == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+
+            return View(courseView);
         }
 
-        // POST: Courses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST for edit course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objCourses"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName")] Course course)
+        public ActionResult EditCourse(int id, Course objCourses)
         {
-            if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Course objCourse = new Course
+                    {
+                        CourseId = id,
+                        CourseName = objCourses.CourseName
+                    };
+                    objEntities.Entry(objCourse).State = EntityState.Modified;
+                    objEntities.SaveChanges();
+                    return RedirectToAction("GetCourse");
+                }
+                return View(objCourses);
             }
-            return View(course);
+
         }
 
-        // GET: Courses/Delete/5
-        public ActionResult Delete(int? id)
+        /// <summary>
+        /// GET: for delete course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeleteCourse(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            Course courses = objEntities.Courses.Find(id);
+            var data = from d in objEntities.Courses
+                       where d.CourseId == id
+                       select d;
+            //var TEMPlIST = objEntities.Subjects.ToList();
+            CourseViewModel courseView = new CourseViewModel
+            {
+                CourseId = Convert.ToInt32(courses.CourseId),
+                CourseName = courses.CourseName
+            };
+            if (courses == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(courseView);
         }
 
-        // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        /// <summary>
+        ///POST: for delete  course 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteCourse(int id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                Course courses = objEntities.Courses.Find(id);
+                objEntities.Courses.Remove(courses);
+                objEntities.SaveChanges();
+                return RedirectToAction("GetCourse");
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception source: delete failed", ex.Message);
+                return View(ex);
+            }
         }
     }
 }

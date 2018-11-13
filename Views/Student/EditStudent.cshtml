@@ -46,13 +46,20 @@
     });
 </script>
 
-
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "Student", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+        
+</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>User RegistrationModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

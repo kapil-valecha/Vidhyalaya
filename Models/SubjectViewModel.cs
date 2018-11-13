@@ -9,6 +9,7 @@ namespace Vidhyalaya.Areas.Admin.Models
     public class SubjectViewModel
     {
         public int SubjectId { get; set; }
+
         [Required]
         [Display(Name = "Add Subject ")]
         public string SubjectName { get; set; }

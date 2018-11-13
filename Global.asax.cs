@@ -18,5 +18,12 @@ namespace Vidhyalaya
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_BeginRequest()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.Private);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(1));
+            Response.Cache.SetNoStore();
+        }
+
     }
 }

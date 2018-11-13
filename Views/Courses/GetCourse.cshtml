@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Vidhyalaya.Areas.Admin.Models.CourseViewModel>
+
+<h2>List of Courses</h2>
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("CreateCourse")">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span>Create New</span>
+    </a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseId }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+
+

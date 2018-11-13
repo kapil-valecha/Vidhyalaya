@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Vidhyalaya.Areas.Admin.Models.SubjectViewModel>
+
+@{
+
+    ViewBag.Title = "GetSubject";
+
+}
+
+<h2>Total Subjects</h2>
+
+
+
+<p>
+
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
+
+        <span class="glyphicon glyphicon-list"></span>
+
+        <span>Back to Main menu</span>
+
+
+
+    </a>
+
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("CreateSubject")">
+
+        <span class="glyphicon glyphicon-plus"></span>
+
+        <span>Create New</span>
+
+    </a>
+
+</p>
+
+<table class="table table-striped table ">
+
+    <tr class="success">
+
+    <tr>
+
+        <th>
+
+            @Html.DisplayNameFor(model => model.SubjectName)
+
+        </th>
+
+        <th></th>
+
+    </tr>
+
+    @foreach (var item in Model)
+
+    {
+
+        <tr>
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.SubjectName)
+
+            </td>
+
+            <td>
+
+                @Html.ActionLink("Edit", "EditSubject", new { id = item.SubjectId }) |
+
+                @Html.ActionLink("Delete", "DeleteSubject", new { id = item.SubjectId })
+
+            </td>
+
+        </tr>
+
+
+
+
+
+    }
+
+
+
+</table>
+
+
+

@@ -29,11 +29,11 @@ namespace Vidhyalaya.Controllers
         public ActionResult TeacherProfile()
         {
             //for logged in Teacher.
-            UserRegistration user = (UserRegistration)Session["User"];
-            var usr = db.UserRegistrations.Find(user.UserId);
+            UserRegistration objUser = (UserRegistration)Session["User"];
+            var usr = db.UserRegistrations.Find(objUser.UserId);
             if (Session["User"] != null)
             {
-                var userDetails = db.UserRegistrations.Where(u => u.UserId == user.UserId);
+                var userDetails = db.UserRegistrations.Where(user => user.UserId == objUser.UserId);
                 if (usr != null)
                     return View(userDetails);
             }
@@ -48,8 +48,8 @@ namespace Vidhyalaya.Controllers
         public ActionResult EditUser(int id)
         {
             //for roles
-            List<Role> objRoleList = GetRoles();
-            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+            //List<Role> objRoleList = GetRoles();
+            //ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
             //for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
@@ -83,7 +83,7 @@ namespace Vidhyalaya.Controllers
                 DOB = objUserRegistration.DOB,
                 Hobby = objUserRegistration.Hobby,
                 CourseId = objUserRegistration.CourseId,
-                RoleId = objUserRegistration.RoleId,
+                //RoleId = objUserRegistration.RoleId,
                 CountryId = objUserRegistration.Address.CountryId,
                 StateId = objUserRegistration.Address.StateId,
                 CityId = objUserRegistration.Address.CityId,

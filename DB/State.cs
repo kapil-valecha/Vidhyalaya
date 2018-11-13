@@ -11,7 +11,8 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +24,7 @@ namespace Vidhyalaya.DB
     
         public int StateId { get; set; }
         public int CountryId { get; set; }
+        [DisplayName("State Name")]
         public string StateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

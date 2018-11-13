@@ -11,7 +11,8 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,10 +22,15 @@ namespace Vidhyalaya.DB
         }
     
         public int AddressId { get; set; }
+        [DisplayName("First Address")]
         public string AddressTextBox1 { get; set; }
+        [DisplayName("Second Address")]
         public string AddressTextBox2 { get; set; }
+        [DisplayName("Country")]
         public int CountryId { get; set; }
+        [DisplayName("State")]
         public int StateId { get; set; }
+        [DisplayName("City")]
         public int CityId { get; set; }
         public Nullable<int> Pincode { get; set; }
     

@@ -8,29 +8,15 @@
 <h2>TeacherProfile</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "Teacher", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+
 </p>
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        <th></th>
-    </tr>
 
     @foreach (var item in Model)
     {

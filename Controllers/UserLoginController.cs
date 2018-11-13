@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Vidhyalaya.DB;
 using Vidhyalaya.Models;
 
@@ -90,7 +91,17 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-            return RedirectToAction("Login", "UserLogin");
+          
+                Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+                Response.AddHeader("Pragma", "no-cache");
+                Response.AddHeader("Expires", "0");
+                Session.Abandon();
+                Session.Clear();
+                Response.Cookies.Clear();
+                Session.RemoveAll();
+                Session["Login"] = null;
+                FormsAuthentication.SignOut();
+           return RedirectToAction("Login", "UserLogin");
         }
 
         /// <summary>

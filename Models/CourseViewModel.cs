@@ -7,13 +7,11 @@ using System.Web.Mvc;
 
 namespace Vidhyalaya.Areas.Admin.Models
 {
-
     public class CourseViewModel
     {
-        public int? CourseId { get; set; }
+        public int CourseId { get; set; }
+
         [Required]
         public string CourseName { get; set; }
-        public int SubjectId { get; set; }
-        public IEnumerable<SelectListItem> Subject { get; set; }
     }
 }

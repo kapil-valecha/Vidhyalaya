@@ -8,10 +8,11 @@
 
 <br />
 <table class="table table-hover">
+
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Student List", "AllStudentDetails", "Teacher", new { @class = "navbar-brand" })
+                <a href="/Vidhyalaya/Teacher/TeacherProfile">&nbsp;&nbsp;My Profile</a>
             </div>
         </th>
     </tr>
@@ -19,15 +20,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Courses List", "CourseList", "Student", new { @class = "navbar-brand" })
-            </div>
-        </th>
-    </tr>
-
-    <tr>
-        <th>
-            <div>
-                @Html.ActionLink("Subjects List", "SubjectList", "Student", new { @class = "navbar-brand" })
+                <a href="/Vidhyalaya/Teacher/AllStudentDetails">&nbsp;&nbsp;View all Student List</a>
             </div>
         </th>
     </tr>

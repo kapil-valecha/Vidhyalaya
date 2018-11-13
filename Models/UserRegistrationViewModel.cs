@@ -35,7 +35,7 @@ namespace Vidhyalaya.Models
         [Required(ErrorMessage = "Confirmation Password is required.")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "please choose required role.")]
+       
         [Display(Name = "Role")]
         public int RoleId { get; set; }
 

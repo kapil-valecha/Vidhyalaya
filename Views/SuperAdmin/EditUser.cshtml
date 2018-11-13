@@ -45,7 +45,15 @@
     });
 </script>
 
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
 
+    <a>@Html.Partial("_CreateButtonPartial")</a>
+</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

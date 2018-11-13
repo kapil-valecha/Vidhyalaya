@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Vidhyalaya.DB.SubjectInCourse>
+
+@{
+    ViewBag.Title = "List of Subjects in Courses";
+}
+
+<h2>Index</h2>
+<p>
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+    </a>
+
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("CreateSubjectInCourse")">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span>Map New</span>
+    </a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.SubjectName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditSubjectInCourse", new { id = item.SubjectCourseId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectCourseId })
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -37,47 +37,43 @@ namespace Vidhyalaya.Controllers
             }
             return View(varUser);
         }
-        
+
         /// <summary>
         /// for getting list of subjects
         /// </summary>
         /// <returns></returns>
-        public ActionResult SubjectList(int id)
+        public ActionResult SubjectsList(int id)
         {
             var subjectList = db.SubjectInCourses.Where(subj => subj.CourseId == id).ToList();
-
             return View(subjectList.ToList());
 
         }
 
         public ActionResult TeachersList(int id)
         {
-
             var teachersList = db.TeacherInSubjects.Where(teach => teach.UserId == id).ToList();
-
             return View(teachersList);
         }
 
         public ActionResult TeachersCourseList(int id)
         {
-
             var teachersList = db.UserRegistrations.Where(teach => teach.CourseId == id && teach.RoleId == 3 /*&& teach.IsActive == true*/).ToList();
-
             return View(teachersList);
         }
-        
+
         /// <summary>
         /// get method for new student registration
         /// </summary>
         /// <returns></returns>
         public ActionResult RegisterStudent()
         {
+            //for roles
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
-
+            //for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
-
+            //for country
             List<Country> countryList = db.Countries.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
             return View();
@@ -98,7 +94,6 @@ namespace Vidhyalaya.Controllers
 
                 try
                 {
-
                     if (ModelState.IsValid)
                     {
                         Address address = new Address();
@@ -152,7 +147,6 @@ namespace Vidhyalaya.Controllers
                     ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
                     throw ex;
                 }
-
             }
         }
 
@@ -190,19 +184,18 @@ namespace Vidhyalaya.Controllers
                 UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel();
                 if (ModelState.IsValid)
                 {
-
                     objUserRegistrationViewModel.FirstName = objUserRegistration.FirstName;
                     objUserRegistrationViewModel.LastName = objUserRegistration.LastName;
                     objUserRegistrationViewModel.Gender = objUserRegistration.Gender;
                     objUserRegistrationViewModel.Hobby = objUserRegistration.Hobby;
                     objUserRegistrationViewModel.EmailId = objUserRegistration.EmailId;
                     objUserRegistrationViewModel.IsEmailVerified = true;
-                    objUserRegistrationViewModel.Password = objUserRegistration.Password;                    
+                    objUserRegistrationViewModel.Password = objUserRegistration.Password;
                     objUserRegistrationViewModel.DOB = objUserRegistration.DOB;
                     objUserRegistrationViewModel.RoleId = objUserRegistration.RoleId;
                     objUserRegistrationViewModel.CourseId = objUserRegistration.CourseId;
                     objUserRegistrationViewModel.IsActive = true;
-                   
+
                     objUserRegistrationViewModel.DateCreated = objUserRegistration.DateCreated;
                     objUserRegistrationViewModel.DateModified = objUserRegistration.DateModified;
                     objUserRegistrationViewModel.AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1;
@@ -262,7 +255,7 @@ namespace Vidhyalaya.Controllers
                     objUserRegistration.Hobby = objUserRegistrationViewModel.Hobby;
                     objUserRegistration.EmailId = objUserRegistrationViewModel.EmailId;
                     objUserRegistration.IsEmailVerified = true;
-                    objUserRegistration.Password = objUserRegistrationViewModel.Password;                    
+                    objUserRegistration.Password = objUserRegistrationViewModel.Password;
                     objUserRegistration.DOB = objUserRegistrationViewModel.DOB;
                     objUserRegistration.CourseId = objUserRegistrationViewModel.CourseId;
                     objUserRegistration.RoleId = objUserRegistrationViewModel.RoleId;

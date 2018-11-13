@@ -12,59 +12,58 @@ namespace Vidhyalaya.Controllers
 {
     public class SubjectInCoursesController : Controller
     {
-        private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
+        public SchoolDatabaseEntities db = new SchoolDatabaseEntities();
 
-        // GET: SubjectInCourses
-        public ActionResult Index()
+        /// <summary>
+        /// for assigning subject with courses
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetMapCourseSubject()
         {
-            var subjectInCourses = db.SubjectInCourses.Include(s => s.Course).Include(s => s.Subject);
-            return View(subjectInCourses.ToList());
+            //query for list
+            var subjectInCourse = db.SubjectInCourses.Include(s => s.Course).Include(s => s.Subject);
+            return View(subjectInCourse.ToList());
         }
 
-        // GET: SubjectInCourses/Details/5
-        public ActionResult Details(int? id)
+        /// <summary>
+        /// GET: for creating subjects in course
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CreateSubjectInCourse()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SubjectInCourse subjectInCourse = db.SubjectInCourses.Find(id);
-            if (subjectInCourse == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subjectInCourse);
-        }
-
-        // GET: SubjectInCourses/Create
-        public ActionResult Create()
-        {
+            //for getting Course
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            //for getting Subject
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName");
             return View();
         }
 
-        // POST: SubjectInCourses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: for creating subjects in course
+        /// </summary>
+        /// <param name="subjectInCourse"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SubjectCourseId,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
+        public ActionResult CreateSubjectInCourse([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
             if (ModelState.IsValid)
             {
                 db.SubjectInCourses.Add(subjectInCourse);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetMapCourseSubject");
             }
-
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", subjectInCourse.CourseId);
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", subjectInCourse.SubjectId);
             return View(subjectInCourse);
         }
 
-        // GET: SubjectInCourses/Edit/5
-        public ActionResult Edit(int? id)
+        /// <summary>
+        /// GET: for edit subject in course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditSubjectInCourse(int? id)
         {
             if (id == null)
             {
@@ -80,26 +79,32 @@ namespace Vidhyalaya.Controllers
             return View(subjectInCourse);
         }
 
-        // POST: SubjectInCourses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: for edit subject in course
+        /// </summary>
+        /// <param name="subjectInCourse"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SubjectCourseId,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
+        public ActionResult EditSubjectInCourse([Bind(Include = "SubjectCourseId,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(subjectInCourse).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetMapCourseSubject");
             }
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", subjectInCourse.CourseId);
             ViewBag.SubjectId = new SelectList(db.Subjects, "SubjectId", "SubjectName", subjectInCourse.SubjectId);
+
             return View(subjectInCourse);
         }
 
-        // GET: SubjectInCourses/Delete/5
-        public ActionResult Delete(int? id)
+        /// <summary>
+        /// GET: for delete subject in course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -113,7 +118,11 @@ namespace Vidhyalaya.Controllers
             return View(subjectInCourse);
         }
 
-        // POST: SubjectInCourses/Delete/5
+        /// <summary>
+        /// POST: for delete subject in course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -121,9 +130,8 @@ namespace Vidhyalaya.Controllers
             SubjectInCourse subjectInCourse = db.SubjectInCourses.Find(id);
             db.SubjectInCourses.Remove(subjectInCourse);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("GetMapCourseSubject");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -132,5 +140,7 @@ namespace Vidhyalaya.Controllers
             }
             base.Dispose(disposing);
         }
+        // GET: SubjectInCourses
+
     }
 }

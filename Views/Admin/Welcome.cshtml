@@ -12,7 +12,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink(" View all users (Add/Remove)", "AllUserDetails", "Admin", new { @class = "navbar-brand" })
+                <a href="/Vidhyalaya/Admin/AllUserDetails">&nbsp;&nbsp;View all users (Add/Remove) </a>
             </div>
         </th>
     </tr>
@@ -20,7 +20,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Register New User (Teacher/Student)", "CreateNewUser", "Admin", new { @class = "navbar-brand" })
+                <a href="/Vidhyalaya/Admin/CreateNewUser">&nbsp;&nbsp;Register New User (Teacher/Student)</a>
             </div>
         </th>
     </tr>
@@ -28,7 +28,7 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Create New Course", "Create", "Course", new { @class = "navbar-brand" })
+                <a href="/Vidhyalaya/Courses/GetCourse">&nbsp;&nbsp;Create New Course </a>
             </div>
         </th>
     </tr>
@@ -36,7 +36,14 @@
     <tr>
         <th>
             <div>
-                @Html.ActionLink("Create New Subject", "Create", "Subject",  new { @class = "navbar-brand" })<br /><br />
+                <a href="/Vidhyalaya/Subjects/GetSubject">&nbsp;&nbsp;Create New Subject </a>
+            </div>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <div>
+                <a href="/Vidhyalaya/SubjectInCourses/GetMapCourseSubject">&nbsp;&nbsp;Assign Course in Subjects </a>
             </div>
         </th>
     </tr>
