@@ -10,107 +10,109 @@ namespace Vidhyalaya.Controllers
 {
     public class UserLoginController : Controller
     {
-        public SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-        /// <summary>
-        /// Get method for User Login
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Login()
+        public SchoolDatabaseEntities objSchoolDatabaseEntities = new SchoolDatabaseEntities();
+        [AllowAnonymous]
+        public ActionResult LogIn()
         {
-                var model = new LoginViewModel();
-                ViewBag.Title = "Login";
-                model.EmailId = CheckLoginCookie();
-                model.RememberMe = !string.IsNullOrEmpty(model.EmailId);
-                return View("Login", model);
+            var model = new LoginViewModel();
+            ViewBag.Title = "Login";
 
-            }
-        [HttpGet]
-        private string CheckLoginCookie()
-        {
-            if (Request.Cookies.Get("EmailId") != null)
-            {
-                return Request.Cookies["EmailId"].Value;
-            }
-            return string.Empty;
+            model.RememberMe = !string.IsNullOrEmpty(model.EmailId);
+            return View("Login", model);
         }
-        
-        /// <summary>
-        ///  Post method for User Login
-        /// </summary>
-        /// <param name="objUserRegistration"></param>
-        /// <returns></returns>
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnUrl )
+        [AllowAnonymous]
+        public ActionResult LogIn(LoginViewModel model, string returnUrl)
         {
-            if (model.RememberMe)
+            UserRegistration objUserRegistration = new UserRegistration();
+            try
             {
-                HttpCookie ckEmail = new HttpCookie("Email");
-                ckEmail.Expires = DateTime.Now.AddDays(30);
-                ckEmail.Value = model.EmailId;
-                Response.Cookies.Add(ckEmail);
-            }
+                if (model.EmailId != null && model.Password != null)
+                {
+                    using (SchoolDatabaseEntities objSchoolDatabaseEntities = new SchoolDatabaseEntities())
+                    {
+                        //To check EmailId & Password From DB
+                        var obj = objSchoolDatabaseEntities.UserRegistrations.Where
+                             (u => u.EmailId == model.EmailId && u.Password == model.Password)
+                                                      .FirstOrDefault();
 
-            var userDetails = db.UserRegistrations.Where(x => x.EmailId == model.EmailId && x.Password == model.Password).FirstOrDefault();
-            //Code to Authenticate Identity Of user.
-            if (userDetails != null)
+                        if (obj != null)
+                        {
+                            FormsAuthentication.SetAuthCookie(model.EmailId, true);
+                            var isAdmin = (from role in objSchoolDatabaseEntities.Roles
+                                           join user in objSchoolDatabaseEntities.UserInRoles
+                                                                                      on role.RoleId equals user.RoleId
+                                           where user.UserId == obj.UserId
+                                           select role.RoleName).FirstOrDefault();
+
+                            if (isAdmin == "Super Admin")
+                            {
+                                Session["RoleId"] = 1;
+                                Session["RoleName"] = "SuperAdmin";
+                                return RedirectToAction("Welcome", "SuperAdmin");
+                            }
+                            else if (isAdmin == "Admin")
+
+                            {
+                                Session["RoleId"] = 2;
+                                Session["RoleName"] = "Admin";
+                                return RedirectToAction("Welcome", "Admin");
+                            }
+                            else if (isAdmin == "Teacher")
+                            {
+                                Session["User"] = obj;
+                                Session["RoleId"] = 3;
+                                Session["RoleName"] = "Teacher";
+                                return RedirectToAction("Welcome", "Teacher", new { id = obj.UserId });
+                            }
+                            else if (isAdmin == "Student")
+                            {
+                                Session["User"] = obj;
+                                Session["RoleId"] = 4;
+                                Session["RoleName"] = "Student";
+                                return RedirectToAction("Welcome", "Student", new { id = obj.UserId });
+                            }
+                            else
+                            {
+                                Session["EmailId"] = null;
+                                Session["Password"] = null;
+                                return View(model);
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("EmailId", "Email and Password not found or matched");
+                            return View(model);
+                        }
+                    }
+                }
+
+                else return View(model);
+                {
+                }
+
+            }
+            catch (Exception ex)
             {
-                Session["UserId"] = userDetails.UserId.ToString();
-                Session["UserName"] = userDetails.EmailId.ToString();
-
-                if (userDetails.RoleId == 1)
-                {
-                    return RedirectToAction("Welcome", "SuperAdmin");
-                }
-                else if (userDetails.RoleId == 2)
-                {
-                    return RedirectToAction("Welcome", "Admin");
-                }
-                else if (userDetails.RoleId == 3)
-                {
-                    Session["User"] = userDetails;
-                    return RedirectToAction("Welcome", "Teacher");
-                }
-                else if (userDetails.RoleId == 4)
-                {
-                    Session["User"] = userDetails;
-
-                    return RedirectToAction("Welcome", "Student");
-                }
+                Console.WriteLine("Exception source: {0} Login Failed", ex.Message);
+                return View();
             }
-            else
-            {
-                ModelState.AddModelError("", "UserName or Password is wrong");
-            }
-            return View();
         }
 
-        /// <summary>
-        /// for logging out current user
-        /// </summary>
-        /// <returns></returns>
         public ActionResult LogOut()
         {
-          
-                Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
-                Response.AddHeader("Pragma", "no-cache");
-                Response.AddHeader("Expires", "0");
-                Session.Abandon();
-                Session.Clear();
-                Response.Cookies.Clear();
-                Session.RemoveAll();
-                Session["Login"] = null;
-                FormsAuthentication.SignOut();
-           return RedirectToAction("Login", "UserLogin");
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+            Session["Login"] = null;
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "UserLogin");
         }
 
-        /// <summary>
-        /// Thankyou page
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ThankYou()
-        {
-            return View();
-        }
     }
 }

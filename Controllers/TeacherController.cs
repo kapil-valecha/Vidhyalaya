@@ -12,6 +12,7 @@ using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class TeacherController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
@@ -27,6 +28,7 @@ namespace Vidhyalaya.Controllers
         }
 
         public ActionResult TeacherProfile()
+
         {
             //for logged in Teacher.
             UserRegistration objUser = (UserRegistration)Session["User"];

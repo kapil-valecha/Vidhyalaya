@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Vidhyalaya.DB;
@@ -12,10 +13,10 @@ using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class AdminController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
-
         public ActionResult Welcome()
         {
             return View();
@@ -59,7 +60,7 @@ namespace Vidhyalaya.Controllers
         {
             objUserRegistrationViewModel.UserId = 1;
             objUserRegistrationViewModel.AddressId = 1;
-           try
+            try
             {
 
                 if (ModelState.IsValid)
@@ -109,7 +110,7 @@ namespace Vidhyalaya.Controllers
                 return View(objUserRegistrationViewModel);
             }
             catch (Exception)
-            {               
+            {
                 throw;
             }
         }
@@ -373,24 +374,7 @@ namespace Vidhyalaya.Controllers
             }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-
-        /// <summary>
-        /// for logging out current user
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult LogOut()
-        {
-            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
-            Response.AddHeader("Pragma", "no-cache");
-            Response.AddHeader("Expires", "0");
-            Session.Abandon();
-            Session.Clear();
-            Response.Cookies.Clear();
-            Session.RemoveAll();
-            Session["Login"] = null;
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "UserLogin");
-        }
     }
+
 }
 

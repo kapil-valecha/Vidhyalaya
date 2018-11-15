@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "List of Subjects in Courses";
+    Layout = "~/Views/Shared/LogOut.cshtml";
+
 }
 
 <h2>Index</h2>
@@ -20,8 +22,8 @@
     </a>
 </p>
 
-<table class="table">
-    <tr>
+<table class="table table-condensed table-hover">
+    <tr class="success">
         <th>
             @Html.DisplayNameFor(model => model.Course.CourseName)
         </th>

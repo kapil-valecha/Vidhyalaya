@@ -13,6 +13,7 @@ using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class SuperAdminController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
@@ -32,12 +33,10 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult AllUserDetails(string searching)
         {
-
             var users = from usr in db.UserRegistrations where usr.RoleId != 1 select usr;
             if (!String.IsNullOrEmpty(searching))
             {
                 users = users.Where(usr => usr.Role.RoleName.Contains(searching) && usr.RoleId != 1);
-
             }
             return View(users.ToList());
         }
@@ -86,7 +85,7 @@ namespace Vidhyalaya.Controllers
             objUserRegistrationViewModel.DateCreated = objUserRegistration.DateCreated;
             objUserRegistrationViewModel.DateModified = objUserRegistration.DateModified;
             objUserRegistrationViewModel.AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1;
-            objUserRegistrationViewModel.AddAddressTextBox2= objUserRegistration.Address.AddressTextBox2;
+            objUserRegistrationViewModel.AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2;
             objUserRegistrationViewModel.CountryId = objUserRegistration.Address.CountryId;
             objUserRegistrationViewModel.StateId = objUserRegistration.Address.StateId;
             objUserRegistrationViewModel.CityId = objUserRegistration.Address.CityId;
@@ -97,7 +96,7 @@ namespace Vidhyalaya.Controllers
                 return HttpNotFound();
             }
             return View(objUserRegistrationViewModel);
-        }            
+        }
 
 
         /// <summary>
@@ -305,6 +304,11 @@ namespace Vidhyalaya.Controllers
                     return RedirectToAction("AllUserDetails");
 
                 }
+                int latestRoleId = userData.RoleId;
+                UserInRole objUserInRole = new UserInRole();
+                objUserInRole.RoleId = latestRoleId;
+                objUserInRole.UserId = objUserRegistrationViewModel.UserId;
+                db.SaveChanges();
                 return View(objUserRegistrationViewModel);
             }
             catch (Exception ex)
@@ -313,7 +317,7 @@ namespace Vidhyalaya.Controllers
             }
         }
 
-        
+
         /// <summary>
         /// GET: Delete/5
         /// </summary>

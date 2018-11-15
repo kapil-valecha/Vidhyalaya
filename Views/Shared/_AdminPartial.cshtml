@@ -1,0 +1,71 @@
+﻿@if (Convert.ToInt32(Session["RoleId"]) == 2)
+
+{
+    <li class="dropdown" data-admin-menu>
+        <a href="#">
+            Admin
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Manage</li>
+            <li class="divider" />
+            <li><a href="/Vidhyalaya/Admin/CreateNewUser">&nbsp;&nbsp;Registration Page</a></li>
+            <li><a href="/Vidhyalaya/Admin/AllUserDetails">&nbsp;&nbsp;View all users (Add/Remove)</a></li>
+            <li><a href="/Vidhyalaya/Subjects/GetSubject">&nbsp;&nbsp;Manage Subjects</a></li>
+            <li><a href="/Vidhyalaya/Courses/GetCourse">&nbsp;&nbsp;Manage Courses</a></li>
+            <li><a href="/Vidhyalaya/SubjectInCourses/GetMapCourseSubject">&nbsp;&nbsp;Manage Subject In Courses</a></li>
+        </ul>
+    </li>
+}
+else if (Convert.ToInt32(Session["RoleId"]) == 3)
+{
+
+    <li class="dropdown" data-admin-menu>
+        <a href="#">
+            Teacher
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Manage</li>
+            <li class="divider" />
+            <li><a href="/Vidhyalaya/Teacher/TeacherProfile">&nbsp;&nbsp;My Profile</a></li>
+            <li><a href="/Vidhyalaya/Teacher/AllStudentDetails">&nbsp;&nbsp;View all Students</a></li>
+        </ul>
+    </li>
+}
+else if (Convert.ToInt32(Session["RoleId"]) == 4)
+{
+
+    <li class="dropdown" data-admin-menu>
+        <a href="#">
+            Student
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Manage</li>
+            <li class="divider" />
+            <li><a href="/Vidhyalaya/Student/StudentProfile">&nbsp;&nbsp;My Profile</a></li>
+        </ul>
+    </li>
+}
+
+else if (Convert.ToInt32(Session["RoleId"]) == 1)
+{
+
+    <li class="dropdown" data-admin-menu>
+        <a href="#">
+            Super Admin
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Manage</li>
+            <li class="divider" />
+            <li><a href="/Vidhyalaya/SuperAdmin/CreateNewUser">&nbsp;&nbsp;Registration New User</a></li>
+            <li><a href="/Vidhyalaya/SuperAdmin/AllUserDetails">&nbsp;&nbsp;View all users (Add/Remove)</a></li>
+            <li><a href="/Vidhyalaya/Subjects/GetSubject">&nbsp;&nbsp;Manage Subjects</a></li>
+            <li><a href="/Vidhyalaya/Courses/GetCourse">&nbsp;&nbsp;Manage Courses</a></li>
+            <li><a href="/Vidhyalaya/SubjectInCourses/GetMapCourseSubject">&nbsp;&nbsp;Manage Subject In Courses</a></li>
+        </ul>
+    </li>
+}
+

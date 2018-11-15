@@ -12,6 +12,7 @@ using Vidhyalaya.Models;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class StudentController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();
@@ -27,16 +28,18 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         public ActionResult StudentProfile()
         {
+            //for logged in Student.
             UserRegistration objUser = (UserRegistration)Session["User"];
-            var varUser = db.UserRegistrations.Find(objUser.UserId);
+            var usr = db.UserRegistrations.Find(objUser.UserId);
             if (Session["User"] != null)
             {
                 var userDetails = db.UserRegistrations.Where(user => user.UserId == objUser.UserId);
-                if (varUser != null)
+                if (usr != null)
                     return View(userDetails);
             }
-            return View(varUser);
+            return View(usr);
         }
+    
 
         /// <summary>
         /// for getting list of subjects

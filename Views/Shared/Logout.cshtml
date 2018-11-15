@@ -16,11 +16,12 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Vidhyalaya", "Login", "UserLogin", new { area = "" }, new { @class = "navbar-brand" })
-
+            
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("LogOut", "LogOut", "Admin", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+               <li>@Html.Partial("_AdminPartial")</li>
+                <li>@Html.ActionLink("LogOut", "LogOut", "UserLogin", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
 
             </ul>
             <div class="navbar-collapse collapse">

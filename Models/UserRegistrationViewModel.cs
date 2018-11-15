@@ -72,6 +72,10 @@ namespace Vidhyalaya.Models
 
         public IEnumerable<CityModel> CityList { get; set; }
         public IEnumerable<StateModel> StateList { get; set; }
+     
+        [Display(Name = "Zip Code")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Pincode.")]
+        [Range(6, 6, ErrorMessage = "Please enter valid Pincode")]
         public int? Pincode { get; set; }
 
         [Required]
