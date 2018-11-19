@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class State
     {
@@ -24,7 +24,7 @@ namespace Vidhyalaya.DB
     
         public int StateId { get; set; }
         public int CountryId { get; set; }
-        [DisplayName("State Name")]
+        [Display(Name = "State Name")]
         public string StateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

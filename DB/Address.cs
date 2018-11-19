@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Address
     {
@@ -22,15 +22,12 @@ namespace Vidhyalaya.DB
         }
     
         public int AddressId { get; set; }
-        [DisplayName("First Address")]
+        [Display(Name = "Address Line 01")]
         public string AddressTextBox1 { get; set; }
-        [DisplayName("Second Address")]
+        [Display(Name = "Address Line 02")]
         public string AddressTextBox2 { get; set; }
-        [DisplayName("Country")]
         public int CountryId { get; set; }
-        [DisplayName("State")]
         public int StateId { get; set; }
-        [DisplayName("City")]
         public int CityId { get; set; }
         public Nullable<int> Pincode { get; set; }
     

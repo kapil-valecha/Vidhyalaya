@@ -6,21 +6,14 @@
 }
 <h2>All Users List :</h2>
 <p>
-    <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "Admin", new { area = "" })">
-        <span class="glyphicon glyphicon-list"></span>
-        <span>Back to Main menu</span>
-    </a>
-
-    <a>@Html.Partial("_CreateButtonPartial")</a>
+       <a>@Html.Partial("_CreateButtonPartial")</a>
 </p>
 
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
-
-    <table class="table table-condensed table-hover">
+    <table class="table table-striped">
         <tr class="success">
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
@@ -65,16 +58,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address.City.CityName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
-
+        
 
             <th></th>
         </tr>
@@ -124,16 +108,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Address.City.CityName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateModified)
-                </td>
-
+              
                 <td>
                     @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
 

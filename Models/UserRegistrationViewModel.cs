@@ -20,6 +20,7 @@ namespace Vidhyalaya.Models
         public string Hobby { get; set; }
         [Required]
         [DisplayName("Email Id")]
+        [EmailAddress(ErrorMessage = "Please enter a valid Email address")]
         public string EmailId { get; set; }
 
         public bool? IsEmailVerified { get; set; }
@@ -32,10 +33,8 @@ namespace Vidhyalaya.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
-        [Required(ErrorMessage = "Confirmation Password is required.")]
         public string ConfirmPassword { get; set; }
-
-       
+               
         [Display(Name = "Role")]
         public int RoleId { get; set; }
 
@@ -73,9 +72,8 @@ namespace Vidhyalaya.Models
         public IEnumerable<CityModel> CityList { get; set; }
         public IEnumerable<StateModel> StateList { get; set; }
      
-        [Display(Name = "Zip Code")]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Pincode.")]
-        [Range(6, 6, ErrorMessage = "Please enter valid Pincode")]
+        [Display(Name = "Pincode")]
+        [RegularExpression(@"[0-9]{6}", ErrorMessage = "Invalid Pincode")]
         public int? Pincode { get; set; }
 
         [Required]
@@ -84,7 +82,7 @@ namespace Vidhyalaya.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
     }

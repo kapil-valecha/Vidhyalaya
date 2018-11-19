@@ -45,33 +45,31 @@ namespace Vidhyalaya.Controllers
                                                                                       on role.RoleId equals user.RoleId
                                            where user.UserId == obj.UserId
                                            select role.RoleName).FirstOrDefault();
-
+                            Session["User"] = obj;
                             if (isAdmin == "Super Admin")
                             {
+                                
                                 Session["RoleId"] = 1;
                                 Session["RoleName"] = "SuperAdmin";
-                                return RedirectToAction("Welcome", "SuperAdmin");
+                                return RedirectToAction("AllUserDetails", "SuperAdmin");
                             }
                             else if (isAdmin == "Admin")
-
                             {
                                 Session["RoleId"] = 2;
                                 Session["RoleName"] = "Admin";
-                                return RedirectToAction("Welcome", "Admin");
+                                return RedirectToAction("AllUserDetails", "Admin");
                             }
                             else if (isAdmin == "Teacher")
                             {
-                                Session["User"] = obj;
                                 Session["RoleId"] = 3;
                                 Session["RoleName"] = "Teacher";
-                                return RedirectToAction("Welcome", "Teacher", new { id = obj.UserId });
+                                return RedirectToAction("TeacherProfile", "Teacher", new { id = obj.UserId });
                             }
                             else if (isAdmin == "Student")
                             {
-                                Session["User"] = obj;
                                 Session["RoleId"] = 4;
                                 Session["RoleName"] = "Student";
-                                return RedirectToAction("Welcome", "Student", new { id = obj.UserId });
+                                return RedirectToAction("StudentProfile", "Student", new { id = obj.UserId });
                             }
                             else
                             {
@@ -102,15 +100,15 @@ namespace Vidhyalaya.Controllers
 
         public ActionResult LogOut()
         {
-            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
-            Response.AddHeader("Pragma", "no-cache");
-            Response.AddHeader("Expires", "0");
+            //Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            //Response.AddHeader("Pragma", "no-cache");
+            //Response.AddHeader("Expires", "0");
             Session.Abandon();
-            Session.Clear();
-            Response.Cookies.Clear();
+           // Session.Clear();
+            //Response.Cookies.Clear();
             Session.RemoveAll();
             Session["Login"] = null;
-            FormsAuthentication.SignOut();
+          //  FormsAuthentication.SignOut();
             return RedirectToAction("Login", "UserLogin");
         }
 

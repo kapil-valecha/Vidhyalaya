@@ -240,7 +240,7 @@
     <Property Name="AddressId" Type="Int32" Nullable="false" />
     <Property Name="CourseId" Type="Int32" Nullable="false" />
     <Property Name="RoleId" Type="Int32" Nullable="false" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Address" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="UserRegistration" ToRole="Address" />

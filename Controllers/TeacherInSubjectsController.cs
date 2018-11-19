@@ -10,6 +10,7 @@ using Vidhyalaya.DB;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class TeacherInSubjectsController : Controller
     {
         private SchoolDatabaseEntities db = new SchoolDatabaseEntities();

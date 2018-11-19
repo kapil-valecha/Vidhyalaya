@@ -10,19 +10,13 @@
 <p>
 <p>
     <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
-        <span class="glyphicon glyphicon-list"></span>
-        <span>Back to Main menu</span>
-    </a>
-
-    <a type="button" class="btn btn-primary btn-sm"
        href="@Url.Action("CreateSubjectInCourse")">
         <span class="glyphicon glyphicon-plus"></span>
         <span>Map New</span>
     </a>
 </p>
 
-<table class="table table-condensed table-hover">
+<table class="table table-striped">
     <tr class="success">
         <th>
             @Html.DisplayNameFor(model => model.Course.CourseName)

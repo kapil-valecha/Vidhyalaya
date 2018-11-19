@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class City
     {
@@ -23,7 +23,7 @@ namespace Vidhyalaya.DB
     
         public int CityId { get; set; }
         public int StateId { get; set; }
-        [DisplayName("City Name")]
+        [Display(Name = "City Name")]
         public string CityName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

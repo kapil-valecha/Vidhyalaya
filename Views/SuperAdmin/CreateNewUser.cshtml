@@ -44,12 +44,11 @@
     });
 </script>
 
-<p>
-    <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
-        <span class="glyphicon glyphicon-list"></span>
-        <span>Back to Main menu</span>
-    </a>
+<p><a type="button" class="btn btn-primary btn-sm"
+   href="@Url.Action("AllUserDetails", "SuperAdmin", new { area = "" })">
+    <span class="glyphicon glyphicon-list"></span>
+    <span>Back to User's List</span>
+</a>
 
 </p>
 
@@ -123,12 +122,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IsEmailVerified, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.IsEmailVerified, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsEmailVerified)
-                @Html.ValidationMessageFor(model => model.IsEmailVerified, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(model => model.IsEmailVerified, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
+            @Html.ValidationMessageFor(model => model.IsEmailVerified, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -184,7 +181,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Pincode, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", required = "Required"} })
+            @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
             @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -204,6 +201,14 @@
         <div class="col-md-10">
             @Html.DropDownList("CourseId", ViewBag.Course as SelectList, "--select--", htmlAttributes: new { @class = "form-control", required = "Required" })
             @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
         </div>
     </div>
 

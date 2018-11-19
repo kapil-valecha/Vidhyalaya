@@ -1,4 +1,3 @@
-C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\obj\Debug\Vidhyalaya.csproj.CoreCompileInputs.cache
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\ApplicationInsights.config
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Vidhyalaya.dll.config
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Vidhyalaya.dll
@@ -104,6 +103,7 @@ C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Microsoft.AI.DependencyColl
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Microsoft.AI.Web.xml
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\obj\Debug\Vidhyalaya.csproj.CoreCompileInputs.cache
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\obj\Debug\Vidhyalaya.csproj.CopyComplete
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\obj\Debug\Vidhyalaya.dll
 C:\Users\sipl\source\repos\Vidhyalaya\Vidhyalaya\obj\Debug\Vidhyalaya.pdb

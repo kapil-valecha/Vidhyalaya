@@ -25,9 +25,10 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> 
+
             <a type="button" class="btn btn-primary btn-sm"
-               href="@Url.Action("GetMapCourseSubject", "MapCourseSubject")">
+               href="@Url.Action("MapCourseSubject","SubjectInCourses" )">
                 <span class="glyphicon glyphicon-list"></span>
                 <span>Back to list</span>
             </a>

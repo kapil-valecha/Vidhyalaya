@@ -257,7 +257,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\UserSearchViewModel.cs" />
     <Compile Include="Models\UserRegistrationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -319,7 +318,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Admin\CreateNewUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
-    <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
     <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
     <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
@@ -332,32 +330,25 @@
     <Content Include="Views\SuperAdmin\CreateNewUser.cshtml" />
     <Content Include="Views\SuperAdmin\DeleteUser.cshtml" />
     <Content Include="Views\SuperAdmin\EditUser.cshtml" />
-    <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
     <Content Include="Views\UserLogin\ThankYou.cshtml" />
     <Content Include="Views\Teacher\AllStudentDetails.cshtml" />
-    <Content Include="Views\Admin\Welcome.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Student\Welcome.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
-    <Content Include="Views\SuperAdmin\Welcome.cshtml" />
     <Content Include="Views\Student\RegisterStudent.cshtml" />
-    <Content Include="Views\Student\Thankyou.cshtml" />
+    <Content Include="Views\Shared\Thankyou.cshtml" />
     <Content Include="Views\Teacher\Welcome.cshtml" />
     <Content Include="Views\Student\StudentProfile.cshtml" />
-    <Content Include="Views\Student\TeachersList.cshtml" />
     <Content Include="Views\Student\TeachersCourseList.cshtml" />
     <Content Include="Views\Teacher\TeacherProfile.cshtml" />
     <Content Include="Views\Teacher\StudentDetails.cshtml" />
     <Content Include="Views\Teacher\EditUser.cshtml" />
-    <Content Include="Views\Student\EditStudent.cshtml" />
     <Content Include="Views\SubjectInCourses\Delete.cshtml" />
     <Content Include="Views\TeacherInSubjects\Create.cshtml" />
     <Content Include="Views\TeacherInSubjects\Delete.cshtml" />
     <Content Include="Views\TeacherInSubjects\Details.cshtml" />
     <Content Include="Views\TeacherInSubjects\Edit.cshtml" />
     <Content Include="Views\TeacherInSubjects\Index.cshtml" />
-    <Content Include="Views\Student\SubjectsList.cshtml" />
     <Content Include="Views\Courses\GetCourse.cshtml" />
     <Content Include="Views\Courses\EditCourse.cshtml" />
     <Content Include="Views\Courses\DeleteCourse.cshtml" />
@@ -370,6 +361,7 @@
     <Content Include="Views\SubjectInCourses\CreateSubjectInCourse.cshtml" />
     <Content Include="Views\SubjectInCourses\EditSubjectInCourse.cshtml" />
     <Content Include="Views\Shared\_AdminPartial.cshtml" />
+    <Content Include="Views\Student\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

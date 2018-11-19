@@ -6,23 +6,23 @@
 }
 <p>
     <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "Admin", new { area = "" })">
-        <span class="glyphicon glyphicon-list"></span>
+             href="@Url.Action("AllUserDetails", "Admin", new { area = "" })">
+                <span class="glyphicon glyphicon-list"></span>
         <span>Back to Main menu</span>
     </a>
 
 </p>
 
+<h2>Delete</h2>
 <h3>Are you sure you want to delete this?</h3>
-
-
 <div>
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
-        @Html.Partial("_BackToListButtonPartial")
-    </div>
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+            @Html.Partial("_BackToListButtonPartial")
+        </div>
     }
 </div>

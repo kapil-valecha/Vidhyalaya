@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Role
     {
@@ -23,7 +23,7 @@ namespace Vidhyalaya.DB
         }
     
         public int RoleId { get; set; }
-        [DisplayName("Role Name")]
+        [Display(Name = "Role Name")]
         public string RoleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

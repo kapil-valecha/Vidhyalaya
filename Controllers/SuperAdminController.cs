@@ -225,11 +225,10 @@ namespace Vidhyalaya.Controllers
             var data = from p in db.UserRegistrations where p.UserId == id select p;
             UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
             {
-                UserId = objUserRegistration.UserId,
                 FirstName = objUserRegistration.FirstName,
                 LastName = objUserRegistration.LastName,
-                Password = objUserRegistration.Password,
                 EmailId = objUserRegistration.EmailId,
+                Password = objUserRegistration.Password,
                 IsEmailVerified = objUserRegistration.IsEmailVerified,
                 Gender = objUserRegistration.Gender,
                 DOB = objUserRegistration.DOB,
@@ -281,15 +280,18 @@ namespace Vidhyalaya.Controllers
 
             try
             {
-                UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
-                if (ModelState.IsValid)
-                {
+                UserRegistration userData = db.UserRegistrations.Find(id);
+
+                objUserRegistrationViewModel.Password = userData.Password;
+                //if (ModelState.IsValid)
+                //{
                     userData.FirstName = objUserRegistrationViewModel.FirstName;
                     userData.LastName = objUserRegistrationViewModel.LastName;
                     userData.Gender = objUserRegistrationViewModel.Gender;
                     userData.Hobby = objUserRegistrationViewModel.Hobby;
                     userData.EmailId = objUserRegistrationViewModel.EmailId;
                     userData.Password = objUserRegistrationViewModel.Password;
+                    userData.IsEmailVerified = objUserRegistrationViewModel.IsEmailVerified;
                     userData.DOB = objUserRegistrationViewModel.DOB;
                     userData.RoleId = objUserRegistrationViewModel.RoleId;
                     userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
@@ -300,16 +302,17 @@ namespace Vidhyalaya.Controllers
                     userData.Address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
                     userData.IsActive = objUserRegistrationViewModel.IsActive;
                     userData.DateModified = DateTime.Now;
-                    db.SaveChanges();
-                    return RedirectToAction("AllUserDetails");
+                   // db.SaveChanges();
 
-                }
-                int latestRoleId = userData.RoleId;
+                //}
+                int latestRoleId = objUserRegistrationViewModel.RoleId;
                 UserInRole objUserInRole = new UserInRole();
                 objUserInRole.RoleId = latestRoleId;
                 objUserInRole.UserId = objUserRegistrationViewModel.UserId;
                 db.SaveChanges();
-                return View(objUserRegistrationViewModel);
+                return RedirectToAction("AllUserDetails");
+
+                //return View(objUserRegistrationViewModel);
             }
             catch (Exception ex)
             {

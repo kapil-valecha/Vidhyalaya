@@ -1,94 +1,63 @@
 ﻿@model Vidhyalaya.Models.UserRegistrationViewModel
 
 @{
-    ViewBag.Title = "StudentDetails";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/LogOut.cshtml";
 }
-
-<h2>Student Profile Details</h2>
-
-<script src="~/Scripts/jquery-1.7.1.min.js"></script>
-
-@if (Session["UserId"] != null)
-{
-    <h4>Hello @Session["UserName"].ToString()</h4>
-}
+<h2>Edit</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <script>
 
     $(document).ready(function () {
-        debugger;
-     //   var city = ;
 
         $("#country").change(function () {
 
             var id = $(this).val();
 
-                $.ajax({
-            type: "POST",
-            url: '@Url.Action("StateBind")',
-                    data: { countryId: id },
-            success: function (response) {
+            $("#state").empty();
+            history.pushState(null, null, '/Vidhyalaya/Admin/');
+            $.getJSON("StateBind", { countryId: id }, function (data) {
 
                 var v = "<option>..Select State..</option>";
-                $.each(response, function (i, v2) {
-                    v += "<option Value=" + v2.StateId + ">" + v2.StateName + "</option>";
+                $.each(data, function (i, v1) {
+                    v += "<option Value=" + v1.StateId + ">" + v1.StateName + "</option>";
+
                 });
-
                 $("#state").html(v);
-
-            },
-            Error: function (error) {
-                console.log(error);
-            }
-
+            });
         });
 
-     });
-
-
-
-          $("#state").change(function () {
+        $("#state").change(function () {
 
             var id = $(this).val();
 
-                $.ajax({
-            type: "POST",
-            url: '@Url.Action("CityBind")',
-                    data: { stateId: id },
-            success: function (response) {
+            $("#city").empty();
+            history.pushState(null, null, '/Vidhyalaya/Admin/');
+
+            $.getJSON("CityBind", { stateId: id }, function (data) {
 
                 var v = "<option>..Select City..</option>";
-                $.each(response, function (i, v2) {
-                    v += "<option Value=" + v2.CityId + ">" + v2.CityName + "</option>";
+                $.each(data, function (i, v1) {
+                    v += "<option Value=" + v1.CityId + ">" + v1.CityName + "</option>";
+
                 });
-
                 $("#city").html(v);
-
-            },
-            Error: function (error) {
-                console.log(error);
-            }
-
+            });
         });
-
-     });
-
-
-
 
     });
 </script>
 
 <p>
     <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "Teacher", new { area = "" })">
+       href="@Url.Action("Welcome", "SuperAdmin", new { area = "" })">
         <span class="glyphicon glyphicon-list"></span>
         <span>Back to Main menu</span>
     </a>
 
+    <a>@Html.Partial("_CreateButtonPartial")</a>
 </p>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -192,20 +161,21 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            <select id="state" name="StateId" required class="form-control">--Select--</select>
+            @Html.DropDownList("StateId", ViewBag.StateList as SelectList, "--select--", htmlAttributes: new { @id = "state", @name = "StateId", @class = "form-control", required = "required" })
             @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            <select id="city" name="CityId" required class="form-control">--Select--</select>
+            @Html.DropDownList("CityId", ViewBag.CityList as SelectList, "--select--", htmlAttributes: new { @id = "city", @name = "CityId", @class = "form-control", required = "required" })
             @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
         </div>
     </div>
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.Pincode, htmlAttributes: new { @class = "control-label required col-md-2" })
@@ -250,8 +220,6 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back To Profile", "TeacherProfile")
-</div>
-
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

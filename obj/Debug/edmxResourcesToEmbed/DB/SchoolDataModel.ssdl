@@ -106,7 +106,7 @@
     <Property Name="AddressId" Type="int" Nullable="false" />
     <Property Name="CourseId" Type="int" Nullable="false" />
     <Property Name="RoleId" Type="int" Nullable="false" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="DateModified" Type="datetime" Nullable="false" />
   </EntityType>

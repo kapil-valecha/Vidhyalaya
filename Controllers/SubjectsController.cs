@@ -11,6 +11,7 @@ using Vidhyalaya.DB;
 
 namespace Vidhyalaya.Controllers
 {
+    [SessionController]
     public class SubjectsController : Controller
     {
         SchoolDatabaseEntities objEntities = new SchoolDatabaseEntities();

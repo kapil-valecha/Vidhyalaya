@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Subject
     {
@@ -23,7 +23,7 @@ namespace Vidhyalaya.DB
         }
     
         public int SubjectId { get; set; }
-        [DisplayName("Subject Name")]
+        [Display(Name = "Subject Name")]
         public string SubjectName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

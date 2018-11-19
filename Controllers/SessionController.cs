@@ -10,8 +10,9 @@ namespace Vidhyalaya.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if ( HttpContext.Current.Session["RoleId"].Equals(null) &&
-                HttpContext.Current.Session["RoleName"].Equals(null))
+            if (HttpContext.Current.Session["User"] ==null && 
+                HttpContext.Current.Session["RoleId"]==null
+                && HttpContext.Current.Session["RoleName"]==null)
             {
                 filterContext.Result = new RedirectResult("~/UserLogin/Login");
             }
