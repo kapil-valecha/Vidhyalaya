@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "RegisterStudent";
+
 }
 
-<h2>Register Student</h2>
+<h2>Register Here:</h2>
 
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <script>
@@ -47,15 +48,6 @@
 
 </script>
 
-@*<p>
-    <a type="button" class="btn btn-primary btn-sm"
-       href="@Url.Action("Welcome", "Student", new { area = "" })">
-        <span class="glyphicon glyphicon-list"></span>
-        <span>Back to Main menu</span>
-    </a>
-
-</p>*@
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -90,7 +82,8 @@
             <span>Female</span>
             @Html.RadioButtonFor(model => model.Gender, "O")
             <span>Others</span>
-            @Html.ValidationMessageFor(model => model.Gender)
+            <br>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
     </div>
 

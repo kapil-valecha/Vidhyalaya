@@ -51,25 +51,25 @@ namespace Vidhyalaya.Controllers
                                 
                                 Session["RoleId"] = 1;
                                 Session["RoleName"] = "SuperAdmin";
-                                return RedirectToAction("AllUserDetails", "SuperAdmin");
+                                return RedirectToAction("Welcome", "SuperAdmin");
                             }
                             else if (isAdmin == "Admin")
                             {
                                 Session["RoleId"] = 2;
                                 Session["RoleName"] = "Admin";
-                                return RedirectToAction("AllUserDetails", "Admin");
+                                return RedirectToAction("Welcome", "Admin");
                             }
                             else if (isAdmin == "Teacher")
                             {
                                 Session["RoleId"] = 3;
                                 Session["RoleName"] = "Teacher";
-                                return RedirectToAction("TeacherProfile", "Teacher", new { id = obj.UserId });
+                                return RedirectToAction("Welcome", "Teacher", new { id = obj.UserId });
                             }
                             else if (isAdmin == "Student")
                             {
                                 Session["RoleId"] = 4;
                                 Session["RoleName"] = "Student";
-                                return RedirectToAction("StudentProfile", "Student", new { id = obj.UserId });
+                                return RedirectToAction("StudentsProfile", "Student", new { id = obj.UserId });
                             }
                             else
                             {

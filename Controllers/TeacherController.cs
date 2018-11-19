@@ -26,7 +26,10 @@ namespace Vidhyalaya.Controllers
             var returnStudentDetailsList = db.UserRegistrations.Where(user => user.RoleId != 1 && user.RoleId != 2 && user.RoleId != 3).ToList();
             return View(returnStudentDetailsList);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult TeacherProfile()
 
         {
@@ -41,7 +44,7 @@ namespace Vidhyalaya.Controllers
             }
             return View(usr);
         }
-
+      
         /// <summary>
         /// Action for Edit Existing User Get method
         /// </summary>
@@ -50,8 +53,8 @@ namespace Vidhyalaya.Controllers
         public ActionResult EditUser(int id)
         {
             //for roles
-            //List<Role> objRoleList = GetRoles();
-            //ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = new SelectList(objRoleList, "RoleId", "RoleName");
             //for course
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
@@ -73,19 +76,18 @@ namespace Vidhyalaya.Controllers
             UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
 
             var data = from p in db.UserRegistrations where p.UserId == id select p;
-            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
+            EditRegistrationViewModel objUserRegistrationViewModel = new EditRegistrationViewModel
             {
-                UserId = objUserRegistration.UserId,
                 FirstName = objUserRegistration.FirstName,
                 LastName = objUserRegistration.LastName,
-                Password = objUserRegistration.Password,
                 EmailId = objUserRegistration.EmailId,
+                Password = objUserRegistration.Password,
                 IsEmailVerified = objUserRegistration.IsEmailVerified,
                 Gender = objUserRegistration.Gender,
                 DOB = objUserRegistration.DOB,
                 Hobby = objUserRegistration.Hobby,
                 CourseId = objUserRegistration.CourseId,
-                //RoleId = objUserRegistration.RoleId,
+                RoleId = objUserRegistration.RoleId,
                 CountryId = objUserRegistration.Address.CountryId,
                 StateId = objUserRegistration.Address.StateId,
                 CityId = objUserRegistration.Address.CityId,
@@ -131,30 +133,39 @@ namespace Vidhyalaya.Controllers
 
             try
             {
-                UserRegistration userData = db.UserRegistrations.Find(objUserRegistrationViewModel.UserId);
-                if (ModelState.IsValid)
-                {
-                    userData.FirstName = objUserRegistrationViewModel.FirstName;
-                    userData.LastName = objUserRegistrationViewModel.LastName;
-                    userData.Gender = objUserRegistrationViewModel.Gender;
-                    userData.Hobby = objUserRegistrationViewModel.Hobby;
-                    userData.EmailId = objUserRegistrationViewModel.EmailId;
-                    userData.Password = objUserRegistrationViewModel.Password;
-                    userData.DOB = objUserRegistrationViewModel.DOB;
-                    userData.RoleId = objUserRegistrationViewModel.RoleId;
-                    userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
-                    userData.Address.StateId = objUserRegistrationViewModel.StateId;
-                    userData.Address.CityId = objUserRegistrationViewModel.CityId;
-                    userData.Address.Pincode = objUserRegistrationViewModel.Pincode;
-                    userData.Address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
-                    userData.Address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
-                    userData.IsActive = objUserRegistrationViewModel.IsActive;
-                    userData.DateModified = DateTime.Now;
-                    db.SaveChanges();
-                    return RedirectToAction("AllUserDetails");
+                UserRegistration userData = db.UserRegistrations.Find(id);
 
-                }
-                return View(objUserRegistrationViewModel);
+                objUserRegistrationViewModel.Password = userData.Password;
+                //if (ModelState.IsValid)
+                //{
+                userData.FirstName = objUserRegistrationViewModel.FirstName;
+                userData.LastName = objUserRegistrationViewModel.LastName;
+                userData.Gender = objUserRegistrationViewModel.Gender;
+                userData.Hobby = objUserRegistrationViewModel.Hobby;
+                userData.EmailId = objUserRegistrationViewModel.EmailId;
+                userData.Password = objUserRegistrationViewModel.Password;
+                userData.IsEmailVerified = objUserRegistrationViewModel.IsEmailVerified;
+                userData.DOB = objUserRegistrationViewModel.DOB;
+                userData.RoleId = objUserRegistrationViewModel.RoleId;
+                userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
+                userData.Address.StateId = objUserRegistrationViewModel.StateId;
+                userData.Address.CityId = objUserRegistrationViewModel.CityId;
+                userData.Address.Pincode = objUserRegistrationViewModel.Pincode;
+                userData.Address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
+                userData.Address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
+                userData.IsActive = objUserRegistrationViewModel.IsActive;
+                userData.DateModified = DateTime.Now;
+                // db.SaveChanges();
+
+                //}
+                int latestRoleId = objUserRegistrationViewModel.RoleId;
+                UserInRole objUserInRole = new UserInRole();
+                objUserInRole.RoleId = latestRoleId;
+                objUserInRole.UserId = objUserRegistrationViewModel.UserId;
+                db.SaveChanges();
+                return RedirectToAction("TeacherProfile");
+
+                //return View(objUserRegistrationViewModel);
             }
             catch (Exception ex)
             {
@@ -162,21 +173,19 @@ namespace Vidhyalaya.Controllers
             }
         }
 
-        public ActionResult StudentDetails(int id)
+        public ActionResult StudentDetails(int? id)
         {
-            //for role
-            List<Role> objRoleList = GetRoles();
-            ViewBag.Role = objRoleList;
+
             // for course
             List<Course> objCourseList = db.Courses.ToList();
-            ViewBag.Course = objCourseList;
-            // for countries
+            ViewBag.Course = new SelectList(objCourseList, "CourseId", "CourseName");
+            // for country
             List<Country> countryList = db.Countries.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "CountryName");
             //for state
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
-            //for city
+            // for city
             List<City> citiesList = db.Cities.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
@@ -184,36 +193,34 @@ namespace Vidhyalaya.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+           
+                UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
 
-            UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
+                UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel();
+                objUserRegistrationViewModel.FirstName = objUserRegistration.FirstName;
+                objUserRegistrationViewModel.LastName = objUserRegistration.LastName;
+                objUserRegistrationViewModel.Gender = objUserRegistration.Gender;
+                objUserRegistrationViewModel.Hobby = objUserRegistration.Hobby;
+                objUserRegistrationViewModel.EmailId = objUserRegistration.EmailId;
+                objUserRegistrationViewModel.Password = objUserRegistration.Password;
+                objUserRegistrationViewModel.DOB = objUserRegistration.DOB;
+                objUserRegistrationViewModel.CourseId = objUserRegistration.CourseId;
+                objUserRegistrationViewModel.AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1;
+                objUserRegistrationViewModel.AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2;
+                objUserRegistrationViewModel.CountryId = objUserRegistration.Address.CountryId;
+                objUserRegistrationViewModel.StateId = objUserRegistration.Address.StateId;
+                objUserRegistrationViewModel.CityId = objUserRegistration.Address.CityId;
+                objUserRegistrationViewModel.Pincode = objUserRegistration.Address.Pincode;
 
-            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel();
-            objUserRegistrationViewModel.FirstName = objUserRegistration.FirstName;
-            objUserRegistrationViewModel.LastName = objUserRegistration.LastName;
-            objUserRegistrationViewModel.Gender = objUserRegistration.Gender;
-            objUserRegistrationViewModel.Hobby = objUserRegistration.Hobby;
-            objUserRegistrationViewModel.EmailId = objUserRegistration.EmailId;
-            objUserRegistrationViewModel.Password = objUserRegistration.Password;
-            objUserRegistrationViewModel.DOB = objUserRegistration.DOB;
-            objUserRegistrationViewModel.RoleId = objUserRegistration.RoleId;
-            objUserRegistrationViewModel.CourseId = objUserRegistration.CourseId;
-            objUserRegistrationViewModel.IsActive = objUserRegistration.IsActive;
-            objUserRegistrationViewModel.DateCreated = objUserRegistration.DateCreated;
-            objUserRegistrationViewModel.DateModified = objUserRegistration.DateModified;
-            objUserRegistrationViewModel.AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1;
-            objUserRegistrationViewModel.AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2;
-            objUserRegistrationViewModel.CountryId = objUserRegistration.Address.CountryId;
-            objUserRegistrationViewModel.StateId = objUserRegistration.Address.StateId;
-            objUserRegistrationViewModel.CityId = objUserRegistration.Address.CityId;
-            objUserRegistrationViewModel.Pincode = objUserRegistration.Address.Pincode;
-
-            if (objUserRegistration == null)
-            {
-                return HttpNotFound();
+                if (objUserRegistration == null)
+                {
+                    return HttpNotFound();
+                }
+            
+                return View(objUserRegistrationViewModel);
             }
-            return View(objUserRegistrationViewModel);
-        }
         
+
         public ActionResult Welcome()
         {
             return View();

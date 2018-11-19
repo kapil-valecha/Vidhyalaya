@@ -146,7 +146,7 @@ namespace Vidhyalaya.Controllers
             UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
 
             var data = from p in db.UserRegistrations where p.UserId == id select p;
-            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
+            EditRegistrationViewModel objUserRegistrationViewModel = new EditRegistrationViewModel
             {
                 FirstName = objUserRegistration.FirstName,
                 LastName = objUserRegistration.LastName,
@@ -183,7 +183,7 @@ namespace Vidhyalaya.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(int id, UserRegistrationViewModel objUserRegistrationViewModel)
+        public ActionResult EditUser(int id, EditRegistrationViewModel objUserRegistrationViewModel)
         {
             //for roles
             List<Role> objRoleList = GetRoles();

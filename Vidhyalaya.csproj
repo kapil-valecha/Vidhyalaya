@@ -338,10 +338,8 @@
     <Content Include="Views\Student\RegisterStudent.cshtml" />
     <Content Include="Views\Shared\Thankyou.cshtml" />
     <Content Include="Views\Teacher\Welcome.cshtml" />
-    <Content Include="Views\Student\StudentProfile.cshtml" />
     <Content Include="Views\Student\TeachersCourseList.cshtml" />
     <Content Include="Views\Teacher\TeacherProfile.cshtml" />
-    <Content Include="Views\Teacher\StudentDetails.cshtml" />
     <Content Include="Views\Teacher\EditUser.cshtml" />
     <Content Include="Views\SubjectInCourses\Delete.cshtml" />
     <Content Include="Views\TeacherInSubjects\Create.cshtml" />
@@ -361,6 +359,11 @@
     <Content Include="Views\SubjectInCourses\CreateSubjectInCourse.cshtml" />
     <Content Include="Views\SubjectInCourses\EditSubjectInCourse.cshtml" />
     <Content Include="Views\Shared\_AdminPartial.cshtml" />
+    <Content Include="Views\Student\SubjectList.cshtml" />
+    <Content Include="Views\Admin\Welcome.cshtml" />
+    <Content Include="Views\SuperAdmin\Welcome.cshtml" />
+    <Content Include="Views\Teacher\StudentDetails.cshtml" />
+    <Content Include="Views\Student\StudentsProfile.cshtml" />
     <Content Include="Views\Student\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -36,19 +36,19 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailId)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Password)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.DOB)
         </th>
 
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateModified)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Address.AddressTextBox1)
         </th>
@@ -80,9 +80,9 @@
                 @Html.DisplayFor(modelItem => item.EmailId)
             </td>
 
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Password)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.DOB)
             </td>
@@ -102,6 +102,3 @@
     }
 
 </table>
-<p>
-    @Html.ActionLink("View My Profile", "TeacherProfile")
-</p>

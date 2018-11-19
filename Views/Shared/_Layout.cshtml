@@ -16,8 +16,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Vidhyalaya", "Login", "UserLogin", new { area = "" }, new { @class = "navbar-brand" })
-                             
+                <ul class="nav navbar-nav navbar-left">
+                    @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                    {
+                        <li>
+                            @Html.ActionLink("Vidhyalaya", "Welcome", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                    }
+                    else if (Convert.ToInt32(Session["RoleId"]) == 2)
+                    {
+                        <li>
+                            @Html.ActionLink("Vidhyalaya", "Welcome", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+
+                    }
+                    else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                    {
+                        <li>
+                            @Html.ActionLink("Vidhyalaya", "Welcome", "Teacher", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+
+                    }
+                    else if (Convert.ToInt32(Session["RoleId"]) == 4)
+                    {
+                        <li>
+                            @Html.ActionLink("Vidhyalaya", "StudentsProfile", "Student", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+
+                    }
+
+                    <li>@Html.Partial("_AdminPartial")</li>
+                </ul>
             </div>
            
           

@@ -1,4 +1,5 @@
-﻿@if (Convert.ToInt32(Session["RoleId"]) == 2)
+﻿
+@if (Convert.ToInt32(Session["RoleId"]) == 2)
 
 {
     <li class="dropdown" data-admin-menu>
@@ -44,7 +45,12 @@ else if (Convert.ToInt32(Session["RoleId"]) == 4)
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-header">Manage</li>
             <li class="divider" />
-            <li><a href="/Vidhyalaya/Student/StudentProfile">&nbsp;&nbsp;My Profile</a></li>
+            <li><a href="/Vidhyalaya/Student/StudentsProfile">&nbsp;&nbsp;My Profile</a></li>
+            <li>
+                <a href="/Vidhyalaya/Student/TeachersCourseList">&nbsp;&nbsp;View Teachers</a>
+
+               
+            </li>
         </ul>
     </li>
 }

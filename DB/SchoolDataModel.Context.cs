@@ -142,5 +142,7 @@ namespace Vidhyalaya.DB
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+
+        public System.Data.Entity.DbSet<Vidhyalaya.Models.UserRegistrationViewModel> UserRegistrationViewModels { get; set; }
     }
 }

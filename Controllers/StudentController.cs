@@ -22,9 +22,11 @@ namespace Vidhyalaya.Controllers
         /// for showing details of Logged in Student
         /// </summary>
         /// <returns></returns>
-        public ActionResult StudentProfile()
+       
+        public ActionResult StudentsProfile()
+
         {
-            //for logged in Student.
+            //for logged in Teacher.
             UserRegistration objUser = (UserRegistration)Session["User"];
             var usr = db.UserRegistrations.Find(objUser.UserId);
             if (Session["User"] != null)
@@ -37,7 +39,7 @@ namespace Vidhyalaya.Controllers
         }
 
         [SessionController]
-        public ActionResult TeachersCourseList(int id)
+        public ActionResult TeachersCourseList(int ?id)
         {
             var teachersList = db.UserRegistrations.Where(teach => teach.CourseId == id && teach.RoleId == 3 /*&& teach.IsActive == true*/).ToList();
             return View(teachersList);
@@ -132,6 +134,20 @@ namespace Vidhyalaya.Controllers
             }
         }
 
+        public JsonResult CheckEmailExists(string emailid)
+        {
+            try
+            {
+                bool isValid = !db.UserRegistrations.ToList().Exists(p => p.EmailId.Equals(emailid, StringComparison.CurrentCultureIgnoreCase));
+                return Json(isValid, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception source: {0}", ex.Source);
+                return null;
+            }
+        }
+
         [SessionController]
         /// <summary>
         /// Action for Edit Existing User Get method
@@ -164,13 +180,13 @@ namespace Vidhyalaya.Controllers
             UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
 
             var data = from p in db.UserRegistrations where p.UserId == id select p;
-            UserRegistrationViewModel objUserRegistrationViewModel = new UserRegistrationViewModel
-            {
+          EditRegistrationViewModel objEditRegistrationViewModel = new EditRegistrationViewModel
+          {
                 FirstName = objUserRegistration.FirstName,
                 LastName = objUserRegistration.LastName,
                 EmailId = objUserRegistration.EmailId,
-                Password = objUserRegistration.Password,
-                IsEmailVerified = objUserRegistration.IsEmailVerified,
+                //Password = objUserRegistration.Password,
+                //IsEmailVerified = objUserRegistration.IsEmailVerified,
                 Gender = objUserRegistration.Gender,
                 DOB = objUserRegistration.DOB,
                 Hobby = objUserRegistration.Hobby,
@@ -182,7 +198,7 @@ namespace Vidhyalaya.Controllers
                 Pincode = objUserRegistration.Address.Pincode,
                 AddAddressTextBox1 = objUserRegistration.Address.AddressTextBox1,
                 AddAddressTextBox2 = objUserRegistration.Address.AddressTextBox2,
-                IsActive = objUserRegistration.IsActive,
+                //IsActive = objUserRegistration.IsActive,
                 DateCreated = objUserRegistration.DateCreated,
                 DateModified = objUserRegistration.DateModified
             };
@@ -190,7 +206,7 @@ namespace Vidhyalaya.Controllers
             {
                 return HttpNotFound();
             }
-            return View(objUserRegistrationViewModel);
+            return View(objEditRegistrationViewModel);
         }
 
         /// <summary>
@@ -232,8 +248,8 @@ namespace Vidhyalaya.Controllers
                 userData.Gender = objUserRegistrationViewModel.Gender;
                 userData.Hobby = objUserRegistrationViewModel.Hobby;
                 userData.EmailId = objUserRegistrationViewModel.EmailId;
-                userData.Password = objUserRegistrationViewModel.Password;
-                userData.IsEmailVerified = objUserRegistrationViewModel.IsEmailVerified;
+                //userData.Password = objUserRegistrationViewModel.Password;
+                //userData.IsEmailVerified = objUserRegistrationViewModel.IsEmailVerified;
                 userData.DOB = objUserRegistrationViewModel.DOB;
                 userData.RoleId = objUserRegistrationViewModel.RoleId;
                 userData.Address.CountryId = objUserRegistrationViewModel.CountryId;
@@ -242,7 +258,7 @@ namespace Vidhyalaya.Controllers
                 userData.Address.Pincode = objUserRegistrationViewModel.Pincode;
                 userData.Address.AddressTextBox1 = objUserRegistrationViewModel.AddAddressTextBox1;
                 userData.Address.AddressTextBox2 = objUserRegistrationViewModel.AddAddressTextBox2;
-                userData.IsActive = objUserRegistrationViewModel.IsActive;
+                //userData.IsActive = objUserRegistrationViewModel.IsActive;
                 userData.DateModified = DateTime.Now;
                 // db.SaveChanges();
 
@@ -252,7 +268,7 @@ namespace Vidhyalaya.Controllers
                 objUserInRole.RoleId = latestRoleId;
                 objUserInRole.UserId = objUserRegistrationViewModel.UserId;
                 db.SaveChanges();
-                return RedirectToAction("AllUserDetails");
+                return RedirectToAction("StudentsProfile");
 
                 //return View(objUserRegistrationViewModel);
             }
@@ -350,6 +366,19 @@ namespace Vidhyalaya.Controllers
                 data.Add(ds);
             }
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SubjectList(int id)
+        { 
+            var subjectList = db.SubjectInCourses.Where(subj => subj.CourseId == id).ToList();
+
+            return View(subjectList.ToList());
+
+        }
+
+        public ActionResult Welcome()
+        {
+            return View();
         }
 
         public ActionResult Thankyou()
