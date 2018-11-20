@@ -6,7 +6,7 @@
     </Key>
     <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="AddressTextBox1" Type="varchar(max)" Nullable="false" />
-    <Property Name="AddressTextBox2" Type="varchar(max)" Nullable="false" />
+    <Property Name="AddressTextBox2" Type="varchar(max)" />
     <Property Name="CountryId" Type="int" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" Nullable="false" />

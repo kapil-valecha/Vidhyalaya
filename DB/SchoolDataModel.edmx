@@ -11,7 +11,7 @@
           </Key>
           <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AddressTextBox1" Type="varchar(max)" Nullable="false" />
-          <Property Name="AddressTextBox2" Type="varchar(max)" Nullable="false" />
+          <Property Name="AddressTextBox2" Type="varchar(max)" />
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="CityId" Type="int" Nullable="false" />
@@ -419,7 +419,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="Addresses" EntityType="SchoolDatabaseModel.Address" />
           <EntitySet Name="Cities" EntityType="SchoolDatabaseModel.City" />
           <EntitySet Name="Countries" EntityType="SchoolDatabaseModel.Country" />
           <EntitySet Name="Courses" EntityType="SchoolDatabaseModel.Course" />
@@ -431,22 +430,6 @@
           <EntitySet Name="TeacherInSubjects" EntityType="SchoolDatabaseModel.TeacherInSubject" />
           <EntitySet Name="UserInRoles" EntityType="SchoolDatabaseModel.UserInRole" />
           <EntitySet Name="UserRegistrations" EntityType="SchoolDatabaseModel.UserRegistration" />
-          <AssociationSet Name="FK_Address_City" Association="SchoolDatabaseModel.FK_Address_City">
-            <End Role="City" EntitySet="Cities" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_Country" Association="SchoolDatabaseModel.FK_Address_Country">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_State" Association="SchoolDatabaseModel.FK_Address_State">
-            <End Role="State" EntitySet="States" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRegistration_Address" Association="SchoolDatabaseModel.FK_UserRegistration_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="UserRegistration" EntitySet="UserRegistrations" />
-          </AssociationSet>
           <AssociationSet Name="FK_City_State" Association="SchoolDatabaseModel.FK_City_State">
             <End Role="State" EntitySet="States" />
             <End Role="City" EntitySet="Cities" />
@@ -487,6 +470,23 @@
             <End Role="UserRegistration" EntitySet="UserRegistrations" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="SchoolDatabaseModel.Address" />
+          <AssociationSet Name="FK_Address_City" Association="SchoolDatabaseModel.FK_Address_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Country" Association="SchoolDatabaseModel.FK_Address_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_State" Association="SchoolDatabaseModel.FK_Address_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRegistration_Address" Association="SchoolDatabaseModel.FK_UserRegistration_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="UserRegistration" EntitySet="UserRegistrations" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -499,22 +499,6 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressTextBox1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AddressTextBox2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CountryId" Type="Int32" Nullable="false" />
-          <Property Name="StateId" Type="Int32" Nullable="false" />
-          <Property Name="CityId" Type="Int32" Nullable="false" />
-          <Property Name="Pincode" Type="Int32" />
-          <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
-          <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country" FromRole="Address" ToRole="Country" />
-          <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State" FromRole="Address" ToRole="State" />
-          <NavigationProperty Name="UserRegistrations" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="Address" ToRole="UserRegistration" />
-        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="CityId" />
@@ -522,8 +506,8 @@
           <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="CityName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="City" ToRole="Address" />
           <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_City_State" FromRole="City" ToRole="State" />
+          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="City" ToRole="Address" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -531,8 +515,8 @@
           </Key>
           <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_Country" FromRole="Country" ToRole="Address" />
           <NavigationProperty Name="States" Relationship="SchoolDatabaseModel.FK_State_Country1" FromRole="Country" ToRole="State" />
+          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_Country" FromRole="Country" ToRole="Address" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -559,9 +543,9 @@
           <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="StateName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_State" FromRole="State" ToRole="Address" />
           <NavigationProperty Name="Cities" Relationship="SchoolDatabaseModel.FK_City_State" FromRole="State" ToRole="City" />
           <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_State_Country1" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Addresses" Relationship="SchoolDatabaseModel.FK_Address_State" FromRole="State" ToRole="Address" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -631,60 +615,12 @@
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Address" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="UserRegistration" ToRole="Address" />
           <NavigationProperty Name="Course" Relationship="SchoolDatabaseModel.FK_UserRegistration_Course" FromRole="UserRegistration" ToRole="Course" />
           <NavigationProperty Name="Role" Relationship="SchoolDatabaseModel.FK_UserRegistration_Role" FromRole="UserRegistration" ToRole="Role" />
           <NavigationProperty Name="TeacherInSubjects" Relationship="SchoolDatabaseModel.FK_TeacherInSubject_UserRegistration" FromRole="UserRegistration" ToRole="TeacherInSubject" />
           <NavigationProperty Name="UserInRoles" Relationship="SchoolDatabaseModel.FK_UserInRole_UserRegistration" FromRole="UserRegistration" ToRole="UserInRole" />
+          <NavigationProperty Name="Address" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="UserRegistration" ToRole="Address" />
         </EntityType>
-        <Association Name="FK_Address_City">
-          <End Type="SchoolDatabaseModel.City" Role="City" Multiplicity="1" />
-          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="CityId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_Country">
-          <End Type="SchoolDatabaseModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="CountryId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_State">
-          <End Type="SchoolDatabaseModel.State" Role="State" Multiplicity="1" />
-          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="State">
-              <PropertyRef Name="StateId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRegistration_Address">
-          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="1" />
-          <End Type="SchoolDatabaseModel.UserRegistration" Role="UserRegistration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="UserRegistration">
-              <PropertyRef Name="AddressId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_City_State">
           <End Type="SchoolDatabaseModel.State" Role="State" Multiplicity="1" />
           <End Type="SchoolDatabaseModel.City" Role="City" Multiplicity="*" />
@@ -805,6 +741,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressTextBox1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressTextBox2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" />
+          <NavigationProperty Name="City" Relationship="SchoolDatabaseModel.FK_Address_City" FromRole="Address" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="SchoolDatabaseModel.FK_Address_Country" FromRole="Address" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="SchoolDatabaseModel.FK_Address_State" FromRole="Address" ToRole="State" />
+          <NavigationProperty Name="UserRegistrations" Relationship="SchoolDatabaseModel.FK_UserRegistration_Address" FromRole="Address" ToRole="UserRegistration" />
+        </EntityType>
+        <Association Name="FK_Address_City">
+          <End Type="SchoolDatabaseModel.City" Role="City" Multiplicity="1" />
+          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Country">
+          <End Type="SchoolDatabaseModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_State">
+          <End Type="SchoolDatabaseModel.State" Role="State" Multiplicity="1" />
+          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRegistration_Address">
+          <End Type="SchoolDatabaseModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="SchoolDatabaseModel.UserRegistration" Role="UserRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="UserRegistration">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -835,19 +835,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SchoolDatabaseModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SchoolDatabaseModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="AddressTextBox2" ColumnName="AddressTextBox2" />
-                <ScalarProperty Name="AddressTextBox1" ColumnName="AddressTextBox1" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="SchoolDatabaseModel.City">
               <MappingFragment StoreEntitySet="City">
@@ -954,6 +941,19 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="AddressTextBox2" ColumnName="AddressTextBox2" />
+                <ScalarProperty Name="AddressTextBox1" ColumnName="AddressTextBox1" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

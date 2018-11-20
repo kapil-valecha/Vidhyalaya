@@ -11,11 +11,14 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class SubjectInCourse
     {
         public int SubjectCourseId { get; set; }
+        [DisplayName("Subject")]
         public int SubjectId { get; set; }
+        [DisplayName("Course")]
         public int CourseId { get; set; }
     
         public virtual Course Course { get; set; }

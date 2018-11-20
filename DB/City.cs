@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
     public partial class City
     {
@@ -20,14 +20,15 @@ namespace Vidhyalaya.DB
         {
             this.Addresses = new HashSet<Address>();
         }
-    
+        [DisplayName("City")]
         public int CityId { get; set; }
+        [DisplayName("State")]
         public int StateId { get; set; }
-        [Display(Name = "City Name")]
+        [DisplayName("City Name")]
         public string CityName { get; set; }
     
+        public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
-        public virtual State State { get; set; }
     }
 }

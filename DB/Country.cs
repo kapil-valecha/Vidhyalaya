@@ -11,24 +11,24 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
     public partial class Country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Country()
         {
-            this.Addresses = new HashSet<Address>();
             this.States = new HashSet<State>();
+            this.Addresses = new HashSet<Address>();
         }
-    
+        [DisplayName("Country")]
         public int CountryId { get; set; }
-        [Display(Name = "Country Name")]
+        [DisplayName("Country Name")]
         public string CountryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<State> States { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

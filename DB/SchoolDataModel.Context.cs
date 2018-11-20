@@ -27,7 +27,6 @@ namespace Vidhyalaya.DB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
@@ -39,6 +38,7 @@ namespace Vidhyalaya.DB
         public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual DbSet<UserInRole> UserInRoles { get; set; }
         public virtual DbSet<UserRegistration> UserRegistrations { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -142,7 +142,5 @@ namespace Vidhyalaya.DB
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
-
-        public System.Data.Entity.DbSet<Vidhyalaya.Models.UserRegistrationViewModel> UserRegistrationViewModels { get; set; }
     }
 }

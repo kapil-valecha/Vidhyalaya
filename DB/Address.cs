@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
     public partial class Address
     {
@@ -20,14 +20,17 @@ namespace Vidhyalaya.DB
         {
             this.UserRegistrations = new HashSet<UserRegistration>();
         }
-    
+        [DisplayName("Addresss")]
         public int AddressId { get; set; }
-        [Display(Name = "Address Line 01")]
+        [DisplayName("Address Line 01")]
         public string AddressTextBox1 { get; set; }
-        [Display(Name = "Address Line 02")]
+        [DisplayName("Address Line 02")]
         public string AddressTextBox2 { get; set; }
+        [DisplayName("Country")]
         public int CountryId { get; set; }
+        [DisplayName("State")]
         public int StateId { get; set; }
+        [DisplayName("City")]
         public int CityId { get; set; }
         public Nullable<int> Pincode { get; set; }
     

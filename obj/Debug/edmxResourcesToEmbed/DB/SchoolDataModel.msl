@@ -25,19 +25,6 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SchoolDatabaseModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SchoolDatabaseModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="Addresses">
-      <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
-        <MappingFragment StoreEntitySet="Address">
-          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="AddressTextBox2" ColumnName="AddressTextBox2" />
-          <ScalarProperty Name="AddressTextBox1" ColumnName="AddressTextBox1" />
-          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="SchoolDatabaseModel.City">
         <MappingFragment StoreEntitySet="City">
@@ -144,6 +131,19 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="SchoolDatabaseModel.Address">
+        <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="AddressTextBox2" ColumnName="AddressTextBox2" />
+          <ScalarProperty Name="AddressTextBox1" ColumnName="AddressTextBox1" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

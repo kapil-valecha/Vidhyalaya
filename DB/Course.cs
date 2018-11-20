@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
     public partial class Course
     {
@@ -21,9 +21,9 @@ namespace Vidhyalaya.DB
             this.SubjectInCourses = new HashSet<SubjectInCourse>();
             this.UserRegistrations = new HashSet<UserRegistration>();
         }
-    
+        [DisplayName("Course")]
         public int CourseId { get; set; }
-        [Display(Name = "Course Name")]
+        [DisplayName("Course Name")]
         public string CourseName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

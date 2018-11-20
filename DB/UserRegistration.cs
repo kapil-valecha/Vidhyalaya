@@ -11,7 +11,7 @@ namespace Vidhyalaya.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
     public partial class UserRegistration
     {
@@ -23,38 +23,37 @@ namespace Vidhyalaya.DB
         }
     
         public int UserId { get; set; }
-        [Display(Name = "First Name")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
-        [Display(Name = "Last Name")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
+        [DisplayName("Gender")]
         public string Gender { get; set; }
+        [DisplayName("Hobby")]
         public string Hobby { get; set; }
-        [Display(Name = "Email Id")]
+        [DisplayName("Email Id")]
         public string EmailId { get; set; }
-        [Display(Name = "Email Verified")]
+        [DisplayName("Email Verified")]
         public Nullable<bool> IsEmailVerified { get; set; }
         public string Password { get; set; }
-        [Display(Name = "Date Of Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Date of Birth")]
         public System.DateTime DOB { get; set; }
-        [Display(Name = "Address")]
+        [DisplayName("Address")]
         public int AddressId { get; set; }
-        [Display(Name = "Course")]
+        [DisplayName("Corse")]
         public int CourseId { get; set; }
-        [Display(Name = "Role")]
+        [DisplayName("Role")]
         public int RoleId { get; set; }
-        [Display(Name = "Active User")]
         public Nullable<bool> IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
     
-        public virtual Address Address { get; set; }
         public virtual Course Course { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
+        public virtual Address Address { get; set; }
     }
 }
