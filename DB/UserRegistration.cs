@@ -12,6 +12,7 @@ namespace Vidhyalaya.DB
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class UserRegistration
     {
@@ -36,7 +37,11 @@ namespace Vidhyalaya.DB
         [DisplayName("Email Verified")]
         public Nullable<bool> IsEmailVerified { get; set; }
         public string Password { get; set; }
-        [DisplayName("Date of Birth")]
+       [DisplayName("Date of Birth")]
+          
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        
         public System.DateTime DOB { get; set; }
         [DisplayName("Address")]
         public int AddressId { get; set; }
