@@ -365,6 +365,7 @@
     <Content Include="Views\Teacher\StudentDetails.cshtml" />
     <Content Include="Views\Student\StudentsProfile.cshtml" />
     <Content Include="Views\Student\EditUser.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
